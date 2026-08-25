@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # PostGIS Spatial Database
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: samridh-postgis
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: samridh_ai
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+      - ./database/schema/init.sql:/docker-entrypoint-initdb.d/01_init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: samridh-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/samridh_ai
+      - DEMO_MODE=true
+      - SECRET_KEY=samridh_container_secret_key_demo
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+
+  # Mosquitto MQTT Broker (IoT Sensor simulator)
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    container_name: samridh-mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+volumes:
+  postgis_data:
+  backend_uploads:
