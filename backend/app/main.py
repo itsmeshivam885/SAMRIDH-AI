@@ -91,3 +91,19 @@ def health_check():
 
 # Mount versioned API routes
 app.include_router(api_router, prefix=settings.API_V1_PREFIX)
+
+
+@app.on_event("startup")
+def on_startup():
+    """Ensure tables exist on boot"""
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        print(f"[!] Startup DB creation warning: {e}")
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    print(f"[*] Starting SAMRIDH-AI server on port {port}...")
+    uvicorn.run(app, host="0.0.0.0", port=port)
