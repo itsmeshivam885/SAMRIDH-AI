@@ -15,11 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend code and root start scripts
+# Copy backend code
 COPY backend .
-COPY start.sh .
-
-RUN chmod +x start.sh
 
 ENV PYTHONUNBUFFERED=1
 ENV DEMO_MODE=true
@@ -27,4 +24,4 @@ ENV PORT=8000
 
 EXPOSE 8000
 
-CMD ["sh", "start.sh"]
+CMD ["python", "-m", "app.main"]
