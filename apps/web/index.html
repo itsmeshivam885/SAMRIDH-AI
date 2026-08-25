@@ -1097,9 +1097,15 @@
     let currentLanguage = 'en';
     let currentUser = null;
     let farmerMap, adminMap;
-    let selectedDamageFile = null;
+    let API_BASE = localStorage.getItem('SAMRIDH_API_URL') || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? "http://127.0.0.1:8000/api/v1" : "https://samridh-ai-production.up.railway.app/api/v1");
 
-    const API_BASE = "http://127.0.0.1:8000/api/v1";
+    function setApiBaseUrl(url) {
+      if (url) {
+        localStorage.setItem('SAMRIDH_API_URL', url);
+        API_BASE = url;
+        alert(`✓ API Backend set to: ${url}`);
+      }
+    }
 
     function openDepartmentLoginModal(defaultTab = 'farmer') {
       selectLoginTab(defaultTab);
