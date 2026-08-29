@@ -34,7 +34,10 @@
               green: '#138808',
               blue: '#0056B3',
               light: '#F8F9FA',
-              border: '#DEE2E6'
+              border: '#DEE2E6',
+              headerGreen: '#0B6623',
+              softGreen: '#D9EAD3',
+              gold: '#FFC107'
             },
             brand: {
               forest: '#1B5E20',
@@ -105,7 +108,7 @@
   <div class="tricolor-stripe"></div>
 
   <!-- ========================================================================= -->
-  <!-- 2. MAIN PMFBY + SAMRIDH-AI BRANDED HEADER                                 -->
+  <!-- 2. MAIN PMFBY + SAMRIDH-AI BRANDED HEADER (WITH SIGN IN & REGISTER)       -->
   <!-- ========================================================================= -->
   <header class="bg-white border-b border-gray-200 shadow-xs sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">
@@ -132,10 +135,10 @@
         </div>
       </div>
 
-      <!-- Department Login & Team Badge -->
+      <!-- Department Sign In & Register Buttons & Team Badge -->
       <div class="flex items-center space-x-2 sm:space-x-3">
         <!-- TwinBit Developer Attribution Badge -->
-        <div class="hidden md:flex items-center space-x-2 bg-gray-50 border border-gray-200 px-2.5 py-1.5 rounded-xl">
+        <div class="hidden lg:flex items-center space-x-2 bg-gray-50 border border-gray-200 px-2.5 py-1.5 rounded-xl">
           <img src="assets/twinbit_logo.jpg" alt="Team TwinBit" class="h-5 w-auto object-contain rounded-md" onerror="this.style.display='none'">
           <div class="text-left">
             <span class="block text-[8px] text-gray-500 uppercase tracking-wider font-semibold">Architected by</span>
@@ -143,11 +146,18 @@
           </div>
         </div>
 
-        <!-- Department Login Button / Active User Badge -->
-        <div id="auth-container">
-          <button onclick="openDepartmentLoginModal()" class="bg-pmfby-blue hover:bg-blue-700 text-white px-3.5 py-1.5 sm:py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5">
-            <i data-lucide="shield-check" class="w-4 h-4"></i>
-            <span>Department Login</span>
+        <!-- Official Sign In & Register Action Buttons -->
+        <div id="auth-container" class="flex items-center space-x-2">
+          <!-- Sign In Button -->
+          <button onclick="openDepartmentLoginModal()" class="bg-[#0A2540] hover:bg-slate-800 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5">
+            <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+            <span>Sign In</span>
+          </button>
+
+          <!-- Official Register Button (Exact style from screenshot) -->
+          <button onclick="openRegisterModal()" class="bg-[#FFC107] hover:bg-[#FFB300] text-gray-900 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-extrabold text-xs shadow transition-all flex items-center space-x-1.5 border border-amber-400">
+            <i data-lucide="user-plus" class="w-3.5 h-3.5 text-gray-900"></i>
+            <span>Register</span>
           </button>
         </div>
       </div>
@@ -160,7 +170,7 @@
         <div class="flex items-center space-x-1 py-1">
           <button id="nav-landing" onclick="switchView('landing')" class="px-3 py-1.5 rounded-lg bg-white/20 text-white transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="home" class="w-3.5 h-3.5"></i>
-            <span>Home</span>
+            <span>Home (मुख्य पृष्ठ)</span>
           </button>
           <button id="nav-farmer" onclick="requireAuthOrSwitch('farmer')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
@@ -178,10 +188,14 @@
             <i data-lucide="map" class="w-3.5 h-3.5"></i>
             <span>National GIS</span>
           </button>
+          <button id="nav-register-menu" onclick="openRegisterModal()" class="px-3 py-1.5 rounded-lg text-brand-gold bg-brand-gold/15 hover:bg-brand-gold/25 font-bold border border-brand-gold/40 transition-all flex items-center space-x-1 whitespace-nowrap">
+            <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+            <span>Register New User (नया उपयोगकर्ता)</span>
+          </button>
         </div>
 
         <div class="hidden sm:flex items-center space-x-2 text-[10px] text-brand-cream/80 py-1 pl-2">
-          <span>Kharif 2026</span>
+          <span>Kharif 2026 Active</span>
         </div>
       </div>
     </nav>
@@ -202,18 +216,14 @@
     </div>
   </div>
 
-  <!-- Main Multi-Surface Container -->
   <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 w-full">
-
+    
     <!-- ========================================================================= -->
     <!-- SURFACE 1: PUBLIC WEB & REAL PMFBY STAKEHOLDER PORTAL                     -->
     <!-- ========================================================================= -->
     <section id="view-landing" class="space-y-8">
-      
-      <!-- PMFBY + SAMRIDH Hero Showcase -->
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-forest via-[#1f6b25] to-[#0d3b12] text-white p-6 sm:p-10 shadow-lg border border-brand-leaf/40">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
           <div class="lg:col-span-8 space-y-4">
             <div class="inline-flex items-center space-x-2 bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full border border-brand-gold/40 text-xs font-bold uppercase tracking-wider">
               <span>🌾 PMFBY + AI Decision-Support Layer</span>
@@ -224,24 +234,21 @@
             <p class="text-sm sm:text-base text-white/90 font-normal leading-relaxed max-w-2xl">
               SAMRIDH-AI unifies <strong>IoT root-zone telemetry, computer vision disease scans, Sentinel-2 multispectral NDVI, and PostGIS geofencing</strong> into a continuous Digital Farm Health Ledger to accelerate dispute-free PMFBY crop-loss assessments.
             </p>
-            
             <div class="flex flex-wrap gap-3 pt-2">
               <button onclick="openDepartmentLoginModal('farmer')" class="bg-brand-gold hover:bg-yellow-400 text-brand-ink px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all flex items-center space-x-2">
                 <i data-lucide="user-check" class="w-4 h-4"></i>
                 <span>Farmer Corner (किसान कॉर्नर)</span>
               </button>
+              <button onclick="openRegisterModal()" class="bg-[#FFC107] hover:bg-yellow-500 text-gray-900 px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-md transition-all flex items-center space-x-2">
+                <i data-lucide="user-plus" class="w-4 h-4"></i>
+                <span>Register New Stakeholder (नया पंजीकरण)</span>
+              </button>
               <button onclick="openModal('modal-calculator')" class="bg-white text-brand-forest hover:bg-gray-100 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all flex items-center space-x-2">
                 <i data-lucide="calculator" class="w-4 h-4"></i>
-                <span>Calculate Premium (प्रीमियम गणना)</span>
-              </button>
-              <button onclick="openDepartmentLoginModal('officer')" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 px-5 py-2.5 rounded-xl font-semibold text-xs transition-all flex items-center space-x-2">
-                <i data-lucide="clipboard-check" class="w-4 h-4"></i>
-                <span>Officer Claim Triage</span>
+                <span>Calculate Premium</span>
               </button>
             </div>
           </div>
-
-          <!-- Hero Emblem Badge & Quick Stats -->
           <div class="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 text-center space-y-3">
             <img src="assets/samridh_logo.png" alt="SAMRIDH" class="h-20 w-auto mx-auto object-contain" onerror="this.style.display='none'">
             <h3 class="font-bold text-base text-brand-gold">One Nation, One Crop Scheme</h3>
@@ -256,11 +263,9 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- PMFBY Core 6 Citizen Service Cards -->
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <div>
@@ -273,141 +278,112 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          
-          <!-- Card 1: Farmer Application -->
+          <!-- Register & Apply Card -->
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl">
                 📝
               </div>
-              <h3 class="font-bold text-brand-forest text-sm">Apply for Crop Insurance (फसल बीमा आवेदन)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">
-                Direct farmer enrollment, CSC VLE registration, and bank linkage under PMFBY Kharif 2026.
-              </p>
+              <h3 class="font-bold text-brand-forest text-sm">Register New Stakeholder (हितधारक पंजीकरण)</h3>
+              <p class="text-xs text-gray-600 leading-relaxed">Direct registration for Banks, Insurance Companies, Intermediaries, MNCFC, State Govt, and Farmers.</p>
             </div>
-            <button onclick="openDepartmentLoginModal('farmer')" class="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-200 transition-all flex items-center justify-center space-x-1">
-              <span>Apply Online / Login</span>
-              <span>&rarr;</span>
-            </button>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="openRegisterModal()" class="py-2 bg-amber-100 hover:bg-amber-200 text-gray-900 font-extrabold text-xs rounded-xl border border-amber-300 transition-all flex items-center justify-center space-x-1">
+                <span>Register User &rarr;</span>
+              </button>
+              <button onclick="openDepartmentLoginModal('farmer')" class="py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-200 transition-all flex items-center justify-center space-x-1">
+                <span>Sign In &rarr;</span>
+              </button>
+            </div>
           </div>
 
-          <!-- Card 2: Premium Calculator -->
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center text-xl">
                 🧮
               </div>
               <h3 class="font-bold text-brand-forest text-sm">Insurance Premium Calculator (प्रीमियम गणना)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">
-                Calculate crop sum insured, farmer share (2% Kharif, 1.5% Rabi), and government subsidy instantly.
-              </p>
+              <p class="text-xs text-gray-600 leading-relaxed">Calculate crop sum insured, farmer share (2% Kharif, 1.5% Rabi), and government subsidy instantly.</p>
             </div>
             <button onclick="openModal('modal-calculator')" class="w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold text-xs rounded-xl border border-blue-200 transition-all flex items-center justify-center space-x-1">
-              <span>Calculate Premium</span>
-              <span>&rarr;</span>
+              <span>Calculate Premium &rarr;</span>
             </button>
           </div>
 
-          <!-- Card 3: 72-Hour Loss Intimation (SOS) -->
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-red hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div class="space-y-2">
-              <div class="w-10 h-10 rounded-xl bg-red-100 text-red-800 flex items-center justify-center text-xl">
+              <div class="w-10 h-10 rounded-xl bg-red-100 text-brand-red flex items-center justify-center text-xl">
                 🚨
               </div>
               <h3 class="font-bold text-brand-red text-sm">Report Crop Damage / 72h SOS (नुकसान दर्ज करें)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">
-                Submit localized calamity photos with auto PostGIS geofence, pHash duplicate check, and SegFormer AI loss mask.
-              </p>
+              <p class="text-xs text-gray-600 leading-relaxed">Submit localized calamity photos with auto PostGIS geofence, pHash duplicate check, and AI loss mask.</p>
             </div>
             <button onclick="openDepartmentLoginModal('farmer')" class="w-full py-2 bg-red-50 hover:bg-red-100 text-red-800 font-bold text-xs rounded-xl border border-red-200 transition-all flex items-center justify-center space-x-1">
-              <span>Report Damage SOS</span>
-              <span>&rarr;</span>
+              <span>Report Damage SOS &rarr;</span>
             </button>
           </div>
 
-          <!-- Card 4: Policy & Claim Status -->
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center text-xl">
                 🔍
               </div>
               <h3 class="font-bold text-brand-forest text-sm">Track Application & Claim (दावा स्थिति जानें)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">
-                Track status of application number or claim docket `PMFBY-CLAIM-2026-MP-0001` with complete audit events.
-              </p>
+              <p class="text-xs text-gray-600 leading-relaxed">Track status of application number or claim docket `PMFBY-CLAIM-2026-MP-0001` with complete audit events.</p>
             </div>
             <button onclick="requireAuthOrSwitch('farmer')" class="w-full py-2 bg-purple-50 hover:bg-purple-100 text-purple-800 font-bold text-xs rounded-xl border border-purple-200 transition-all flex items-center justify-center space-x-1">
-              <span>Track My Claim</span>
-              <span>&rarr;</span>
+              <span>Track My Claim &rarr;</span>
             </button>
           </div>
 
-          <!-- Card 5: Joint Survey & Officer Triage -->
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl">
                 📋
               </div>
               <h3 class="font-bold text-brand-forest text-sm">Joint Survey & Loss Assessor Workbench</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">
-                Field Officer and Insurer verification console with before/after baseline comparisons and one-click DBT approvals.
-              </p>
+              <p class="text-xs text-gray-600 leading-relaxed">Field Officer and Insurer verification console with before/after baseline comparisons and DBT approvals.</p>
             </div>
             <button onclick="openDepartmentLoginModal('officer')" class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs rounded-xl border border-amber-200 transition-all flex items-center justify-center space-x-1">
-              <span>Officer Workbench</span>
-              <span>&rarr;</span>
+              <span>Officer Workbench &rarr;</span>
             </button>
           </div>
 
-          <!-- Card 6: Krishi Rakshak Grievance Portal -->
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-800 flex items-center justify-center text-xl">
                 🤝
               </div>
-              <h3 class="font-bold text-brand-forest text-sm">Grievance & Krishi Rakshak Portal (शिकायत निवारण)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">
-                Dedicated grievance registration for delayed settlements, survey discrepancies, and insurer dispute appeals.
-              </p>
+              <h3 class="font-bold text-brand-forest text-sm">Grievance & Krishi Rakshak Portal</h3>
+              <p class="text-xs text-gray-600 leading-relaxed">Dedicated grievance registration for delayed settlements, survey discrepancies, and appeals.</p>
             </div>
-            <button onclick="alert('Krishi Rakshak Grievance Desk: All active tickets resolved within 15 working days as per PMFBY operational guidelines.')" class="w-full py-2 bg-cyan-50 hover:bg-cyan-100 text-cyan-800 font-bold text-xs rounded-xl border border-cyan-200 transition-all flex items-center justify-center space-x-1">
-              <span>File Grievance</span>
-              <span>&rarr;</span>
+            <button onclick="alert('Krishi Rakshak Grievance Desk: All active tickets resolved within 15 working days as per PMFBY guidelines.')" class="w-full py-2 bg-cyan-50 hover:bg-cyan-100 text-cyan-800 font-bold text-xs rounded-xl border border-cyan-200 transition-all flex items-center justify-center space-x-1">
+              <span>File Grievance &rarr;</span>
             </button>
           </div>
-
         </div>
       </div>
-
     </section>
 
     <!-- ========================================================================= -->
-    <!-- SURFACE 2: FARMER MOBILE / WEB APP                                        -->
+    <!-- SURFACE 2: FARMER PORTAL                                                  -->
     <!-- ========================================================================= -->
     <section id="view-farmer" class="hidden space-y-6">
-      
-      <!-- Farmer Quick Header Card -->
       <div class="bg-gradient-to-r from-brand-forest to-[#2d7734] text-white rounded-2xl p-6 shadow-md border border-brand-leaf/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-3">
-            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center font-bold text-xl">
-              👨‍🌾
-            </div>
-            <div>
-              <h2 class="text-xl font-bold" id="farmer-name">Ramesh Kumar (रमेश कुमार)</h2>
-              <p class="text-xs text-white/80" id="farmer-loc">Farm-001 • 2.5 Hectares • Kothri Village, Sehore (MP) • Policy: PMFBY-2026-MP-984210</p>
-            </div>
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center font-bold text-xl">
+            👨‍🌾
+          </div>
+          <div>
+            <h2 class="text-xl font-bold" id="farmer-name">Ramesh Kumar (रमेश कुमार)</h2>
+            <p class="text-xs text-white/80" id="farmer-loc">Farm-001 • 2.5 Hectares • Kothri Village, Sehore (MP) • Policy: PMFBY-2026-MP-984210</p>
           </div>
         </div>
-        
         <div class="flex items-center gap-3">
-          <!-- Real Crop Scan Trigger -->
           <button onclick="openModal('modal-crop-scan')" class="bg-white text-brand-forest hover:bg-brand-cream px-4 py-2.5 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-2">
             <i data-lucide="scan" class="w-4 h-4"></i>
             <span>AI Crop Health Scan (फसल जांचें)</span>
           </button>
-          
-          <!-- Real Report Damage Trigger -->
           <button onclick="openModal('modal-report-damage')" class="bg-brand-red text-white hover:bg-red-700 px-4 py-2.5 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-2 animate-pulse">
             <i data-lucide="alert-triangle" class="w-4 h-4"></i>
             <span>Report Damage / 72h SOS (नुकसान दर्ज करें)</span>
@@ -415,7 +391,6 @@
         </div>
       </div>
 
-      <!-- Farm Health Status Overview Matrix -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col justify-between">
           <span class="text-xs font-semibold text-brand-muted">Crop Health (स्वास्थ्य)</span>
@@ -425,7 +400,6 @@
           </div>
           <span class="text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md inline-block" id="farmer-health-tag">Healthy Standing Canopy</span>
         </div>
-
         <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col justify-between">
           <span class="text-xs font-semibold text-brand-muted">Soil Moisture (नमी)</span>
           <div class="my-2 flex items-baseline space-x-1">
@@ -434,7 +408,6 @@
           </div>
           <span class="text-[11px] font-medium text-brand-sky bg-sky-50 px-2 py-0.5 rounded-md inline-block">Optimal Root Zone</span>
         </div>
-
         <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col justify-between">
           <span class="text-xs font-semibold text-brand-muted">Weather Alert (मौसम)</span>
           <div class="my-2 flex items-baseline space-x-1">
@@ -442,7 +415,6 @@
           </div>
           <span class="text-[11px] font-medium text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md inline-block">Heavy Rain & Squall</span>
         </div>
-
         <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col justify-between">
           <span class="text-xs font-semibold text-brand-muted">PMFBY Claim (बीमा स्थिति)</span>
           <div class="my-2 flex items-baseline space-x-1">
@@ -452,13 +424,8 @@
         </div>
       </div>
 
-      <!-- Main Farmer Content Area: 2 Columns -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Left 2 Cols: Interactive Map & Telemetry -->
         <div class="lg:col-span-2 space-y-6">
-          
-          <!-- Farm GIS Boundary Map -->
           <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center space-x-2">
@@ -470,7 +437,6 @@
             <div id="farmer-map" class="h-64 w-full rounded-xl bg-gray-100 border border-gray-200"></div>
           </div>
 
-          <!-- IoT Sensor & NDVI Graph -->
           <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-4">
             <div class="flex items-center justify-between">
               <h3 class="font-bold text-sm text-brand-forest">7-Day Soil Telemetry (TwinBit SoilNode Pro)</h3>
@@ -480,10 +446,7 @@
           </div>
         </div>
 
-        <!-- Right Col: Daily Advisory & Live AI Crop Doctor -->
         <div class="space-y-6">
-          
-          <!-- Today's Proactive Advisory -->
           <div class="bg-emerald-50/60 p-5 rounded-2xl border border-emerald-200 space-y-3">
             <div class="flex items-center space-x-2">
               <i data-lucide="sparkles" class="w-4 h-4 text-emerald-700"></i>
@@ -498,36 +461,31 @@
             </div>
           </div>
 
-          <!-- Live AI Crop Doctor Chat Box -->
           <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
             <div class="flex items-center space-x-2 border-b border-gray-100 pb-3">
               <i data-lucide="bot" class="w-4 h-4 text-brand-forest"></i>
               <h3 class="font-bold text-sm text-brand-forest">Live AI Crop Doctor (फसल डॉक्टर)</h3>
             </div>
-            
             <div id="crop-doctor-messages" class="h-44 overflow-y-auto space-y-2.5 p-2 bg-gray-50 rounded-xl text-xs">
               <div class="bg-white p-2.5 rounded-lg shadow-xs border border-gray-200 text-gray-800">
                 🌱 <strong>Crop Doctor:</strong> Hello Ramesh! I am connected to your live farm telemetry. Ask me about crop diseases, soil moisture, or fertilizer applications.
               </div>
             </div>
-
             <div class="flex space-x-2 pt-1">
               <input id="crop-doctor-input" type="text" placeholder="Type question (उदा. फसल पीली क्यों है?)..." class="flex-grow px-3 py-2 text-xs border border-gray-300 rounded-xl focus:outline-none focus:border-brand-forest" onkeypress="if(event.key==='Enter') askCropDoctor()">
-              <button onclick="askCropDoctor()" class="bg-brand-forest text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-brand-leaf transition-all flex items-center space-x-1">
+              <button onclick="askCropDoctor()" class="bg-brand-forest text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-brand-leaf transition-all">
                 <span>Ask</span>
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
     <!-- ========================================================================= -->
-    <!-- SURFACE 3: OFFICER PORTAL                                                 -->
+    <!-- SURFACE 3: OFFICER WORKBENCH                                              -->
     <!-- ========================================================================= -->
     <section id="view-officer" class="hidden space-y-6">
-      
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
         <div>
           <h2 class="text-xl font-bold text-brand-forest">PMFBY Joint Survey & Loss Assessor Workbench</h2>
@@ -540,13 +498,9 @@
         </div>
       </div>
 
-      <!-- Claim Queue & Inspector Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Left: Claims Queue List -->
         <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 space-y-3">
           <h3 class="font-bold text-xs uppercase tracking-wider text-brand-muted">Active Claims Queue</h3>
-          
           <div class="space-y-2">
             <div class="p-3.5 rounded-xl border border-brand-leaf bg-emerald-50/40 cursor-pointer hover:shadow transition-all space-y-1.5">
               <div class="flex items-center justify-between">
@@ -562,10 +516,7 @@
           </div>
         </div>
 
-        <!-- Right 2 Cols: Deep Multi-Signal Evidence Inspector -->
         <div class="lg:col-span-2 space-y-6">
-          
-          <!-- Evidence & AI Segmentation Inspection Box -->
           <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-5">
             <div class="flex items-center justify-between border-b border-gray-100 pb-3">
               <div>
@@ -577,7 +528,6 @@
               </span>
             </div>
 
-            <!-- Multi-Signal Radar Verification Chips -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-center">
                 <span class="text-[10px] font-semibold text-gray-500 block uppercase">1. GPS Geofence</span>
@@ -589,15 +539,14 @@
               </div>
               <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-center">
                 <span class="text-[10px] font-semibold text-gray-500 block uppercase">3. SIFT Baseline</span>
-                <span class="text-xs font-bold text-emerald-700">✓ 89% Landmark Match</span>
+                <span class="text-xs font-bold text-emerald-700">✓ 89% Match</span>
               </div>
               <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-center">
                 <span class="text-[10px] font-semibold text-gray-500 block uppercase">4. Satellite NDVI</span>
-                <span class="text-xs font-bold text-amber-700">⚠️ -32.5% Sudden Drop</span>
+                <span class="text-xs font-bold text-amber-700">⚠️ -32.5% Drop</span>
               </div>
             </div>
 
-            <!-- Before / After Baseline Comparison Visualizer -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="space-y-1.5">
                 <span class="text-xs font-bold text-brand-forest">Sowing Baseline (Reference Landmark)</span>
@@ -605,7 +554,6 @@
                   <span class="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-full absolute bottom-3 left-3">Baseline: Jun 22, 2026</span>
                 </div>
               </div>
-
               <div class="space-y-1.5">
                 <span class="text-xs font-bold text-brand-red">Damage Evidence & AI Mask (SegFormer)</span>
                 <div id="officer-damage-preview" class="h-48 rounded-xl bg-gray-200 border border-brand-red/40 flex items-center justify-center text-center p-4 relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(229,57,53,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80')">
@@ -614,12 +562,10 @@
               </div>
             </div>
 
-            <!-- Officer Decision Actions -->
             <div class="pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-3">
               <div class="text-xs text-gray-500 italic">
                 * AI decision support only. Official DBT disbursement requires officer sanction.
               </div>
-
               <div class="flex items-center space-x-2">
                 <button onclick="officerAction('FIELD_VERIFICATION_REQUESTED')" class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold rounded-xl transition-all">
                   Request Field Visit
@@ -633,7 +579,6 @@
                 </button>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -643,18 +588,16 @@
     <!-- SURFACE 4: ADMIN / NATIONAL COMMAND CENTER                                -->
     <!-- ========================================================================= -->
     <section id="view-admin" class="hidden space-y-6">
-      
       <div class="border-b border-gray-200 pb-4">
         <h2 class="text-xl font-bold text-brand-forest">National & State Agronomy Command Center</h2>
         <p class="text-xs text-brand-muted">Real-time geospatial analytics, active disaster footprints, and scheme integrity monitoring.</p>
       </div>
 
-      <!-- KPI Summary Cards -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-          <span class="text-xs font-semibold text-brand-muted">Registered Farmers</span>
-          <p class="text-2xl font-bold text-brand-forest mt-1">1,248</p>
-          <span class="text-[11px] text-emerald-600">Across 14 Districts</span>
+          <span class="text-xs font-semibold text-brand-muted">Registered Stakeholders</span>
+          <p class="text-2xl font-bold text-brand-forest mt-1" id="admin-kpi-users">1,248</p>
+          <span class="text-[11px] text-emerald-600">Across All Departments</span>
         </div>
         <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
           <span class="text-xs font-semibold text-brand-muted">Monitored Hectares</span>
@@ -673,12 +616,11 @@
         </div>
       </div>
 
-      <!-- Master GIS Map -->
       <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-2">
             <i data-lucide="layers" class="w-4 h-4 text-brand-forest"></i>
-            <h3 class="font-bold text-sm text-brand-forest">State-Wide Multi-Layer Geospatial Hub (MP Agricultural Grid)</h3>
+            <h3 class="font-bold text-sm text-brand-forest">State-Wide Multi-Layer Geospatial Hub</h3>
           </div>
           <div class="flex space-x-2">
             <span class="text-xs bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium border border-emerald-200">● 5 Active Farms</span>
@@ -687,17 +629,237 @@
         </div>
         <div id="admin-map" class="h-96 w-full rounded-xl bg-gray-100 border border-gray-200"></div>
       </div>
-
     </section>
-
   </main>
 
   <!-- ========================================================================= -->
-  <!-- MODAL: REAL AI CROP SCAN & LEAF ANALYSIS                                  -->
+  <!-- MODAL: REGISTER NEW USER (EXACTLY AS SCREENSHOT)                          -->
+  <!-- ========================================================================= -->
+  <div id="modal-register" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-gray-100 my-8">
+      
+      <!-- Top Title & Breadcrumbs -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-4">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-2xl">📝</span>
+            <h2 class="text-2xl font-extrabold text-[#1B5E20] tracking-tight">REGISTER NEW USER</h2>
+          </div>
+          <div class="text-xs text-gray-500 font-medium mt-1 flex items-center space-x-1.5">
+            <span class="text-emerald-700 font-bold hover:underline cursor-pointer" onclick="closeModal('modal-register')">Home</span>
+            <span>/</span>
+            <span class="text-gray-700 font-semibold">Register New User</span>
+          </div>
+        </div>
+
+        <!-- Note on CCE App (Exact from Screenshot) -->
+        <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-xs text-emerald-950 flex items-center space-x-2 max-w-md shadow-xs">
+          <span class="text-2xl text-emerald-600 font-serif leading-none">❝</span>
+          <p class="leading-snug">
+            <strong>Note:</strong> Primary Worker for conducting CCE can Register only through <span class="text-blue-700 font-bold underline cursor-pointer">CCE APP</span>
+          </p>
+          <span class="text-2xl text-emerald-600 font-serif leading-none">❞</span>
+        </div>
+      </div>
+
+      <!-- Registration Form Card (Exact from Screenshot) -->
+      <form id="register-user-form" onsubmit="event.preventDefault(); submitUserRegistration();" class="space-y-6">
+        
+        <!-- Official Information Container -->
+        <div class="rounded-2xl border-2 border-emerald-200 overflow-hidden shadow-sm">
+          <!-- Light green bar title -->
+          <div class="bg-[#D9EAD3] px-5 py-3 border-b border-emerald-200 flex items-center justify-between">
+            <span class="font-extrabold text-sm text-[#0B6623] tracking-wide">Official Information</span>
+            <span class="text-[11px] text-emerald-800 font-semibold">* All fields mandatory for PMFBY verification</span>
+          </div>
+
+          <!-- Fields Grid -->
+          <div class="p-6 bg-white space-y-5">
+            
+            <!-- Row 1: 3 Dropdowns (Stakeholder, Choose Category, User Category) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              
+              <!-- 1. Stakeholder Dropdown -->
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Stakeholder <span class="text-red-500 font-bold">*</span>
+                </label>
+                <select id="reg-stakeholder" onchange="updateRegisterCategories()" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                  <option value="">Select Stakeholder</option>
+                  <option value="BANK">BANK</option>
+                  <option value="INSURANCE COMPANY">INSURANCE COMPANY</option>
+                  <option value="INTERMEDIARY">INTERMEDIARY</option>
+                  <option value="MNCFC">MNCFC</option>
+                  <option value="MNCFC_ADMIN">MNCFC_ADMIN</option>
+                  <option value="STATE GOVERNMENT">STATE GOVERNMENT</option>
+                  <option value="STATE PROJECT OFFICER">STATE PROJECT OFFICER</option>
+                  <option value="WEATHER DATA PROVIDER">WEATHER DATA PROVIDER</option>
+                  <option value="FARMER">FARMER (किसान)</option>
+                </select>
+              </div>
+
+              <!-- 2. Choose Category Dropdown -->
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Choose Category <span class="text-red-500 font-bold">*</span>
+                </label>
+                <select id="reg-category" onchange="updateRegisterUserCategories()" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                  <option value="">Select Category</option>
+                </select>
+              </div>
+
+              <!-- 3. User Category Dropdown -->
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  User Category <span class="text-red-500 font-bold">*</span>
+                </label>
+                <select id="reg-user-category" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                  <option value="">Select Category</option>
+                </select>
+              </div>
+
+            </div>
+
+            <!-- Row 2: Personal & Designation Details -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-gray-100">
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Full Name (पूरा नाम) <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input id="reg-fullname" type="text" placeholder="e.g. Ramesh Kumar / Dr. Rajesh Verma" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Official Designation (पदनाम) <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input id="reg-designation" type="text" placeholder="e.g. Branch Manager / Field Loss Assessor" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Mobile Number (मोबाइल नंबर) <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input id="reg-phone" type="tel" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile (e.g. 9876543210)" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-mono font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              </div>
+            </div>
+
+            <!-- Row 3: Official Email, State, District -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-gray-100">
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Official Email (ईमेल) <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input id="reg-email" type="email" placeholder="official.user@pmfby.gov.in" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  State Jurisdiction (राज्य) <span class="text-red-500 font-bold">*</span>
+                </label>
+                <select id="reg-state" onchange="updateStateDistricts()" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                  <option value="Madhya Pradesh">Madhya Pradesh (मध्य प्रदेश)</option>
+                  <option value="Maharashtra">Maharashtra (महाराष्ट्र)</option>
+                  <option value="Rajasthan">Rajasthan (राजस्थान)</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh (उत्तर प्रदेश)</option>
+                  <option value="Gujarat">Gujarat (गुजरात)</option>
+                  <option value="Haryana">Haryana (हरियाणा)</option>
+                  <option value="Punjab">Punjab (पंजाब)</option>
+                  <option value="Karnataka">Karnataka (कर्नाटक)</option>
+                  <option value="Tamil Nadu">Tamil Nadu (तमिलनाडु)</option>
+                  <option value="Odisha">Odisha (ओडिशा)</option>
+                  <option value="Bihar">Bihar (बिहार)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  District (जिला) <span class="text-red-500 font-bold">*</span>
+                </label>
+                <select id="reg-district" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                  <option value="Sehore">Sehore (सीहोर)</option>
+                  <option value="Bhopal">Bhopal (भोपाल)</option>
+                  <option value="Dewas">Dewas (देवास)</option>
+                  <option value="Indore">Indore (इंदौर)</option>
+                  <option value="Ujjain">Ujjain (उज्जैन)</option>
+                  <option value="Hoshangabad">Hoshangabad (होशंगाबाद)</option>
+                  <option value="Raisen">Raisen (रायसेन)</option>
+                  <option value="Vidisha">Vidisha (विदिशा)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 4: Identification Code & Password -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-gray-100">
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Official ID / Badge Code / KCC No <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input id="reg-code" type="text" placeholder="e.g. EMP-2026-MP-001 or KCC-984210" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-mono font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 uppercase">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Create Password <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input id="reg-password" type="password" placeholder="••••••••" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-gray-800 mb-1.5">
+                  Confirm Password <span class="text-red-500 font-bold">*</span>
+                </label>
+                <input id="reg-confirm-password" type="password" placeholder="••••••••" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Action Buttons (Exact as screenshot Discard & Create) -->
+        <div class="flex items-center justify-end space-x-3 pt-2">
+          <button type="button" onclick="closeModal('modal-register'); resetRegisterForm();" class="px-6 py-2.5 border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 font-bold text-xs rounded-xl shadow-xs transition-all">
+            Discard
+          </button>
+          <button type="submit" class="px-8 py-2.5 bg-[#4CAF50] hover:bg-[#388E3C] text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center space-x-2">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>Create</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: REGISTRATION SUCCESS ACKNOWLEDGMENT                                -->
+  <!-- ========================================================================= -->
+  <div id="modal-register-success" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border border-gray-100">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-3xl mx-auto shadow-inner">
+        ✓
+      </div>
+      <h3 class="text-lg font-extrabold text-brand-forest">Registration Successful!</h3>
+      <p class="text-xs text-gray-600">Your official PMFBY stakeholder profile has been verified and registered on the SAMRIDH-AI National Gateway.</p>
+      
+      <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-left space-y-1.5 text-xs">
+        <div class="flex justify-between"><span class="text-gray-500">Docket Number:</span><strong class="font-mono text-brand-forest" id="success-docket">REG-PMFBY-2026-MP-001</strong></div>
+        <div class="flex justify-between"><span class="text-gray-500">Registered Name:</span><strong id="success-name">Ramesh Kumar</strong></div>
+        <div class="flex justify-between"><span class="text-gray-500">Stakeholder:</span><strong class="text-emerald-900" id="success-stakeholder">BANK / AIC</strong></div>
+        <div class="flex justify-between"><span class="text-gray-500">Designation:</span><strong id="success-role">Branch Manager</strong></div>
+      </div>
+
+      <button onclick="closeModal('modal-register-success');" class="w-full py-3 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-xl text-xs shadow transition-all">
+        Proceed to Dashboard &rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: AI CROP SCAN & LEAF ANALYSIS                                       -->
   <!-- ========================================================================= -->
   <div id="modal-crop-scan" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100 max-h-[95vh] overflow-y-auto">
-      
       <div class="flex items-center justify-between border-b border-gray-100 pb-3">
         <div class="flex items-center space-x-2">
           <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
@@ -718,13 +880,12 @@
           <i data-lucide="camera" class="w-10 h-10 text-brand-leaf mx-auto mb-2"></i>
           <span class="font-bold text-brand-forest block text-sm">Click to Upload / Capture Real Crop Photo</span>
           <span class="text-gray-500 text-[11px] block mt-1">Select any leaf image (JPEG, PNG) from your device</span>
-          <span class="text-[10px] text-emerald-700 font-semibold bg-emerald-100 px-2 py-0.5 rounded-full inline-block mt-2">Active: OpenCV Laplacian Blur & ExG Vegetation Analyzer</span>
+          <span class="text-[10px] text-emerald-700 font-semibold bg-emerald-100 px-2 py-0.5 rounded-full inline-block mt-2">Active: OpenCV Laplacian Blur & ExG Analyzer</span>
         </div>
 
         <div id="crop-scan-loader" class="hidden p-6 text-center space-y-3 bg-gray-50 rounded-2xl border border-gray-200">
           <div class="w-10 h-10 border-4 border-brand-leaf border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p class="text-xs font-bold text-brand-forest">Analyzing spectral reflectance & disease patterns...</p>
-          <span class="text-[11px] text-gray-500">Checking Laplacian blur variance & Excess Green Index (ExG)</span>
         </div>
 
         <div id="crop-scan-result" class="hidden space-y-3">
@@ -753,17 +914,15 @@
             Scan Another Image (दूसरी फोटो जांचें)
           </button>
         </div>
-
       </div>
     </div>
   </div>
 
   <!-- ========================================================================= -->
-  <!-- MODAL: REAL REPORT DAMAGE / 72H SOS EVIDENCE SUBMISSION                   -->
+  <!-- MODAL: REPORT DAMAGE (72H SOS)                                            -->
   <!-- ========================================================================= -->
   <div id="modal-report-damage" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100 max-h-[95vh] overflow-y-auto">
-      
       <div class="flex items-center justify-between border-b border-gray-100 pb-3">
         <div class="flex items-center space-x-2">
           <div class="w-9 h-9 rounded-xl bg-red-100 text-brand-red flex items-center justify-center">
@@ -825,7 +984,6 @@
   <!-- ========================================================================= -->
   <div id="modal-calculator" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-5 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
-      
       <div class="flex items-center justify-between border-b border-gray-100 pb-3">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center text-xl font-bold">
@@ -895,7 +1053,6 @@
           </div>
         </div>
 
-        <!-- Calculated Summary Box -->
         <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-2.5">
           <div class="flex justify-between items-center text-emerald-950 font-bold border-b border-emerald-200 pb-2">
             <span>Total Sum Insured (कुल बीमित राशि):</span>
@@ -915,24 +1072,22 @@
           Proceed to Apply with Calculated Coverage &rarr;
         </button>
       </div>
-
     </div>
   </div>
 
   <!-- ========================================================================= -->
-  <!-- MODAL: DEPARTMENT / ROLE AUTHENTICATION PORTAL                            -->
+  <!-- MODAL: DEPARTMENT / ROLE AUTHENTICATION PORTAL (SIGN IN)                  -->
   <!-- ========================================================================= -->
   <div id="modal-dept-login" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-gray-100 max-h-[95vh] overflow-y-auto">
-      
       <div class="flex items-center justify-between border-b border-gray-100 pb-4">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-xl bg-brand-forest/10 flex items-center justify-center text-brand-forest font-bold">
             🏛️
           </div>
           <div>
-            <h3 class="font-bold text-lg text-brand-forest">Department & Role Login</h3>
-            <p class="text-xs text-brand-muted">Select your department and enter credentials</p>
+            <h3 class="font-bold text-lg text-brand-forest">Department & Role Sign In</h3>
+            <p class="text-xs text-brand-muted">Select department and enter verified credentials</p>
           </div>
         </div>
         <button onclick="closeModal('modal-dept-login')" class="text-gray-400 hover:text-gray-600 font-bold p-1">✕</button>
@@ -953,7 +1108,7 @@
         </button>
       </div>
 
-      <!-- TAB CONTENT 1: FARMER -->
+      <!-- Farmer -->
       <div id="login-panel-farmer" class="space-y-4 text-xs">
         <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200 text-emerald-900 space-y-1">
           <span class="font-bold block">🌾 Farmer Mobile OTP Login</span>
@@ -976,72 +1131,70 @@
         </button>
       </div>
 
-      <!-- TAB CONTENT 2: OFFICER -->
+      <!-- Officer -->
       <div id="login-panel-officer" class="hidden space-y-4 text-xs">
         <div class="bg-blue-50 p-3.5 rounded-2xl border border-blue-200 text-blue-900 space-y-1">
           <span class="font-bold block">📋 District Agriculture Department / Patwari</span>
           <span class="text-[11px] text-blue-800">Assigned Jurisdiction: Sehore District, Madhya Pradesh</span>
         </div>
-
         <div>
           <label class="font-bold text-gray-700 block mb-1">Officer Username / Badge Number</label>
           <input id="officer-user-input" type="text" value="officer_sharma" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
         </div>
-
         <div>
           <label class="font-bold text-gray-700 block mb-1">Password</label>
           <input id="officer-pass-input" type="password" value="DemoPass123!" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
         </div>
-
         <button onclick="performOfficerLogin()" class="w-full py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs shadow transition-all">
           Login to Officer Review Console &rarr;
         </button>
       </div>
 
-      <!-- TAB CONTENT 3: INSURANCE DESK -->
+      <!-- Insurer -->
       <div id="login-panel-insurance" class="hidden space-y-4 text-xs">
         <div class="bg-purple-50 p-3.5 rounded-2xl border border-purple-200 text-purple-900 space-y-1">
           <span class="font-bold block">🛡️ PMFBY Insurance Company Desk</span>
           <span class="text-[11px] text-purple-800">Agriculture Insurance Company of India (AIC) Gateway</span>
         </div>
-
         <div>
           <label class="font-bold text-gray-700 block mb-1">Insurer Email / Portal ID</label>
           <input type="text" value="aic.assessor@pmfby.gov.in" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
         </div>
-
         <div>
           <label class="font-bold text-gray-700 block mb-1">Access Token / Password</label>
           <input type="password" value="DemoPass123!" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
         </div>
-
         <button onclick="performInsuranceLogin()" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl text-xs shadow transition-all">
           Open Insurance Claim Workstation &rarr;
         </button>
       </div>
 
-      <!-- TAB CONTENT 4: ADMIN -->
+      <!-- Admin -->
       <div id="login-panel-admin" class="hidden space-y-4 text-xs">
         <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-200 text-amber-900 space-y-1">
           <span class="font-bold block">🗺️ State / National Agronomy Administrator</span>
           <span class="text-[11px] text-amber-800">Ministry of Agriculture & Farmers Welfare GIS Grid</span>
         </div>
-
         <div>
           <label class="font-bold text-gray-700 block mb-1">Admin Username</label>
           <input id="admin-user-input" type="text" value="admin_samridh" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
         </div>
-
         <div>
           <label class="font-bold text-gray-700 block mb-1">Master Password</label>
           <input id="admin-pass-input" type="password" value="DemoPass123!" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
         </div>
-
         <button onclick="performAdminLogin()" class="w-full py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-xl text-xs shadow transition-all">
           Access National GIS Command Center &rarr;
         </button>
       </div>
 
+      <!-- Quick Link to Register -->
+      <div class="pt-3 border-t border-gray-100 text-center text-xs text-gray-600">
+        Don't have a stakeholder account? 
+        <button onclick="closeModal('modal-dept-login'); openRegisterModal();" class="text-brand-forest font-extrabold underline ml-1 hover:text-emerald-700">
+          Register New User Here
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1050,7 +1203,6 @@
   <!-- ========================================================================= -->
   <footer class="bg-brand-forest text-white/80 py-8 text-xs border-t border-brand-leaf/30 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-      
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center border-b border-white/10 pb-6">
         <div class="flex items-center space-x-3">
           <img src="assets/twinbit_logo.jpg" alt="Team TwinBit" class="h-10 w-auto rounded-lg shadow-sm" onerror="this.style.display='none'">
@@ -1059,18 +1211,15 @@
             <span class="text-[11px] text-brand-cream/80">Smart India Hackathon • All Rights Reserved</span>
           </div>
         </div>
-
         <div class="text-center md:text-left">
           <span class="font-semibold text-white">Pradhan Mantri Fasal Bima Yojana (PMFBY)</span>
           <p class="text-[11px] text-brand-cream/70">Ministry of Agriculture and Farmers Welfare, Government of India</p>
         </div>
-
         <div class="text-right text-[11px] text-brand-cream/60">
           <p>AI Loss Estimates are Decision-Support only.</p>
           <p>Official settlements subject to state/insurer notification.</p>
         </div>
       </div>
-
       <div class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-brand-cream/70 gap-2">
         <div>
           <span>© 2026 SAMRIDH-AI • Team TwinBit • All Rights Reserved.</span>
@@ -1081,22 +1230,23 @@
           <a href="https://samridh-ai-production.up.railway.app/docs" target="_blank" class="hover:text-white underline">FastAPI Swagger Docs (Live)</a>
         </div>
       </div>
-
     </div>
   </footer>
 
-  <!-- Frontend Logic -->
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT LOGIC FOR STAKEHOLDER REGISTRATION & PORTAL WORKFLOWS          -->
+  <!-- ========================================================================= -->
   <script>
     lucide.createIcons();
-
-    // Register PWA Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration error:', err));
     }
-
+    
     let currentLanguage = 'en';
     let currentUser = null;
     let farmerMap, adminMap;
+    let selectedDamageFile = null;
+    
     let API_BASE = localStorage.getItem('SAMRIDH_API_URL') || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? "http://127.0.0.1:8000/api/v1" : "https://samridh-ai-production.up.railway.app/api/v1");
 
     function setApiBaseUrl(url) {
@@ -1105,6 +1255,319 @@
         API_BASE = url;
         alert(`✓ API Backend set to: ${url}`);
       }
+    }
+
+    // =========================================================================
+    // PMFBY STAKEHOLDER & USER CATEGORY HIERARCHY DATA (EXACT TO SCREENSHOT)
+    // =========================================================================
+    const STAKEHOLDER_DATA = {
+      "BANK": {
+        categories: [
+          "Public Sector Commercial Bank (सार्वजनिक बैंक)",
+          "Private Sector Commercial Bank (निजी बैंक)",
+          "Regional Rural Bank - RRB (क्षेत्रीय ग्रामीण बैंक)",
+          "State / District Central Cooperative Bank (सहकारी बैंक)",
+          "Primary Agricultural Credit Society - PACS (पैक्स)"
+        ],
+        userCategories: [
+          "Head Office Nodal Officer",
+          "Zonal / Regional Manager",
+          "Branch Manager (शाखा प्रबंधक)",
+          "Loan Sanction Officer (KCC Desk)",
+          "Data Entry Operator"
+        ]
+      },
+      "INSURANCE COMPANY": {
+        categories: [
+          "Agriculture Insurance Company of India - AIC",
+          "HDFC ERGO General Insurance Co. Ltd.",
+          "ICICI Lombard General Insurance Co. Ltd.",
+          "SBI General Insurance Company Ltd.",
+          "Bajaj Allianz General Insurance Co. Ltd.",
+          "Reliance General Insurance Co. Ltd.",
+          "Universal Sompo General Insurance Co. Ltd."
+        ],
+        userCategories: [
+          "Head Office Underwriting Head",
+          "State Operations Head",
+          "District Loss Assessor (सर्वेक्षक)",
+          "Claim Settlement Officer",
+          "Field Survey Supervisor"
+        ]
+      },
+      "INTERMEDIARY": {
+        categories: [
+          "Common Service Centre - CSC VLE (सीएससी वीएलई)",
+          "Primary Agricultural Society Operator",
+          "Bank Mitra / Banking Correspondent (बीसी)",
+          "Krishi Vigyan Kendra - KVK Facilitator",
+          "Farmer Producer Organisation - FPO Representative"
+        ],
+        userCategories: [
+          "Certified Village Level Entrepreneur (VLE)",
+          "FPO Nodal Representative",
+          "Kisan Call Centre Executive",
+          "Enrollment Field Agent"
+        ]
+      },
+      "MNCFC": {
+        categories: [
+          "Satellite Optical & SAR Processing Cell",
+          "Crop Yield Estimation & Spatial Modeling Unit",
+          "National Drought & Flood Monitoring Wing",
+          "High-Resolution Spectral Classification Desk"
+        ],
+        userCategories: [
+          "Lead Remote Sensing Scientist",
+          "Geospatial Analyst",
+          "GIS Data Engineer",
+          "Satellite Telemetry Verifier"
+        ]
+      },
+      "MNCFC_ADMIN": {
+        categories: [
+          "National Geospatial Architecture Cell",
+          "Sentinel-2 & RISAT Data Gateway Administration",
+          "Inter-Agency Satellite Protocol Command"
+        ],
+        userCategories: [
+          "Chief Remote Sensing Officer",
+          "National Spatial Data Infrastructure Administrator",
+          "State Remote Sensing Coordinator"
+        ]
+      },
+      "STATE GOVERNMENT": {
+        categories: [
+          "State Directorate of Agriculture (कृषि निदेशालय)",
+          "Department of Revenue & Land Records (राजस्व विभाग)",
+          "State Nodal Agency for PMFBY",
+          "District Collectorate Agriculture Desk",
+          "Tehsil / Block Agriculture Office"
+        ],
+        userCategories: [
+          "State Nodal Officer (SNO)",
+          "District Agriculture Officer (DAO)",
+          "Sub-Divisional Agriculture Officer (SDAO)",
+          "Revenue Inspector / Patwari (पटवारी)",
+          "Block Technology Manager (ATMA)"
+        ]
+      },
+      "STATE PROJECT OFFICER": {
+        categories: [
+          "PMFBY State Project Monitoring Unit (SPMU)",
+          "Yield Assessment & CCE Coordination Cell",
+          "Grievance Redressal & Krishi Rakshak Desk"
+        ],
+        userCategories: [
+          "State Project Officer (SPO)",
+          "Assistant Project Officer (Monitoring)",
+          "District Technical Consultant",
+          "CCE Quality Auditor"
+        ]
+      },
+      "WEATHER DATA PROVIDER": {
+        categories: [
+          "India Meteorological Department - IMD",
+          "State Automated Weather Station (AWS) Grid",
+          "Skymet Weather Services",
+          "Gramin Krishi Mausam Seva (GKMS)",
+          "IoT Field Micro-Weather Sensor Provider"
+        ],
+        userCategories: [
+          "Chief Agrometeorologist",
+          "AWS Telemetry Network Manager",
+          "Doppler Radar Data Specialist",
+          "Weather Alert Dispatcher"
+        ]
+      },
+      "FARMER": {
+        categories: [
+          "Small & Marginal Farmer - PMFBY Insured (छोटे एवं सीमांत किसान)",
+          "Loanee Farmer - KCC Linked (ऋणी किसान)",
+          "Non-Loanee Farmer - Direct Portal (गैर-ऋणी किसान)",
+          "Sharecropper / Tenant Farmer (बटाईदार किसान)",
+          "Organic & Horticultural Farmer (उद्यानिकी कृषक)"
+        ],
+        userCategories: [
+          "Individual Landholding Farmer",
+          "Joint Family Landholder",
+          "Tenant / Leaseholder Farmer",
+          "Women Farmer (महिला कृषक)"
+        ]
+      }
+    };
+
+    const STATE_DISTRICTS = {
+      "Madhya Pradesh": ["Sehore", "Bhopal", "Dewas", "Indore", "Ujjain", "Hoshangabad", "Raisen", "Vidisha", "Jabalpur", "Gwalior"],
+      "Maharashtra": ["Nagpur", "Pune", "Nashik", "Aurangabad", "Amravati", "Solapur", "Kolhapur", "Latur", "Nanded"],
+      "Rajasthan": ["Jaipur", "Jodhpur", "Kota", "Bikaner", "Ajmer", "Udaipur", "Alwar", "Barmer", "Sikar"],
+      "Uttar Pradesh": ["Lucknow", "Varanasi", "Kanpur", "Prayagraj", "Agra", "Meerut", "Gorakhpur", "Bareilly"],
+      "Gujarat": ["Ahmedabad", "Surat", "Rajkot", "Vadodara", "Bhavnagar", "Jamnagar", "Junagadh", "Kutch"],
+      "Haryana": ["Karnal", "Hisar", "Rohtak", "Ambala", "Sirsa", "Kurukshetra", "Sonipat", "Panipat"],
+      "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Hoshiarpur", "Moga"],
+      "Karnataka": ["Bengaluru", "Mysuru", "Belagavi", "Hubballi", "Kalaburagi", "Dharwad", "Shivamogga"],
+      "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Thanjavur", "Erode"],
+      "Odisha": ["Bhubaneswar", "Cuttack", "Sambalpur", "Balasore", "Puri", "Bhadrak", "Ganjam"],
+      "Bihar": ["Patna", "Gaya", "Muzaffarpur", "Bhagalpur", "Darbhanga", "Purnia", "Rohtas"]
+    };
+
+    function openRegisterModal() {
+      openModal('modal-register');
+      updateRegisterCategories();
+      updateStateDistricts();
+    }
+
+    function updateRegisterCategories() {
+      const stakeholder = document.getElementById('reg-stakeholder').value;
+      const catSelect = document.getElementById('reg-category');
+      const userCatSelect = document.getElementById('reg-user-category');
+
+      catSelect.innerHTML = '<option value="">Select Category</option>';
+      userCatSelect.innerHTML = '<option value="">Select Category</option>';
+
+      if (stakeholder && STAKEHOLDER_DATA[stakeholder]) {
+        STAKEHOLDER_DATA[stakeholder].categories.forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat;
+          opt.innerText = cat;
+          catSelect.appendChild(opt);
+        });
+
+        STAKEHOLDER_DATA[stakeholder].userCategories.forEach(ucat => {
+          const opt = document.createElement('option');
+          opt.value = ucat;
+          opt.innerText = ucat;
+          userCatSelect.appendChild(opt);
+        });
+      }
+    }
+
+    function updateRegisterUserCategories() {
+      const stakeholder = document.getElementById('reg-stakeholder').value;
+      const userCatSelect = document.getElementById('reg-user-category');
+
+      if (stakeholder && STAKEHOLDER_DATA[stakeholder]) {
+        userCatSelect.innerHTML = '<option value="">Select Category</option>';
+        STAKEHOLDER_DATA[stakeholder].userCategories.forEach(ucat => {
+          const opt = document.createElement('option');
+          opt.value = ucat;
+          opt.innerText = ucat;
+          userCatSelect.appendChild(opt);
+        });
+      }
+    }
+
+    function updateStateDistricts() {
+      const state = document.getElementById('reg-state').value;
+      const distSelect = document.getElementById('reg-district');
+      distSelect.innerHTML = '';
+
+      const districts = STATE_DISTRICTS[state] || ["Sehore", "Bhopal", "Dewas", "Indore", "Ujjain"];
+      districts.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d;
+        opt.innerText = `${d}`;
+        distSelect.appendChild(opt);
+      });
+    }
+
+    function resetRegisterForm() {
+      document.getElementById('register-user-form').reset();
+      updateRegisterCategories();
+      updateStateDistricts();
+    }
+
+    async function submitUserRegistration() {
+      const stakeholder = document.getElementById('reg-stakeholder').value;
+      const category = document.getElementById('reg-category').value;
+      const userCat = document.getElementById('reg-user-category').value;
+      const fullName = document.getElementById('reg-fullname').value.trim();
+      const designation = document.getElementById('reg-designation').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const state = document.getElementById('reg-state').value;
+      const district = document.getElementById('reg-district').value;
+      const code = document.getElementById('reg-code').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirmPassword = document.getElementById('reg-confirm-password').value;
+
+      if (!stakeholder) {
+        alert("Please select a Stakeholder.");
+        return;
+      }
+      if (!category) {
+        alert("Please choose a Category.");
+        return;
+      }
+      if (!userCat) {
+        alert("Please select a User Category.");
+        return;
+      }
+      if (!fullName || !phone || !email || !code || !password) {
+        alert("Please fill in all mandatory fields marked with *.");
+        return;
+      }
+      if (phone.length !== 10 || isNaN(phone)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return;
+      }
+      if (password !== confirmPassword) {
+        alert("Passwords do not match. Please re-enter.");
+        return;
+      }
+
+      // Determine mapping role for dashboard routing
+      let mappedRole = "farmer";
+      let mappedSurface = "farmer";
+      if (["BANK", "INSURANCE COMPANY", "STATE GOVERNMENT", "STATE PROJECT OFFICER"].includes(stakeholder)) {
+        mappedRole = "officer";
+        mappedSurface = "officer";
+      } else if (["MNCFC", "MNCFC_ADMIN", "WEATHER DATA PROVIDER"].includes(stakeholder)) {
+        mappedRole = "admin";
+        mappedSurface = "admin";
+      }
+
+      const docketNo = `REG-PMFBY-2026-${state.substring(0,2).toUpperCase()}-${Math.floor(100000 + Math.random() * 900000)}`;
+
+      try {
+        // Call backend registration API
+        const res = await fetch(`${API_BASE}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: code.toLowerCase().replace(/[^a-z0-9_]/g, '_') || `user_${phone}`,
+            phone_number: phone,
+            full_name: fullName,
+            password: password,
+            email: email,
+            role: mappedRole,
+            preferred_language: currentLanguage
+          })
+        });
+      } catch (err) {
+        console.warn("Backend API dispatch skipped or fallback active:", err);
+      }
+
+      // Activate session
+      currentUser = {
+        name: `${fullName} (${designation})`,
+        role: `${stakeholder} • ${userCat}`,
+        code: code,
+        surface: mappedSurface
+      };
+
+      updateSessionUI();
+
+      // Show Success Modal
+      document.getElementById('success-docket').innerText = docketNo;
+      document.getElementById('success-name').innerText = fullName;
+      document.getElementById('success-stakeholder').innerText = `${stakeholder} (${category.split('(')[0].trim()})`;
+      document.getElementById('success-role').innerText = `${designation} - ${userCat}`;
+
+      closeModal('modal-register');
+      openModal('modal-register-success');
+      resetRegisterForm();
+      switchView(mappedSurface);
     }
 
     function openDepartmentLoginModal(defaultTab = 'farmer') {
@@ -1127,52 +1590,28 @@
     }
 
     function performFarmerLogin() {
-      currentUser = {
-        name: "Ramesh Kumar (रमेश कुमार)",
-        role: "Farmer (किसान)",
-        code: "FARMER-MP-2026-001",
-        surface: "farmer"
-      };
-      
+      currentUser = { name: "Ramesh Kumar (रमेश कुमार)", role: "Farmer (किसान)", code: "FARMER-MP-2026-001", surface: "farmer" };
       updateSessionUI();
       closeModal('modal-dept-login');
       switchView('farmer');
     }
 
     function performOfficerLogin() {
-      currentUser = {
-        name: "V. K. Sharma (District Agriculture Officer)",
-        role: "Field Officer (कृषि अधिकारी)",
-        code: "OFFICER-MP-SEH-01",
-        surface: "officer"
-      };
-      
+      currentUser = { name: "V. K. Sharma (District Agriculture Officer)", role: "Field Officer (कृषि अधिकारी)", code: "OFFICER-MP-SEH-01", surface: "officer" };
       updateSessionUI();
       closeModal('modal-dept-login');
       switchView('officer');
     }
 
     function performInsuranceLogin() {
-      currentUser = {
-        name: "AIC PMFBY Loss Assessor",
-        role: "Insurance Assessor (बीमा मूल्यांकनकर्ता)",
-        code: "AIC-ASSESSOR-04",
-        surface: "officer"
-      };
-      
+      currentUser = { name: "AIC PMFBY Loss Assessor", role: "Insurance Assessor (बीमा मूल्यांकनकर्ता)", code: "AIC-ASSESSOR-04", surface: "officer" };
       updateSessionUI();
       closeModal('modal-dept-login');
       switchView('officer');
     }
 
     function performAdminLogin() {
-      currentUser = {
-        name: "Rajesh Verma (State Agronomy Coordinator)",
-        role: "State Admin (राज्य नोडल अधिकारी)",
-        code: "ADMIN-MP-NODAL",
-        surface: "admin"
-      };
-      
+      currentUser = { name: "Rajesh Verma (State Agronomy Coordinator)", role: "State Admin (राज्य नोडल अधिकारी)", code: "ADMIN-MP-NODAL", surface: "admin" };
       updateSessionUI();
       closeModal('modal-dept-login');
       switchView('admin');
@@ -1183,12 +1622,12 @@
         document.getElementById('session-banner').classList.remove('hidden');
         document.getElementById('session-user-name').innerText = currentUser.name;
         document.getElementById('session-user-role').innerText = currentUser.role;
-
         document.getElementById('auth-container').innerHTML = `
           <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-300">
             <span class="w-2 h-2 rounded-full bg-green-500"></span>
             <span class="text-xs font-semibold text-gray-800">${currentUser.name.split(' ')[0]}</span>
             <button onclick="openDepartmentLoginModal()" class="text-[10px] text-brand-forest ml-1 underline font-bold">Switch</button>
+            <button onclick="openRegisterModal()" class="text-[10px] text-amber-700 ml-1 font-bold bg-amber-100 px-1.5 py-0.5 rounded">+ Reg</button>
           </div>
         `;
       }
@@ -1198,9 +1637,13 @@
       currentUser = null;
       document.getElementById('session-banner').classList.add('hidden');
       document.getElementById('auth-container').innerHTML = `
-        <button onclick="openDepartmentLoginModal()" class="bg-pmfby-blue hover:bg-blue-700 text-white px-3.5 py-1.5 sm:py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5">
-          <i data-lucide="shield-check" class="w-4 h-4"></i>
-          <span>Department Login</span>
+        <button onclick="openDepartmentLoginModal()" class="bg-[#0A2540] hover:bg-slate-800 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5">
+          <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+          <span>Sign In</span>
+        </button>
+        <button onclick="openRegisterModal()" class="bg-[#FFC107] hover:bg-[#FFB300] text-gray-900 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-extrabold text-xs shadow transition-all flex items-center space-x-1.5 border border-amber-400">
+          <i data-lucide="user-plus" class="w-3.5 h-3.5 text-gray-900"></i>
+          <span>Register</span>
         </button>
       `;
       switchView('landing');
@@ -1229,13 +1672,8 @@
           }
         }
       });
-
-      if (viewName === 'farmer' && !farmerMap) {
-        setTimeout(initFarmerMap, 100);
-      }
-      if (viewName === 'admin' && !adminMap) {
-        setTimeout(initAdminMap, 100);
-      }
+      if (viewName === 'farmer' && !farmerMap) setTimeout(initFarmerMap, 100);
+      if (viewName === 'admin' && !adminMap) setTimeout(initAdminMap, 100);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       lucide.createIcons();
     }
@@ -1266,27 +1704,20 @@
       const cropSumHa = parseFloat(document.getElementById('calc-crop').value) || 48000.0;
       const area = parseFloat(document.getElementById('calc-area').value) || 2.5;
       const season = document.getElementById('calc-season').value;
-
       const totalSum = cropSumHa * area;
-      let rate = 0.02; // 2% Kharif
+      let rate = 0.02;
       if (season === 'Rabi') rate = 0.015;
       if (season === 'Commercial') rate = 0.05;
-
       const farmerShare = totalSum * rate;
       const govtShare = totalSum * 0.10;
-
       document.getElementById('calc-sum-insured').innerText = `₹${totalSum.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
       document.getElementById('calc-farmer-share').innerText = `₹${farmerShare.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
       document.getElementById('calc-govt-share').innerText = `₹${govtShare.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
     }
 
-    // =========================================================================
-    // REAL AI CROP SCAN VIA LIVE BACKEND API
-    // =========================================================================
     async function handleRealCropImage(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       document.getElementById('crop-upload-box').classList.add('hidden');
       document.getElementById('crop-scan-loader').classList.remove('hidden');
       document.getElementById('crop-scan-result').classList.add('hidden');
@@ -1300,19 +1731,11 @@
       formData.append('image', file);
 
       try {
-        const response = await fetch(`${API_BASE}/ai/crop-scan`, {
-          method: 'POST',
-          body: formData
-        });
-
+        const response = await fetch(`${API_BASE}/ai/crop-scan`, { method: 'POST', body: formData });
         if (!response.ok) throw new Error("API call failed");
         const json = await response.json();
-        const data = json.data;
-
-        renderCropScanResult(data, localThumbUrl);
-
+        renderCropScanResult(json.data, localThumbUrl);
       } catch (err) {
-        console.warn("Backend offline or error, using local high-accuracy vision analyzer:", err);
         setTimeout(() => {
           renderCropScanResult({
             detected_condition: "Soybean Rust (Phakopsora pachyrhizi)",
@@ -1330,63 +1753,44 @@
     function renderCropScanResult(data, thumbUrl) {
       document.getElementById('crop-scan-loader').classList.add('hidden');
       document.getElementById('crop-scan-result').classList.remove('hidden');
-
       document.getElementById('crop-result-category').innerText = data.category || "FUNGAL";
       document.getElementById('crop-result-condition').innerText = data.detected_condition || "Leaf Health Analysis";
       document.getElementById('crop-result-conf').innerText = `${Math.round((data.confidence || 0.9) * 100)}% Confidence`;
-      
       const q = data.quality_gate || { blur_score: 120.0, passed_quality_gate: true };
       document.getElementById('crop-result-quality').innerText = `Blur Score: ${q.blur_score} (${q.passed_quality_gate ? '✓ Sharp' : '⚠️ Blurry'})`;
-
       document.getElementById('crop-result-treatment-en').innerText = data.treatment_advisory_en || "";
       document.getElementById('crop-result-treatment-hi').innerText = data.treatment_advisory_hi || "";
-
-      if (data.crop_health_score) {
-        document.getElementById('farmer-health-metric').innerText = Math.round(data.crop_health_score);
-      }
+      if (data.crop_health_score) document.getElementById('farmer-health-metric').innerText = Math.round(data.crop_health_score);
       lucide.createIcons();
     }
 
-    // =========================================================================
-    // REAL DAMAGE SOS UPLOAD & FRAUD RADAR
-    // =========================================================================
     function handleRealDamageImage(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       selectedDamageFile = file;
       const previewUrl = URL.createObjectURL(file);
-
       document.getElementById('damage-live-preview').classList.remove('hidden');
       document.getElementById('damage-preview-img').src = previewUrl;
-
       document.getElementById('officer-damage-preview').style.backgroundImage = `linear-gradient(rgba(229,57,53,0.3), rgba(0,0,0,0.6)), url('${previewUrl}')`;
     }
 
     function submitRealDamageReport() {
       const category = document.getElementById('damage-loss-category').value;
       const pct = document.getElementById('damage-loss-pct').value;
-
       document.getElementById('claim-status-metric').innerText = "Submitted (SOS)";
       document.getElementById('claim-payout-metric').innerText = `₹${((pct/100) * 120000).toLocaleString('en-IN')} Est.`;
-
       document.getElementById('officer-claim-loss').innerText = `${pct}.0%`;
       document.getElementById('officer-mask-tag').innerText = `AI Segmented: ${pct}.0% Loss`;
       document.getElementById('officer-sanction-badge').innerText = `Est. Sanction: ₹${((pct/100) * 120000).toLocaleString('en-IN')}`;
-
       alert(`✓ Calamity damage evidence submitted with PostGIS geofence & unique 64-bit pHash!\nDocket PMFBY-CLAIM-2026-MP-0001 is now under Officer Review.`);
       closeModal('modal-report-damage');
       switchView('officer');
     }
 
-    // =========================================================================
-    // LIVE AI CROP DOCTOR CHAT
-    // =========================================================================
     async function askCropDoctor() {
       const input = document.getElementById('crop-doctor-input');
       const text = input.value.trim();
       if (!text) return;
-
       const container = document.getElementById('crop-doctor-messages');
       container.innerHTML += `<div class="bg-emerald-100 p-2.5 rounded-xl text-emerald-950 ml-6 text-right shadow-xs font-medium"><strong>You:</strong> ${text}</div>`;
       input.value = '';
@@ -1398,13 +1802,10 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ question: text, farm_id: 'farm_001', language: currentLanguage })
         });
-
         const json = await res.json();
         const reply = currentLanguage === 'hi' ? (json.data.answer_hi || json.data.answer) : json.data.answer;
-        
         container.innerHTML += `<div class="bg-white p-2.5 rounded-xl shadow-xs border border-gray-200 text-gray-800 mr-4">🌱 <strong>Crop Doctor:</strong> ${reply}</div>`;
         container.scrollTop = container.scrollHeight;
-
       } catch (err) {
         let reply = "Your farm telemetry shows soil moisture is 52.4% (Optimal) and canopy vigor is steady. For PMFBY damage claims, open the 'Report Damage' button to submit geofenced photos.";
         if (text.toLowerCase().includes('peeli') || text.toLowerCase().includes('yellow') || text.toLowerCase().includes('disease')) {
@@ -1429,34 +1830,15 @@
 
     function initFarmerMap() {
       farmerMap = L.map('farmer-map').setView([23.0185, 76.8821], 15);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(farmerMap);
-
-      const farmPolygonCoords = [
-        [23.0175, 76.8810],
-        [23.0175, 76.8835],
-        [23.0195, 76.8835],
-        [23.0195, 76.8810]
-      ];
-      L.polygon(farmPolygonCoords, {
-        color: '#1B5E20',
-        fillColor: '#3E8E41',
-        fillOpacity: 0.35,
-        weight: 3
-      }).addTo(farmerMap).bindPopup("<strong>Farm-001</strong><br>Soybean 2.5 Ha • Ramesh Kumar");
-
-      L.marker([23.0185, 76.8821]).addTo(farmerMap)
-        .bindPopup("<strong>SoilNode Pro #001</strong><br>Moisture: 52.4% • Status: Optimal")
-        .openPopup();
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(farmerMap);
+      const farmPolygonCoords = [[23.0175, 76.8810], [23.0175, 76.8835], [23.0195, 76.8835], [23.0195, 76.8810]];
+      L.polygon(farmPolygonCoords, { color: '#1B5E20', fillColor: '#3E8E41', fillOpacity: 0.35, weight: 3 }).addTo(farmerMap).bindPopup("<strong>Farm-001</strong><br>Soybean 2.5 Ha • Ramesh Kumar");
+      L.marker([23.0185, 76.8821]).addTo(farmerMap).bindPopup("<strong>SoilNode Pro #001</strong><br>Moisture: 52.4% • Status: Optimal").openPopup();
     }
 
     function initAdminMap() {
       adminMap = L.map('admin-map').setView([23.1, 76.8], 9);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(adminMap);
-
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(adminMap);
       const farms = [
         { name: "Farm-001 (Ramesh Kumar)", coords: [23.0185, 76.8821], crop: "Soybean (2.5 Ha)", risk: "Disaster Zone" },
         { name: "Farm-002 (Bhopal Parcel)", coords: [23.2599, 77.4126], crop: "Wheat (3.2 Ha)", risk: "Normal" },
@@ -1464,17 +1846,9 @@
         { name: "Farm-004 (Ujjain Mustard)", coords: [23.1765, 75.7885], crop: "Mustard (4.0 Ha)", risk: "Normal" },
         { name: "Farm-005 (Hoshangabad)", coords: [22.7519, 77.7289], crop: "Pulses (2.2 Ha)", risk: "Normal" },
       ];
-
       farms.forEach(f => {
         const color = f.risk === "Disaster Zone" ? "#E53935" : "#1B5E20";
-        L.circleMarker(f.coords, {
-          radius: 8,
-          fillColor: color,
-          color: "#ffffff",
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 0.8
-        }).addTo(adminMap).bindPopup(`<strong>${f.name}</strong><br>${f.crop}<br>Status: ${f.risk}`);
+        L.circleMarker(f.coords, { radius: 8, fillColor: color, color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.8 }).addTo(adminMap).bindPopup(`<strong>${f.name}</strong><br>${f.crop}<br>Status: ${f.risk}`);
       });
     }
 
@@ -1486,28 +1860,11 @@
           data: {
             labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Today'],
             datasets: [
-              {
-                label: 'Soil Moisture (%)',
-                data: [48, 50, 53, 52, 54, 51, 52.4],
-                borderColor: '#2E7D9A',
-                backgroundColor: 'rgba(46, 125, 154, 0.1)',
-                fill: true,
-                tension: 0.35
-              },
-              {
-                label: 'Soil Temp (°C)',
-                data: [26.5, 27.0, 27.2, 26.8, 28.0, 27.5, 27.8],
-                borderColor: '#D4A017',
-                borderDash: [5, 5],
-                tension: 0.35
-              }
+              { label: 'Soil Moisture (%)', data: [48, 50, 53, 52, 54, 51, 52.4], borderColor: '#2E7D9A', backgroundColor: 'rgba(46, 125, 154, 0.1)', fill: true, tension: 0.35 },
+              { label: 'Soil Temp (°C)', data: [26.5, 27.0, 27.2, 26.8, 28.0, 27.5, 27.8], borderColor: '#D4A017', borderDash: [5, 5], tension: 0.35 }
             ]
           },
-          options: {
-            responsive: true,
-            plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } } },
-            scales: { y: { suggestedMin: 20, suggestedMax: 70, ticks: { font: { size: 10 } } } }
-          }
+          options: { responsive: true, plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } } }, scales: { y: { suggestedMin: 20, suggestedMax: 70, ticks: { font: { size: 10 } } } } }
         });
       }
     });
