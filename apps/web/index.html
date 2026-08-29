@@ -72,9 +72,17 @@
       background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
       height: 4px;
     }
+    /* Hide scrollbar for carousel */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
-<body class="bg-pmfby-light min-h-screen text-brand-ink flex flex-col antialiased">
+<body class="bg-pmfby-light min-h-screen text-brand-ink flex flex-col antialiased relative">
 
   <!-- ========================================================================= -->
   <!-- 1. TOP OFFICIAL GOVERNMENT CITIZEN BAR                                    -->
@@ -138,7 +146,7 @@
       <!-- Department Sign In & Register Buttons & Team Badge -->
       <div class="flex items-center space-x-2 sm:space-x-3">
         <!-- TwinBit Developer Attribution Badge -->
-        <div class="hidden lg:flex items-center space-x-2 bg-gray-50 border border-gray-200 px-2.5 py-1.5 rounded-xl">
+        <div class="hidden lg:flex items-center space-x-2 bg-gray-50 border border-gray-200 px-2.5 py-1.5 rounded-xl cursor-pointer" onclick="switchView('about')">
           <img src="assets/twinbit_logo.jpg" alt="Team TwinBit" class="h-5 w-auto object-contain rounded-md" onerror="this.style.display='none'">
           <div class="text-left">
             <span class="block text-[8px] text-gray-500 uppercase tracking-wider font-semibold">Architected by</span>
@@ -164,38 +172,61 @@
 
     </div>
 
-    <!-- Main Navigation Ribbon -->
+    <!-- Main Navigation Ribbon (Home, Dashboard, Gallery, About Us, Roles) -->
     <nav class="bg-brand-forest text-white shadow-inner">
       <div class="max-w-7xl mx-auto px-4 flex items-center justify-between overflow-x-auto text-xs font-semibold scrollbar-none">
         <div class="flex items-center space-x-1 py-1">
           <button id="nav-landing" onclick="switchView('landing')" class="px-3 py-1.5 rounded-lg bg-white/20 text-white transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="home" class="w-3.5 h-3.5"></i>
-            <span>Home (मुख्य पृष्ठ)</span>
+            <span>Home</span>
           </button>
+
+          <!-- Dashboard Dropdown / Direct Tab -->
+          <button id="nav-dashboard" onclick="switchView('dashboard')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
+            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+            <span>Dashboard ▾</span>
+          </button>
+
+          <!-- Gallery Section Tab -->
+          <button id="nav-gallery" onclick="switchView('gallery')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
+            <i data-lucide="image" class="w-3.5 h-3.5"></i>
+            <span>Gallery</span>
+          </button>
+
+          <!-- About Us Section Tab -->
+          <button id="nav-about" onclick="switchView('about')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
+            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+            <span>About Us & Guidelines</span>
+          </button>
+
           <button id="nav-farmer" onclick="requireAuthOrSwitch('farmer')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
             <span>Farmer App (किसान)</span>
           </button>
+
           <button id="nav-calculator" onclick="openModal('modal-calculator')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
             <span>Premium Calculator</span>
           </button>
+
           <button id="nav-officer" onclick="requireAuthOrSwitch('officer')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i>
             <span>Officer Triage</span>
           </button>
+
           <button id="nav-admin" onclick="requireAuthOrSwitch('admin')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="map" class="w-3.5 h-3.5"></i>
             <span>National GIS</span>
           </button>
+
           <button id="nav-register-menu" onclick="openRegisterModal()" class="px-3 py-1.5 rounded-lg text-brand-gold bg-brand-gold/15 hover:bg-brand-gold/25 font-bold border border-brand-gold/40 transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
-            <span>Register New User (नया उपयोगकर्ता)</span>
+            <span>Register</span>
           </button>
         </div>
 
         <div class="hidden sm:flex items-center space-x-2 text-[10px] text-brand-cream/80 py-1 pl-2">
-          <span>Kharif 2026 Active</span>
+          <span>Kharif 2026 Live</span>
         </div>
       </div>
     </nav>
@@ -219,9 +250,11 @@
   <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 w-full">
     
     <!-- ========================================================================= -->
-    <!-- SURFACE 1: PUBLIC WEB & REAL PMFBY STAKEHOLDER PORTAL                     -->
+    <!-- SURFACE 1: PUBLIC HOME & SERVICE BUTTONS CAROUSEL                         -->
     <!-- ========================================================================= -->
     <section id="view-landing" class="space-y-8">
+      
+      <!-- Hero Banner -->
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-forest via-[#1f6b25] to-[#0d3b12] text-white p-6 sm:p-10 shadow-lg border border-brand-leaf/40">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div class="lg:col-span-8 space-y-4">
@@ -241,7 +274,7 @@
               </button>
               <button onclick="openRegisterModal()" class="bg-[#FFC107] hover:bg-yellow-500 text-gray-900 px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-md transition-all flex items-center space-x-2">
                 <i data-lucide="user-plus" class="w-4 h-4"></i>
-                <span>Register New Stakeholder (नया पंजीकरण)</span>
+                <span>Register New Stakeholder</span>
               </button>
               <button onclick="openModal('modal-calculator')" class="bg-white text-brand-forest hover:bg-gray-100 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all flex items-center space-x-2">
                 <i data-lucide="calculator" class="w-4 h-4"></i>
@@ -266,108 +299,541 @@
         </div>
       </div>
 
+      <!-- ========================================================================= -->
+      <!-- OFFICIAL PMFBY SERVICE BUTTONS (EXACT SCREENSHOT 1 & 2 CARDS SLIDER/GRID) -->
+      <!-- ========================================================================= -->
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-xl font-bold text-brand-forest">PMFBY Citizen & Stakeholder Services (मुख्य सेवाएं)</h2>
-            <p class="text-xs text-brand-muted">Essential crop insurance workflows enhanced with AI evidence validation.</p>
+            <h2 class="text-xl font-extrabold text-brand-forest flex items-center space-x-2">
+              <span>🌾</span>
+              <span>PMFBY Key Portals & Digital Initiatives</span>
+            </h2>
+            <p class="text-xs text-brand-muted">Click any official module below to launch the live functional service.</p>
           </div>
-          <span class="text-xs font-semibold text-pmfby-blue bg-blue-50 px-3 py-1 rounded-lg border border-blue-200">
-            Govt of India Verified
-          </span>
+          <div class="flex items-center space-x-2">
+            <button onclick="scrollServiceCards(-300)" class="w-8 h-8 rounded-full bg-white shadow border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-700">
+              ‹
+            </button>
+            <button onclick="scrollServiceCards(300)" class="w-8 h-8 rounded-full bg-white shadow border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-700">
+              ›
+            </button>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <!-- Register & Apply Card -->
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl">
-                📝
+        <!-- Horizontal Scrollable Container with exact styles from screenshots -->
+        <div id="service-cards-container" class="flex gap-4 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth">
+          
+          <!-- Card 1: Farmer Corner Access -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-[#E8F5E9] rounded-2xl p-5 border border-emerald-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-[#138808] text-white flex items-center justify-center text-2xl shadow-sm">
+                🛡️
               </div>
-              <h3 class="font-bold text-brand-forest text-sm">Register New Stakeholder (हितधारक पंजीकरण)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">Direct registration for Banks, Insurance Companies, Intermediaries, MNCFC, State Govt, and Farmers.</p>
+              <h3 class="font-extrabold text-sm text-gray-900 leading-snug">Farmer Corner Access</h3>
+              <p class="text-xs text-gray-600">Apply for Crop Insurance Yourself</p>
             </div>
-            <div class="grid grid-cols-2 gap-2">
-              <button onclick="openRegisterModal()" class="py-2 bg-amber-100 hover:bg-amber-200 text-gray-900 font-extrabold text-xs rounded-xl border border-amber-300 transition-all flex items-center justify-center space-x-1">
-                <span>Register User &rarr;</span>
-              </button>
-              <button onclick="openDepartmentLoginModal('farmer')" class="py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-200 transition-all flex items-center justify-center space-x-1">
-                <span>Sign In &rarr;</span>
-              </button>
-            </div>
+            <button onclick="openDepartmentLoginModal('farmer')" class="mt-5 w-full py-2 bg-[#0B6623] hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-1 transition-all shadow-xs">
+              <span>Enroll Now</span>
+              <span>&rarr;</span>
+            </button>
           </div>
 
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center text-xl">
+          <!-- Card 2: Insurance Premium Calculator (Gold Highlighted) -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-gradient-to-b from-[#F9C35B] to-[#EE9B00] rounded-2xl p-5 border border-amber-300 shadow-md flex flex-col justify-between hover:shadow-lg hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-white/90 text-amber-800 flex items-center justify-center text-2xl shadow-sm">
                 🧮
               </div>
-              <h3 class="font-bold text-brand-forest text-sm">Insurance Premium Calculator (प्रीमियम गणना)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">Calculate crop sum insured, farmer share (2% Kharif, 1.5% Rabi), and government subsidy instantly.</p>
+              <h3 class="font-extrabold text-sm text-gray-950 leading-snug">Insurance Premium Calculator</h3>
+              <p class="text-xs text-gray-900 font-medium">Know your insurance premium before</p>
             </div>
-            <button onclick="openModal('modal-calculator')" class="w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold text-xs rounded-xl border border-blue-200 transition-all flex items-center justify-center space-x-1">
-              <span>Calculate Premium &rarr;</span>
+            <button onclick="openModal('modal-calculator')" class="mt-5 w-full py-2 bg-white hover:bg-amber-50 text-amber-950 rounded-xl font-extrabold text-xs flex items-center justify-center space-x-1 transition-all shadow-sm">
+              <span>Calculate Now</span>
+              <span>&rarr;</span>
             </button>
           </div>
 
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-red hover:shadow-md transition-all flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="w-10 h-10 rounded-xl bg-red-100 text-brand-red flex items-center justify-center text-xl">
-                🚨
+          <!-- Card 3: Application Status -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-[#E0F2F1] rounded-2xl p-5 border border-teal-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-[#00897B] text-white flex items-center justify-center text-2xl shadow-sm">
+                🖥️
               </div>
-              <h3 class="font-bold text-brand-red text-sm">Report Crop Damage / 72h SOS (नुकसान दर्ज करें)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">Submit localized calamity photos with auto PostGIS geofence, pHash duplicate check, and AI loss mask.</p>
+              <h3 class="font-extrabold text-sm text-gray-900 leading-snug">Application Status</h3>
+              <p class="text-xs text-gray-600">Know your application status on every step</p>
             </div>
-            <button onclick="openDepartmentLoginModal('farmer')" class="w-full py-2 bg-red-50 hover:bg-red-100 text-red-800 font-bold text-xs rounded-xl border border-red-200 transition-all flex items-center justify-center space-x-1">
-              <span>Report Damage SOS &rarr;</span>
+            <button onclick="openModal('modal-track-app')" class="mt-5 w-full py-2 bg-[#0B6623] hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-1 transition-all shadow-xs">
+              <span>Check Now</span>
+              <span>&rarr;</span>
             </button>
           </div>
 
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center text-xl">
-                🔍
+          <!-- Card 4: Krishi Rakshak Portal & Helpline (KRPH) -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-[#F3E5F5] rounded-2xl p-5 border border-purple-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-[#7B1FA2] text-white flex items-center justify-center text-2xl shadow-sm">
+                👩‍🌾
               </div>
-              <h3 class="font-bold text-brand-forest text-sm">Track Application & Claim (दावा स्थिति जानें)</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">Track status of application number or claim docket `PMFBY-CLAIM-2026-MP-0001` with complete audit events.</p>
+              <h3 class="font-extrabold text-sm text-gray-900 leading-snug">Krishi Rakshak Portal & Helpline (KRPH)</h3>
+              <p class="text-xs text-gray-600">Tell us about your Grievances & Report loss of Crop.</p>
             </div>
-            <button onclick="requireAuthOrSwitch('farmer')" class="w-full py-2 bg-purple-50 hover:bg-purple-100 text-purple-800 font-bold text-xs rounded-xl border border-purple-200 transition-all flex items-center justify-center space-x-1">
-              <span>Track My Claim &rarr;</span>
+            <button onclick="openModal('modal-krph')" class="mt-5 w-full py-2 bg-[#0B6623] hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-1 transition-all shadow-xs">
+              <span>Explore Now</span>
+              <span>&rarr;</span>
             </button>
           </div>
 
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl">
-                📋
+          <!-- Card 5: Learning Management System (LMS) -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-[#FFEBEE] rounded-2xl p-5 border border-red-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-[#E53935] text-white flex items-center justify-center text-2xl shadow-sm">
+                🎓
               </div>
-              <h3 class="font-bold text-brand-forest text-sm">Joint Survey & Loss Assessor Workbench</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">Field Officer and Insurer verification console with before/after baseline comparisons and DBT approvals.</p>
+              <h3 class="font-extrabold text-sm text-gray-900 leading-snug">Learning Management System (LMS)</h3>
+              <p class="text-xs text-gray-600">Your Gateway to Smarter Farming & Insurance Learning</p>
             </div>
-            <button onclick="openDepartmentLoginModal('officer')" class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs rounded-xl border border-amber-200 transition-all flex items-center justify-center space-x-1">
-              <span>Officer Workbench &rarr;</span>
+            <button onclick="openModal('modal-lms')" class="mt-5 w-full py-2 bg-[#0B6623] hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-1 transition-all shadow-xs">
+              <span>Explore Now</span>
+              <span>&rarr;</span>
             </button>
           </div>
 
-          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-brand-leaf hover:shadow-md transition-all flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-800 flex items-center justify-center text-xl">
-                🤝
+          <!-- Card 6: YESTECH - Live crop observations & photographs -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-[#FCE4EC] rounded-2xl p-5 border border-pink-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-[#D81B60] text-white flex items-center justify-center text-2xl shadow-sm">
+                🌱
               </div>
-              <h3 class="font-bold text-brand-forest text-sm">Grievance & Krishi Rakshak Portal</h3>
-              <p class="text-xs text-gray-600 leading-relaxed">Dedicated grievance registration for delayed settlements, survey discrepancies, and appeals.</p>
+              <h3 class="font-extrabold text-sm text-gray-900 leading-snug">YESTECH - Live crop observations & photographs</h3>
+              <p class="text-xs text-gray-600">Yield Estimation System based on Technology</p>
             </div>
-            <button onclick="alert('Krishi Rakshak Grievance Desk: All active tickets resolved within 15 working days as per PMFBY guidelines.')" class="w-full py-2 bg-cyan-50 hover:bg-cyan-100 text-cyan-800 font-bold text-xs rounded-xl border border-cyan-200 transition-all flex items-center justify-center space-x-1">
-              <span>File Grievance &rarr;</span>
+            <button onclick="openModal('modal-yestech')" class="mt-5 w-full py-2 bg-[#0B6623] hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-1 transition-all shadow-xs">
+              <span>Explore Now</span>
+              <span>&rarr;</span>
             </button>
+          </div>
+
+          <!-- Card 7: Weather Information Network Data System (WINDS) -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-[#E1F5FE] rounded-2xl p-5 border border-sky-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-[#0288D1] text-white flex items-center justify-center text-2xl shadow-sm">
+                ⛅
+              </div>
+              <h3 class="font-extrabold text-sm text-gray-900 leading-snug">Weather Information Network Data System (WINDS)</h3>
+              <p class="text-xs text-gray-600">Know your Area's Weather Updates</p>
+            </div>
+            <button onclick="openModal('modal-winds')" class="mt-5 w-full py-2 bg-[#0B6623] hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-1 transition-all shadow-xs">
+              <span>Explore Now</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+
+          <!-- Card 8: Collection of Real time Observations and Photographs (CROPIC) -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-[#FFF3E0] rounded-2xl p-5 border border-orange-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-[#FB8C00] text-white flex items-center justify-center text-2xl shadow-sm">
+                📸
+              </div>
+              <h3 class="font-extrabold text-sm text-gray-900 leading-snug">Collection of Real time Observations (CROPIC)</h3>
+              <p class="text-xs text-gray-600">Crop Health Monitoring & Crop Loss Assessment</p>
+            </div>
+            <button onclick="openModal('modal-crop-scan')" class="mt-5 w-full py-2 bg-[#0B6623] hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-1 transition-all shadow-xs">
+              <span>Explore Now</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+
+          <!-- Card 9: Crop Loss Assessment Platform (CLAP) -->
+          <div class="min-w-[240px] max-w-[260px] flex-shrink-0 bg-[#F1F8E9] rounded-2xl p-5 border border-lightGreen-200 shadow-xs flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-full bg-[#7CB342] text-white flex items-center justify-center text-2xl shadow-sm">
+                🍃
+              </div>
+              <h3 class="font-extrabold text-sm text-gray-900 leading-snug">Crop Loss Assessment Platform (CLAP)</h3>
+              <p class="text-xs text-gray-600">Crop Loss Assessment Platform & AI Lodging Verification</p>
+            </div>
+            <button onclick="openModal('modal-report-damage')" class="mt-5 w-full py-2 bg-[#0B6623] hover:bg-emerald-800 text-white rounded-xl font-bold text-xs flex items-center justify-center space-x-1 transition-all shadow-xs">
+              <span>Explore Now</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SURFACE 2: PUBLIC DASHBOARDS (GRAPHICAL & COVERAGE STATS)                 -->
+    <!-- ========================================================================= -->
+    <section id="view-dashboard" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-2xl">📊</span>
+            <h2 class="text-2xl font-extrabold text-brand-forest">PMFBY National Public Dashboard</h2>
+          </div>
+          <p class="text-xs text-brand-muted">Comprehensive scheme transparency, state coverage figures, and loss settlement analytics.</p>
+        </div>
+        <div class="flex items-center space-x-2 bg-gray-100 p-1 rounded-xl">
+          <button id="dash-tab-btn-graph" onclick="switchDashboardTab('graphical')" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-white text-brand-forest shadow-xs transition-all">
+            Graphical Dashboard
+          </button>
+          <button id="dash-tab-btn-cov" onclick="switchDashboardTab('coverage')" class="px-4 py-1.5 rounded-lg text-xs font-bold text-gray-600 hover:text-brand-forest transition-all">
+            Coverage Statistics
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab 1: Graphical Dashboard -->
+      <div id="dash-panel-graphical" class="space-y-6">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200">
+            <span class="text-xs font-semibold text-gray-500">Total Enrolled Farmers</span>
+            <p class="text-2xl font-extrabold text-brand-forest mt-1">5.82 Crore</p>
+            <span class="text-[11px] text-emerald-600 font-bold">↑ 8.4% YoY Growth</span>
+          </div>
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200">
+            <span class="text-xs font-semibold text-gray-500">Gross Insured Area</span>
+            <p class="text-2xl font-extrabold text-brand-forest mt-1">4.95 Crore Ha</p>
+            <span class="text-[11px] text-brand-sky font-bold">28 States & UTs</span>
+          </div>
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200">
+            <span class="text-xs font-semibold text-gray-500">Total Sum Insured</span>
+            <p class="text-2xl font-extrabold text-amber-600 mt-1">₹2,42,800 Cr</p>
+            <span class="text-[11px] text-amber-700 font-bold">Kharif + Rabi 2026</span>
+          </div>
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200">
+            <span class="text-xs font-semibold text-gray-500">Total Claims Disbursed</span>
+            <p class="text-2xl font-extrabold text-emerald-600 mt-1">₹1,58,400 Cr</p>
+            <span class="text-[11px] text-emerald-700 font-bold">Direct DBT (Aadhaar Linked)</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-brand-forest">Crop-Wise Coverage & Loss Claims (Kharif 2026)</h3>
+              <span class="text-xs bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded font-bold">PMFBY Official</span>
+            </div>
+            <canvas id="crop-dist-chart" height="150"></canvas>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-brand-forest">Claim Settlement Speed (Days vs PMFBY Mandate)</h3>
+              <span class="text-xs bg-blue-50 text-blue-800 px-2 py-0.5 rounded font-bold">AI Accelerated</span>
+            </div>
+            <canvas id="speed-chart" height="150"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-emerald-50/70 p-5 rounded-2xl border border-emerald-300 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="space-y-1">
+            <span class="font-extrabold text-sm text-emerald-950">Official PMFBY Graphical Analytics Portal</span>
+            <p class="text-xs text-emerald-900">Access live state-by-state graphical analytics and yield benchmarks hosted on Amnex PMFBY Portal.</p>
+          </div>
+          <a href="https://pmfbydemo.amnex.co.in/adminStatistics/graphicalDashboard" target="_blank" class="px-5 py-2.5 bg-brand-forest hover:bg-brand-leaf text-white font-bold text-xs rounded-xl shadow whitespace-nowrap transition-all">
+            Open Official Graphical Dashboard &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Tab 2: Coverage Dashboard -->
+      <div id="dash-panel-coverage" class="hidden space-y-6">
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+            <h3 class="font-bold text-sm text-brand-forest">State-Wise Farmer Enrollment & Premium Breakdown (2026)</h3>
+            <a href="https://pmfbydemo.amnex.co.in/adminStatistics/dashboard" target="_blank" class="text-xs font-bold text-blue-700 underline">
+              View on Amnex Dashboard &rarr;
+            </a>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-gray-50 text-gray-700 border-b border-gray-200">
+                  <th class="p-3 font-bold">State / UT</th>
+                  <th class="p-3 font-bold">Insured Farmers</th>
+                  <th class="p-3 font-bold">Insured Area (Ha)</th>
+                  <th class="p-3 font-bold">Farmer Share (₹ Cr)</th>
+                  <th class="p-3 font-bold">Govt Subsidy (₹ Cr)</th>
+                  <th class="p-3 font-bold">Settlement Rate</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 text-gray-800">
+                <tr class="hover:bg-gray-50">
+                  <td class="p-3 font-bold text-brand-forest">Madhya Pradesh</td>
+                  <td class="p-3">78.4 Lakh</td>
+                  <td class="p-3">68.2 Lakh Ha</td>
+                  <td class="p-3">₹420.50 Cr</td>
+                  <td class="p-3">₹3,784.50 Cr</td>
+                  <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">98.2%</span></td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="p-3 font-bold text-brand-forest">Maharashtra</td>
+                  <td class="p-3">82.1 Lakh</td>
+                  <td class="p-3">71.0 Lakh Ha</td>
+                  <td class="p-3">₹480.00 Cr</td>
+                  <td class="p-3">₹4,320.00 Cr</td>
+                  <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">96.8%</span></td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="p-3 font-bold text-brand-forest">Rajasthan</td>
+                  <td class="p-3">64.5 Lakh</td>
+                  <td class="p-3">55.8 Lakh Ha</td>
+                  <td class="p-3">₹360.20 Cr</td>
+                  <td class="p-3">₹3,241.80 Cr</td>
+                  <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">97.4%</span></td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="p-3 font-bold text-brand-forest">Uttar Pradesh</td>
+                  <td class="p-3">92.0 Lakh</td>
+                  <td class="p-3">80.5 Lakh Ha</td>
+                  <td class="p-3">₹540.00 Cr</td>
+                  <td class="p-3">₹4,860.00 Cr</td>
+                  <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">99.1%</span></td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="p-3 font-bold text-brand-forest">Gujarat</td>
+                  <td class="p-3">45.2 Lakh</td>
+                  <td class="p-3">38.9 Lakh Ha</td>
+                  <td class="p-3">₹280.40 Cr</td>
+                  <td class="p-3">₹2,523.60 Cr</td>
+                  <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">97.9%</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ========================================================================= -->
-    <!-- SURFACE 2: FARMER PORTAL                                                  -->
+    <!-- SURFACE 3: GALLERY (PHOTOS & VIDEOS)                                      -->
     <!-- ========================================================================= -->
+    <section id="view-gallery" class="hidden space-y-6">
+      <div class="border-b border-gray-200 pb-4">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">🖼️</span>
+          <h2 class="text-2xl font-extrabold text-brand-forest">SAMRIDH-AI Project & Field Gallery</h2>
+        </div>
+        <p class="text-xs text-brand-muted">Field testing, IoT SoilNode deployments, drone multi-spectral calibrations, and farmer interactions.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Gallery Item 1 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 group hover:shadow-md transition-all">
+          <div class="h-48 bg-cover bg-center overflow-hidden relative" style="background-image: url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80')">
+            <span class="absolute top-3 left-3 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Field Demonstration</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <h4 class="font-bold text-sm text-brand-forest">AI Crop Lodging Assessment</h4>
+            <p class="text-xs text-gray-600">Real-time computer vision semantic segmentation for lodging and waterlogging in Sehore, MP.</p>
+          </div>
+        </div>
+
+        <!-- Gallery Item 2 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 group hover:shadow-md transition-all">
+          <div class="h-48 bg-cover bg-center overflow-hidden relative" style="background-image: url('https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&w=600&q=80')">
+            <span class="absolute top-3 left-3 bg-brand-forest text-white text-[10px] font-bold px-2 py-0.5 rounded-full">IoT Telemetry Node</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <h4 class="font-bold text-sm text-brand-forest">TwinBit SoilNode Pro Root Probe</h4>
+            <p class="text-xs text-gray-600">Sub-surface capacitive permittivity and soil temperature sensor deployed in pilot farm parcel.</p>
+          </div>
+        </div>
+
+        <!-- Gallery Item 3 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 group hover:shadow-md transition-all">
+          <div class="h-48 bg-cover bg-center overflow-hidden relative" style="background-image: url('https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80')">
+            <span class="absolute top-3 left-3 bg-blue-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Satellite Remote Sensing</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <h4 class="font-bold text-sm text-brand-forest">Sentinel-2 Multispectral NDVI</h4>
+            <p class="text-xs text-gray-600">10m resolution canopy greenness and multi-temporal anomaly tracking synchronized with PostGIS.</p>
+          </div>
+        </div>
+
+        <!-- Gallery Item 4 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 group hover:shadow-md transition-all">
+          <div class="h-48 bg-cover bg-center overflow-hidden relative" style="background-image: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=600&q=80')">
+            <span class="absolute top-3 left-3 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Drone CCE Survey</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <h4 class="font-bold text-sm text-brand-forest">Drone-Assisted Crop Cutting Experiments</h4>
+            <p class="text-xs text-gray-600">Orthomosaic stitching and multi-angle yield validation for joint survey committees.</p>
+          </div>
+        </div>
+
+        <!-- Gallery Item 5 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 group hover:shadow-md transition-all">
+          <div class="h-48 bg-cover bg-center overflow-hidden relative" style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80')">
+            <span class="absolute top-3 left-3 bg-purple-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Farmer Onboarding</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <h4 class="font-bold text-sm text-brand-forest">Gram Panchayat Kisan Workshop</h4>
+            <p class="text-xs text-gray-600">Demonstrating 72h Calamity SOS submission and voice-guided AI Crop Doctor to local farmers.</p>
+          </div>
+        </div>
+
+        <!-- Gallery Item 6 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 group hover:shadow-md transition-all">
+          <div class="h-48 bg-cover bg-center overflow-hidden relative" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80')">
+            <span class="absolute top-3 left-3 bg-brand-gold text-black text-[10px] font-bold px-2 py-0.5 rounded-full">Team TwinBit</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <h4 class="font-bold text-sm text-brand-forest">Smart India Hackathon R&D</h4>
+            <p class="text-xs text-gray-600">Architected and engineered by Team TwinBit for national agricultural resilience.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SURFACE 4: ABOUT US, TECHNICAL ARCHITECTURE & USER GUIDELINES             -->
+    <!-- ========================================================================= -->
+    <section id="view-about" class="hidden space-y-8">
+      <div class="border-b border-gray-200 pb-4">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">🏛️</span>
+          <h2 class="text-2xl font-extrabold text-brand-forest">About SAMRIDH-AI & Project Architecture</h2>
+        </div>
+        <p class="text-xs text-brand-muted">Smart Agriculture Monitoring, Risk Insurance Decision Hub & Agronomy AI System.</p>
+      </div>
+
+      <!-- Overview Card -->
+      <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-gray-200 space-y-4">
+        <div class="flex items-center space-x-3">
+          <img src="assets/twinbit_logo.jpg" alt="Team TwinBit" class="h-10 w-auto rounded-lg shadow-sm" onerror="this.style.display='none'">
+          <div>
+            <h3 class="text-lg font-bold text-brand-forest">Designed & Developed by Team TwinBit</h3>
+            <span class="text-xs text-gray-500 font-semibold">National PMFBY Agri-Decision Support System</span>
+          </div>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+          <strong>SAMRIDH-AI</strong> is an advanced AI and IoT-powered decision support system designed specifically for the <strong>Pradhan Mantri Fasal Bima Yojana (PMFBY)</strong>. By addressing the critical bottleneck in crop loss estimation — the reliance on subjective visual inspection and disputed Crop Cutting Experiments (CCEs) — SAMRIDH-AI establishes a continuous, tamper-proof <strong>Digital Farm Health Ledger</strong>.
+        </p>
+      </div>
+
+      <!-- Section: Technical Tools & Technology Stack Used -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-extrabold text-brand-forest flex items-center space-x-2">
+          <span>🛠️</span>
+          <span>Technical Tools & Frameworks Used</span>
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-xs">
+          
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg">
+              📡
+            </div>
+            <h4 class="font-bold text-sm text-brand-forest">1. IoT Edge Root-Zone Sensors</h4>
+            <p class="text-gray-600 leading-relaxed">
+              <strong>TwinBit SoilNode Pro:</strong> Custom firmware on ESP32 microcontrollers with capacitive SDI-12 root permittivity probes, RS485 telemetry, and solar-buffered LiFePO4 battery banks.
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-lg">
+              🛰️
+            </div>
+            <h4 class="font-bold text-sm text-brand-forest">2. Satellite Multispectral Remote Sensing</h4>
+            <p class="text-gray-600 leading-relaxed">
+              <strong>ESA Sentinel-2 & RISAT SAR:</strong> Automated pipeline calculating 10m Normalized Difference Vegetation Index (NDVI), NDRE, and cloud-penetrating synthetic aperture radar for flood inundation mapping.
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center font-bold text-lg">
+              👁️
+            </div>
+            <h4 class="font-bold text-sm text-brand-forest">3. Computer Vision & Quality Gating</h4>
+            <p class="text-gray-600 leading-relaxed">
+              <strong>OpenCV & SegFormer:</strong> Laplacian variance blur quality gates, Excess Green (ExG) chromatic canopy extraction, and deep semantic segmentation for crop lodging damage estimation.
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-lg">
+              🔒
+            </div>
+            <h4 class="font-bold text-sm text-brand-forest">4. Anti-Fraud & Perceptual Hashing</h4>
+            <p class="text-gray-600 leading-relaxed">
+              <strong>64-bit dHash & pHash:</strong> Hamming distance checks preventing recycled web images, combined with strict PostGIS geofence polygon boundary inclusion checks.
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-red-100 text-brand-red flex items-center justify-center font-bold text-lg">
+              ⚡
+            </div>
+            <h4 class="font-bold text-sm text-brand-forest">5. FastAPI & Spatial Database</h4>
+            <p class="text-gray-600 leading-relaxed">
+              <strong>FastAPI (Python 3.11) & PostgreSQL:</strong> Asynchronous REST architecture with SQLAlchemy 2.0 ORM, GeoAlchemy2, JWT stateless authentication, and Docker containerization.
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-lg">
+              📱
+            </div>
+            <h4 class="font-bold text-sm text-brand-forest">6. PWA & Cross-Platform Client</h4>
+            <p class="text-gray-600 leading-relaxed">
+              <strong>Tailwind CSS & Service Workers:</strong> Progressive Web App (PWA) with offline caching, Leaflet.js interactive GIS maps, Chart.js telemetry graphs, and Android APK deployment scripts.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Section: How the System Works & Step-by-Step Guidelines -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-extrabold text-brand-forest flex items-center space-x-2">
+          <span>📖</span>
+          <span>How It Works: Role-by-Role Guidelines</span>
+        </h3>
+
+        <div class="space-y-3 text-xs">
+          
+          <!-- Guide 1: Farmer -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <span class="font-bold text-sm text-emerald-800 block">👨‍🌾 1. For Farmers (किसान गाइड):</span>
+            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+              <li><strong>Check Real-Time Health:</strong> Monitor soil moisture and canopy vigor received from your field IoT SoilNode.</li>
+              <li><strong>Report Calamity Damage (72h SOS):</strong> In case of flood, hailstorm, or lodging, tap <em>Report Damage</em>, snap ground photos, and submit within 72 hours.</li>
+              <li><strong>AI Crop Doctor:</strong> Upload leaf photos to detect fungal/pest infections and get instant treatment advisories in Hindi or English.</li>
+            </ul>
+          </div>
+
+          <!-- Guide 2: Officer & Loss Assessor -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <span class="font-bold text-sm text-blue-800 block">📋 2. For District Agriculture Officers & Insurer Loss Assessors:</span>
+            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+              <li><strong>Triage Queue:</strong> Review incoming claims with auto-computed GPS Geofence compliance, pHash fraud scores, and SIFT baseline matching.</li>
+              <li><strong>Before/After Comparison:</strong> Compare pre-calamity sowing baseline photos with post-disaster AI segmentation masks.</li>
+              <li><strong>Sanction & DBT:</strong> Approve claims to generate automated PFMS DBT disbursement dockets.</li>
+            </ul>
+          </div>
+
+          <!-- Guide 3: State & National Admin -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-2">
+            <span class="font-bold text-sm text-amber-800 block">🗺️ 3. For State Nodal Officers & MNCFC Administrators:</span>
+            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+              <li><strong>National Geospatial Grid:</strong> View state-wide parcel health, flood inundation layers, and aggregated loss exposure in real-time.</li>
+              <li><strong>Disaster Footprint Audits:</strong> Correlate claim density with meteorological radar alerts to prevent systemic fraud.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SURFACE 5: FARMER PORTAL -->
     <section id="view-farmer" class="hidden space-y-6">
       <div class="bg-gradient-to-r from-brand-forest to-[#2d7734] text-white rounded-2xl p-6 shadow-md border border-brand-leaf/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex items-center space-x-3">
@@ -482,9 +948,7 @@
       </div>
     </section>
 
-    <!-- ========================================================================= -->
-    <!-- SURFACE 3: OFFICER WORKBENCH                                              -->
-    <!-- ========================================================================= -->
+    <!-- SURFACE 6: OFFICER WORKBENCH -->
     <section id="view-officer" class="hidden space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
         <div>
@@ -584,9 +1048,7 @@
       </div>
     </section>
 
-    <!-- ========================================================================= -->
-    <!-- SURFACE 4: ADMIN / NATIONAL COMMAND CENTER                                -->
-    <!-- ========================================================================= -->
+    <!-- SURFACE 7: ADMIN / NATIONAL COMMAND CENTER -->
     <section id="view-admin" class="hidden space-y-6">
       <div class="border-b border-gray-200 pb-4">
         <h2 class="text-xl font-bold text-brand-forest">National & State Agronomy Command Center</h2>
@@ -633,12 +1095,316 @@
   </main>
 
   <!-- ========================================================================= -->
-  <!-- MODAL: REGISTER NEW USER (EXACTLY AS SCREENSHOT)                          -->
+  <!-- FLOATING CHATBOT WIDGET: SAMRIDH-BOT                                      -->
   <!-- ========================================================================= -->
+  <div id="chatbot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    
+    <!-- Chat Window (Expandable) -->
+    <div id="chatbot-window" class="hidden w-[340px] sm:w-[380px] h-[500px] bg-white rounded-3xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden mb-3 animate-in fade-in slide-in-from-bottom-4 duration-300">
+      
+      <!-- Chat Header -->
+      <div class="bg-gradient-to-r from-[#1B5E20] to-[#2E7D9A] text-white p-4 flex items-center justify-between shadow-md">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-xl shadow-inner">
+            🤖
+          </div>
+          <div>
+            <div class="flex items-center space-x-1.5">
+              <span class="font-extrabold text-sm">SAMRIDH-Bot</span>
+              <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            </div>
+            <span class="text-[10px] text-white/80 block">AI PMFBY & Agronomy Assistant (24x7)</span>
+          </div>
+        </div>
+        <div class="flex items-center space-x-1">
+          <button onclick="clearChatbotHistory()" title="Clear Chat" class="p-1 hover:bg-white/20 rounded-lg text-white/90">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+          </button>
+          <button onclick="toggleChatbot()" class="p-1 hover:bg-white/20 rounded-lg text-white/90 font-bold text-base">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Suggestion Pills -->
+      <div class="bg-emerald-50/80 px-3 py-2 border-b border-emerald-100 flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px]">
+        <button onclick="sendQuickPrompt('PMFBY प्रीमियम कैसे कैलकुलेट करें?')" class="px-2.5 py-1 bg-white hover:bg-emerald-100 text-emerald-900 rounded-full border border-emerald-200 whitespace-nowrap shadow-2xs font-semibold">
+          🧮 प्रीमियम गणना
+        </button>
+        <button onclick="sendQuickPrompt('How to report crop damage within 72 hours?')" class="px-2.5 py-1 bg-white hover:bg-emerald-100 text-emerald-900 rounded-full border border-emerald-200 whitespace-nowrap shadow-2xs font-semibold">
+          🚨 72h SOS
+        </button>
+        <button onclick="sendQuickPrompt('What is YESTECH & WINDS in PMFBY?')" class="px-2.5 py-1 bg-white hover:bg-emerald-100 text-emerald-900 rounded-full border border-emerald-200 whitespace-nowrap shadow-2xs font-semibold">
+          🌾 YESTECH & WINDS
+        </button>
+      </div>
+
+      <!-- Message History Container -->
+      <div id="chatbot-messages" class="flex-grow p-4 overflow-y-auto space-y-3 bg-gray-50 text-xs">
+        <div class="bg-white p-3 rounded-2xl shadow-xs border border-gray-200 text-gray-800 space-y-1">
+          <p class="font-bold text-brand-forest">Namaste! 🙏 I am SAMRIDH-Bot.</p>
+          <p class="text-gray-600 leading-relaxed">
+            I can assist you with <strong>PMFBY crop insurance claims, premium calculations, disease diagnosis, weather warnings, and scheme guidelines</strong> in Hindi or English. How can I help you today?
+          </p>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <div class="p-3 bg-white border-t border-gray-200 flex items-center space-x-2">
+        <input id="chatbot-input" type="text" placeholder="Ask anything (उदा. फसल नुकसान का दावा कैसे करें?)..." class="flex-grow px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium" onkeypress="if(event.key==='Enter') sendChatbotMessage()">
+        <button onclick="sendChatbotMessage()" class="w-10 h-10 bg-brand-forest hover:bg-brand-leaf text-white rounded-xl flex items-center justify-center shadow transition-all flex-shrink-0">
+          <i data-lucide="send" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Floating Chatbot Button -->
+    <button onclick="toggleChatbot()" class="bg-gradient-to-r from-[#1B5E20] to-[#0B6623] hover:from-emerald-700 hover:to-emerald-800 text-white px-4 py-3 rounded-full shadow-2xl flex items-center space-x-2.5 border-2 border-emerald-300 group hover:scale-105 transition-all">
+      <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg shadow-inner">
+        💬
+      </div>
+      <div class="text-left hidden sm:block">
+        <span class="font-extrabold text-xs block leading-tight">SAMRIDH-Bot</span>
+        <span class="text-[10px] text-emerald-200 block leading-tight">Ask PMFBY AI</span>
+      </div>
+      <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-ping"></span>
+    </button>
+
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: APPLICATION TRACKER (FOR CARD 3)                                   -->
+  <!-- ========================================================================= -->
+  <div id="modal-track-app" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center text-xl">
+            🖥️
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-brand-forest">PMFBY Application & Claim Status Tracker</h3>
+            <p class="text-[11px] text-gray-500">Track status of application number or claim docket</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-track-app')" class="text-gray-400 hover:text-gray-600 font-bold p-1">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="font-bold text-gray-700 block mb-1">Enter Application / Policy / Claim Docket Number</label>
+          <div class="flex space-x-2">
+            <input id="track-app-input" type="text" value="PMFBY-CLAIM-2026-MP-0001" placeholder="e.g. PMFBY-2026-MP-984210" class="flex-grow px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-mono font-bold focus:outline-none focus:border-brand-forest">
+            <button onclick="trackApplicationStatus()" class="px-4 py-2 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-xl text-xs transition-all">
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div id="track-result-box" class="p-4 bg-gray-50 rounded-2xl border border-gray-200 space-y-3">
+          <div class="flex items-center justify-between border-b border-gray-200 pb-2">
+            <div>
+              <span class="text-[10px] text-gray-500 block uppercase">Docket Number</span>
+              <strong class="font-mono text-brand-forest">PMFBY-CLAIM-2026-MP-0001</strong>
+            </div>
+            <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full">OFFICER REVIEW</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-[11px]">
+            <div><span class="text-gray-500">Applicant:</span> <strong>Ramesh Kumar</strong></div>
+            <div><span class="text-gray-500">Crop / Area:</span> <strong>Soybean (2.5 Ha)</strong></div>
+            <div><span class="text-gray-500">Village/District:</span> <strong>Kothri, Sehore (MP)</strong></div>
+            <div><span class="text-gray-500">Estimated Payout:</span> <strong class="text-emerald-700">₹82,800.00</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: KRISHI RAKSHAK PORTAL & HELPLINE (FOR CARD 4)                      -->
+  <!-- ========================================================================= -->
+  <div id="modal-krph" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center text-xl">
+            👩‍🌾
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-purple-950">Krishi Rakshak Portal & Helpline (KRPH)</h3>
+            <p class="text-[11px] text-gray-500">Toll-Free Grievance Redressal & Loss Intimation</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-krph')" class="text-gray-400 hover:text-gray-600 font-bold p-1">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div class="p-3.5 bg-purple-50 rounded-2xl border border-purple-200 text-purple-900 space-y-1">
+          <span class="font-bold block">📞 Kisan Call Center & Grievance Helpline</span>
+          <p class="text-[11px] leading-relaxed">
+            Call toll-free <strong>14447</strong> or <strong>1800-180-1551</strong> for immediate grievance resolution within 15 working days.
+          </p>
+        </div>
+
+        <div>
+          <label class="font-bold text-gray-700 block mb-1">Grievance Category</label>
+          <select class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs">
+            <option>Delay in Claim Settlement / Payout</option>
+            <option>Dispute in CCE Yield Assessment</option>
+            <option>Incorrect Bank Account / IFSC Details</option>
+            <option>Premium Deduction without Policy Generation</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="font-bold text-gray-700 block mb-1">Describe Grievance Details</label>
+          <textarea rows="3" placeholder="Enter specific policy details, block name, or bank branch..." class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs"></textarea>
+        </div>
+
+        <button onclick="alert('✓ Grievance registered successfully!\nDocket Reference: KRPH-2026-MP-84920\nResolution SLA: 15 Working Days.'); closeModal('modal-krph');" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl text-xs shadow transition-all">
+          Submit Grievance Ticket &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: LEARNING MANAGEMENT SYSTEM (FOR CARD 5)                            -->
+  <!-- ========================================================================= -->
+  <div id="modal-lms" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-red-100 text-brand-red flex items-center justify-center text-xl">
+            🎓
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-brand-forest">PMFBY Learning Management System (LMS)</h3>
+            <p class="text-[11px] text-gray-500">Interactive farmer training & policy modules</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-lms')" class="text-gray-400 hover:text-gray-600 font-bold p-1">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="p-3.5 bg-gray-50 rounded-2xl border border-gray-200 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-gray-900">Module 1: PMFBY 72-Hour Calamity Intimation Guide</h4>
+            <p class="text-[11px] text-gray-500">Step-by-step video on submitting localized damage photos.</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-1 rounded">5 Min Video</span>
+        </div>
+
+        <div class="p-3.5 bg-gray-50 rounded-2xl border border-gray-200 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-gray-900">Module 2: Understanding Weather Index & WINDS</h4>
+            <p class="text-[11px] text-gray-500">How rainfall deficit and heat spikes trigger automatic claim pay-outs.</p>
+          </div>
+          <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-1 rounded">8 Min Video</span>
+        </div>
+
+        <div class="p-3.5 bg-gray-50 rounded-2xl border border-gray-200 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-gray-900">Module 3: Best Agronomy Practices for Kharif Soybean & Cotton</h4>
+            <p class="text-[11px] text-gray-500">Soil moisture conservation, integrated pest management, and drainage.</p>
+          </div>
+          <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded">12 Min Guide</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: YESTECH SYSTEM (FOR CARD 6)                                        -->
+  <!-- ========================================================================= -->
+  <div id="modal-yestech" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center text-xl">
+            🌱
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-brand-forest">YESTECH - Yield Estimation System based on Technology</h3>
+            <p class="text-[11px] text-gray-500">MNCFC Remote Sensing & Crop Simulation Modeling</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-yestech')" class="text-gray-400 hover:text-gray-600 font-bold p-1">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs text-gray-700 leading-relaxed">
+        <div class="p-4 bg-pink-50 rounded-2xl border border-pink-200 space-y-2">
+          <span class="font-bold text-pink-950 block">🛰️ Technology-Based Yield Assessment Protocol</span>
+          <p class="text-[11px]">
+            YESTECH leverages optical & radar satellite telemetry (Sentinel-2, RISAT), weather models, and drone surveys to establish Gram Panchayat level expected crop yields, eliminating manual CCE bias.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-center">
+          <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+            <span class="text-[10px] text-gray-500 block">Baseline Soybean Yield</span>
+            <strong class="text-sm text-brand-forest">18.4 Quintals/Ha</strong>
+          </div>
+          <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+            <span class="text-[10px] text-gray-500 block">Model Correlation Index</span>
+            <strong class="text-sm text-emerald-700">0.92 (High Accuracy)</strong>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-yestech'); switchView('admin');" class="w-full py-2.5 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-xl text-xs">
+          Open National GIS to View YESTECH Layers &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: WINDS WEATHER NETWORK (FOR CARD 7)                                 -->
+  <!-- ========================================================================= -->
+  <div id="modal-winds" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl">
+            ⛅
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-sky-950">WINDS - Weather Information Network Data System</h3>
+            <p class="text-[11px] text-gray-500">Hyperlocal Automated Weather Station (AWS) Grid</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-winds')" class="text-gray-400 hover:text-gray-600 font-bold p-1">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div class="bg-sky-50 p-3 rounded-2xl border border-sky-200">
+            <span class="text-[10px] text-gray-600 block">Temperature</span>
+            <strong class="text-base text-sky-900">27.8 °C</strong>
+          </div>
+          <div class="bg-blue-50 p-3 rounded-2xl border border-blue-200">
+            <span class="text-[10px] text-gray-600 block">Precipitation (24h)</span>
+            <strong class="text-base text-blue-900">48.2 mm</strong>
+          </div>
+          <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200">
+            <span class="text-[10px] text-gray-600 block">Wind Gusts</span>
+            <strong class="text-base text-amber-900">24 km/h</strong>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-amber-50 rounded-2xl border border-amber-200 text-amber-950 space-y-1">
+          <span class="font-bold block">⚠️ IMD Agromet Advisory for Sehore, MP:</span>
+          <p class="text-[11px] leading-relaxed">
+            Heavy thunderstorm squall predicted. Ensure open field drainage. Telemetry automated payout threshold: <strong>>75mm/24h</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- [EXISTING REGISTER, SIGN IN, SCAN, DAMAGE, CALCULATOR MODALS PRESERVED FULLY] -->
+  <!-- MODAL: REGISTER NEW USER (EXACTLY AS SCREENSHOT) -->
   <div id="modal-register" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-gray-100 my-8">
-      
-      <!-- Top Title & Breadcrumbs -->
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-4">
         <div>
           <div class="flex items-center space-x-2">
@@ -651,8 +1417,6 @@
             <span class="text-gray-700 font-semibold">Register New User</span>
           </div>
         </div>
-
-        <!-- Note on CCE App (Exact from Screenshot) -->
         <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r-xl text-xs text-emerald-950 flex items-center space-x-2 max-w-md shadow-xs">
           <span class="text-2xl text-emerald-600 font-serif leading-none">❝</span>
           <p class="leading-snug">
@@ -662,24 +1426,15 @@
         </div>
       </div>
 
-      <!-- Registration Form Card (Exact from Screenshot) -->
       <form id="register-user-form" onsubmit="event.preventDefault(); submitUserRegistration();" class="space-y-6">
-        
-        <!-- Official Information Container -->
         <div class="rounded-2xl border-2 border-emerald-200 overflow-hidden shadow-sm">
-          <!-- Light green bar title -->
           <div class="bg-[#D9EAD3] px-5 py-3 border-b border-emerald-200 flex items-center justify-between">
             <span class="font-extrabold text-sm text-[#0B6623] tracking-wide">Official Information</span>
             <span class="text-[11px] text-emerald-800 font-semibold">* All fields mandatory for PMFBY verification</span>
           </div>
 
-          <!-- Fields Grid -->
           <div class="p-6 bg-white space-y-5">
-            
-            <!-- Row 1: 3 Dropdowns (Stakeholder, Choose Category, User Category) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              
-              <!-- 1. Stakeholder Dropdown -->
               <div>
                 <label class="block text-xs font-bold text-gray-800 mb-1.5">
                   Stakeholder <span class="text-red-500 font-bold">*</span>
@@ -698,7 +1453,6 @@
                 </select>
               </div>
 
-              <!-- 2. Choose Category Dropdown -->
               <div>
                 <label class="block text-xs font-bold text-gray-800 mb-1.5">
                   Choose Category <span class="text-red-500 font-bold">*</span>
@@ -708,7 +1462,6 @@
                 </select>
               </div>
 
-              <!-- 3. User Category Dropdown -->
               <div>
                 <label class="block text-xs font-bold text-gray-800 mb-1.5">
                   User Category <span class="text-red-500 font-bold">*</span>
@@ -717,10 +1470,8 @@
                   <option value="">Select Category</option>
                 </select>
               </div>
-
             </div>
 
-            <!-- Row 2: Personal & Designation Details -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-gray-100">
               <div>
                 <label class="block text-xs font-bold text-gray-800 mb-1.5">
@@ -744,7 +1495,6 @@
               </div>
             </div>
 
-            <!-- Row 3: Official Email, State, District -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-gray-100">
               <div>
                 <label class="block text-xs font-bold text-gray-800 mb-1.5">
@@ -789,7 +1539,6 @@
               </div>
             </div>
 
-            <!-- Row 4: Identification Code & Password -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-gray-100">
               <div>
                 <label class="block text-xs font-bold text-gray-800 mb-1.5">
@@ -812,11 +1561,9 @@
                 <input id="reg-confirm-password" type="password" placeholder="••••••••" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
               </div>
             </div>
-
           </div>
         </div>
 
-        <!-- Action Buttons (Exact as screenshot Discard & Create) -->
         <div class="flex items-center justify-end space-x-3 pt-2">
           <button type="button" onclick="closeModal('modal-register'); resetRegisterForm();" class="px-6 py-2.5 border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 font-bold text-xs rounded-xl shadow-xs transition-all">
             Discard
@@ -826,14 +1573,11 @@
             <span>Create</span>
           </button>
         </div>
-
       </form>
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- MODAL: REGISTRATION SUCCESS ACKNOWLEDGMENT                                -->
-  <!-- ========================================================================= -->
+  <!-- MODAL: REGISTRATION SUCCESS -->
   <div id="modal-register-success" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border border-gray-100">
       <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-3xl mx-auto shadow-inner">
@@ -855,9 +1599,7 @@
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- MODAL: AI CROP SCAN & LEAF ANALYSIS                                       -->
-  <!-- ========================================================================= -->
+  <!-- MODAL: CROP SCAN -->
   <div id="modal-crop-scan" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100 max-h-[95vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -866,7 +1608,7 @@
             <i data-lucide="scan-line" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="font-bold text-base text-brand-forest">Live AI Crop Health Scanner</h3>
+            <h3 class="font-bold text-base text-brand-forest">Live AI Crop Health Scanner (CROPIC)</h3>
             <p class="text-[11px] text-gray-500">Upload or capture ANY crop photo for instant AI diagnosis</p>
           </div>
         </div>
@@ -918,9 +1660,7 @@
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- MODAL: REPORT DAMAGE (72H SOS)                                            -->
-  <!-- ========================================================================= -->
+  <!-- MODAL: REPORT DAMAGE -->
   <div id="modal-report-damage" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100 max-h-[95vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -979,9 +1719,7 @@
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- MODAL: INSURANCE PREMIUM CALCULATOR                                       -->
-  <!-- ========================================================================= -->
+  <!-- MODAL: CALCULATOR -->
   <div id="modal-calculator" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-5 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -1075,9 +1813,7 @@
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- MODAL: DEPARTMENT / ROLE AUTHENTICATION PORTAL (SIGN IN)                  -->
-  <!-- ========================================================================= -->
+  <!-- MODAL: DEPARTMENT SIGN IN -->
   <div id="modal-dept-login" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-gray-100 max-h-[95vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-gray-100 pb-4">
@@ -1188,7 +1924,6 @@
         </button>
       </div>
 
-      <!-- Quick Link to Register -->
       <div class="pt-3 border-t border-gray-100 text-center text-xs text-gray-600">
         Don't have a stakeholder account? 
         <button onclick="closeModal('modal-dept-login'); openRegisterModal();" class="text-brand-forest font-extrabold underline ml-1 hover:text-emerald-700">
@@ -1198,13 +1933,11 @@
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- 5. FOOTER WITH OFFICIAL TEAM TWINBIT ATTRIBUTION                          -->
-  <!-- ========================================================================= -->
+  <!-- FOOTER -->
   <footer class="bg-brand-forest text-white/80 py-8 text-xs border-t border-brand-leaf/30 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center border-b border-white/10 pb-6">
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('about')">
           <img src="assets/twinbit_logo.jpg" alt="Team TwinBit" class="h-10 w-auto rounded-lg shadow-sm" onerror="this.style.display='none'">
           <div>
             <span class="text-sm font-bold text-white block">Designed and Developed by Team TwinBit</span>
@@ -1233,9 +1966,6 @@
     </div>
   </footer>
 
-  <!-- ========================================================================= -->
-  <!-- JAVASCRIPT LOGIC FOR STAKEHOLDER REGISTRATION & PORTAL WORKFLOWS          -->
-  <!-- ========================================================================= -->
   <script>
     lucide.createIcons();
     if ('serviceWorker' in navigator) {
@@ -1246,6 +1976,7 @@
     let currentUser = null;
     let farmerMap, adminMap;
     let selectedDamageFile = null;
+    let cropDistChart, speedChart;
     
     let API_BASE = localStorage.getItem('SAMRIDH_API_URL') || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? "http://127.0.0.1:8000/api/v1" : "https://samridh-ai-production.up.railway.app/api/v1");
 
@@ -1257,8 +1988,178 @@
       }
     }
 
+    function scrollServiceCards(distance) {
+      const el = document.getElementById('service-cards-container');
+      if (el) el.scrollBy({ left: distance, behavior: 'smooth' });
+    }
+
     // =========================================================================
-    // PMFBY STAKEHOLDER & USER CATEGORY HIERARCHY DATA (EXACT TO SCREENSHOT)
+    // SAMRIDH-BOT (AI CHATBOT) IMPLEMENTATION
+    // =========================================================================
+    function toggleChatbot() {
+      const win = document.getElementById('chatbot-window');
+      win.classList.toggle('hidden');
+      if (!win.classList.contains('hidden')) {
+        document.getElementById('chatbot-input').focus();
+        lucide.createIcons();
+      }
+    }
+
+    function sendQuickPrompt(prompt) {
+      document.getElementById('chatbot-input').value = prompt;
+      sendChatbotMessage();
+    }
+
+    function clearChatbotHistory() {
+      document.getElementById('chatbot-messages').innerHTML = `
+        <div class="bg-white p-3 rounded-2xl shadow-xs border border-gray-200 text-gray-800 space-y-1">
+          <p class="font-bold text-brand-forest">Namaste! 🙏 I am SAMRIDH-Bot.</p>
+          <p class="text-gray-600 leading-relaxed">
+            I can assist you with PMFBY crop insurance claims, premium calculations, disease diagnosis, weather warnings, and scheme guidelines.
+          </p>
+        </div>
+      `;
+    }
+
+    async function sendChatbotMessage() {
+      const input = document.getElementById('chatbot-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('chatbot-messages');
+      container.innerHTML += `
+        <div class="bg-emerald-100 p-2.5 rounded-2xl text-emerald-950 ml-6 text-right shadow-xs font-medium">
+          <strong>You:</strong> ${escapeHtml(text)}
+        </div>
+      `;
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      // Add typing indicator
+      const loaderId = `chat-loader-${Date.now()}`;
+      container.innerHTML += `
+        <div id="${loaderId}" class="bg-white p-2.5 rounded-2xl shadow-xs border border-gray-200 text-gray-500 mr-6 flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-600 animate-bounce"></span>
+          <span class="w-2 h-2 rounded-full bg-emerald-600 animate-bounce [animation-delay:0.2s]"></span>
+          <span class="w-2 h-2 rounded-full bg-emerald-600 animate-bounce [animation-delay:0.4s]"></span>
+          <span class="text-[11px] font-semibold text-gray-500">SAMRIDH-Bot is thinking...</span>
+        </div>
+      `;
+      container.scrollTop = container.scrollHeight;
+
+      let answer = "";
+
+      try {
+        // Try calling backend crop-doctor / AI endpoint
+        const res = await fetch(`${API_BASE}/ai/crop-doctor`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: text, farm_id: 'farm_001', language: currentLanguage })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          answer = currentLanguage === 'hi' ? (json.data.answer_hi || json.data.answer) : json.data.answer;
+        } else {
+          throw new Error("Backend response error");
+        }
+      } catch (err) {
+        // High-intelligence localized conversational model fallback
+        const q = text.toLowerCase();
+        if (q.includes('premium') || q.includes('प्रीमियम') || q.includes('calculate') || q.includes('गणना')) {
+          answer = "📊 **PMFBY Premium Rates:**\n• **Kharif Crops** (Paddy, Soybean, Cotton, Maize): Farmer pays only **2.0%** of sum insured.\n• **Rabi Crops** (Wheat, Mustard, Gram): Farmer pays only **1.5%** of sum insured.\n• **Commercial / Horticultural Crops**: Farmer pays **5.0%**.\n\nAll remaining actuarial premium (often 85-95%) is subsidized 50:50 by Central and State Governments. Click **Premium Calculator** in the menu to test your exact field coverage!";
+        } else if (q.includes('72') || q.includes('sos') || q.includes('damage') || q.includes('नुकसान') || q.includes('claim') || q.includes('दावा')) {
+          answer = "🚨 **72-Hour Calamity Intimation Rule:**\nUnder PMFBY individual calamity guidelines (inundation, hailstorm, landslide, cloudburst), loss MUST be reported within **72 hours** of occurrence.\n\n1. Open **Report Damage / 72h SOS** button.\n2. Upload geo-tagged photos of standing lodged crop.\n3. Our AI validates the PostGIS geofence and computes loss percentage automatically for Joint Survey Committee sanction.";
+        } else if (q.includes('yestech') || q.includes('winds') || q.includes('cropic')) {
+          answer = "🌾 **PMFBY Tech Ecosystem:**\n• **YESTECH**: Yield Estimation System based on Technology using Sentinel-2 and RISAT SAR satellite modeling.\n• **WINDS**: Weather Information Network Data System collecting hyperlocal rainfall & temperature telemetry from automated weather stations.\n• **CROPIC**: Collection of Real-time Observations & Photographs of Crops for AI disease & lodging scans.";
+        } else if (q.includes('twinbit') || q.includes('who made') || q.includes('developer') || q.includes('team')) {
+          answer = "🏛️ **SAMRIDH-AI** is architected and developed by **Team TwinBit** for the Smart India Hackathon to revolutionize PMFBY crop insurance transparency with IoT, Computer Vision, and PostGIS remote sensing.";
+        } else {
+          answer = `Hello! Based on active telemetry for Madhya Pradesh (Kharif 2026), soil moisture levels are optimal at 52.4%. For any claim queries, use docket **PMFBY-CLAIM-2026-MP-0001** or file a fresh 72h SOS damage intimation.`;
+        }
+      }
+
+      // Remove loader & append response
+      const loaderEl = document.getElementById(loaderId);
+      if (loaderEl) loaderEl.remove();
+
+      container.innerHTML += `
+        <div class="bg-white p-3 rounded-2xl shadow-xs border border-gray-200 text-gray-800 mr-6 space-y-1">
+          <div class="flex items-center space-x-1 text-emerald-800 font-bold text-[11px]">
+            <span>🤖 SAMRIDH-Bot</span>
+          </div>
+          <div class="text-xs text-gray-700 leading-relaxed whitespace-pre-line">${escapeHtml(answer)}</div>
+        </div>
+      `;
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function trackApplicationStatus() {
+      const val = document.getElementById('track-app-input').value.trim();
+      if (!val) {
+        alert("Please enter a valid application or claim docket number.");
+        return;
+      }
+      alert(`✓ Status found for ${val}:\nStatus: UNDER OFFICER REVIEW\nAssigned Officer: V. K. Sharma (DAO Sehore)`);
+    }
+
+    function switchDashboardTab(tab) {
+      if (tab === 'graphical') {
+        document.getElementById('dash-panel-graphical').classList.remove('hidden');
+        document.getElementById('dash-panel-coverage').classList.add('hidden');
+        document.getElementById('dash-tab-btn-graph').className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-white text-brand-forest shadow-xs transition-all";
+        document.getElementById('dash-tab-btn-cov').className = "px-4 py-1.5 rounded-lg text-xs font-bold text-gray-600 hover:text-brand-forest transition-all";
+        initDashboardCharts();
+      } else {
+        document.getElementById('dash-panel-graphical').classList.add('hidden');
+        document.getElementById('dash-panel-coverage').classList.remove('hidden');
+        document.getElementById('dash-tab-btn-cov').className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-white text-brand-forest shadow-xs transition-all";
+        document.getElementById('dash-tab-btn-graph').className = "px-4 py-1.5 rounded-lg text-xs font-bold text-gray-600 hover:text-brand-forest transition-all";
+      }
+    }
+
+    function initDashboardCharts() {
+      if (!cropDistChart) {
+        const ctx1 = document.getElementById('crop-dist-chart');
+        if (ctx1) {
+          cropDistChart = new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+              labels: ['Soybean (सोयाबीन)', 'Paddy (धान)', 'Cotton (कपास)', 'Wheat (गेहूं)', 'Others'],
+              datasets: [{
+                data: [38, 28, 16, 12, 6],
+                backgroundColor: ['#1B5E20', '#2E7D9A', '#D4A017', '#E53935', '#7B1FA2']
+              }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
+          });
+        }
+      }
+
+      if (!speedChart) {
+        const ctx2 = document.getElementById('speed-chart');
+        if (ctx2) {
+          speedChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+              labels: ['Pre-PMFBY Manual', 'Standard PMFBY', 'SAMRIDH-AI Verified'],
+              datasets: [{
+                label: 'Avg Days to Settlement',
+                data: [120, 45, 7],
+                backgroundColor: ['#9E9E9E', '#FF9933', '#138808']
+              }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { font: { size: 10 } } } } }
+          });
+        }
+      }
+    }
+
+    // =========================================================================
+    // PMFBY STAKEHOLDER & USER CATEGORY HIERARCHY DATA
     // =========================================================================
     const STAKEHOLDER_DATA = {
       "BANK": {
@@ -1516,7 +2417,6 @@
         return;
       }
 
-      // Determine mapping role for dashboard routing
       let mappedRole = "farmer";
       let mappedSurface = "farmer";
       if (["BANK", "INSURANCE COMPANY", "STATE GOVERNMENT", "STATE PROJECT OFFICER"].includes(stakeholder)) {
@@ -1530,8 +2430,7 @@
       const docketNo = `REG-PMFBY-2026-${state.substring(0,2).toUpperCase()}-${Math.floor(100000 + Math.random() * 900000)}`;
 
       try {
-        // Call backend registration API
-        const res = await fetch(`${API_BASE}/auth/register`, {
+        await fetch(`${API_BASE}/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -1545,10 +2444,9 @@
           })
         });
       } catch (err) {
-        console.warn("Backend API dispatch skipped or fallback active:", err);
+        console.warn("Backend API dispatch fallback active:", err);
       }
 
-      // Activate session
       currentUser = {
         name: `${fullName} (${designation})`,
         role: `${stakeholder} • ${userCat}`,
@@ -1558,7 +2456,6 @@
 
       updateSessionUI();
 
-      // Show Success Modal
       document.getElementById('success-docket').innerText = docketNo;
       document.getElementById('success-name').innerText = fullName;
       document.getElementById('success-stakeholder').innerText = `${stakeholder} (${category.split('(')[0].trim()})`;
@@ -1627,7 +2524,7 @@
             <span class="w-2 h-2 rounded-full bg-green-500"></span>
             <span class="text-xs font-semibold text-gray-800">${currentUser.name.split(' ')[0]}</span>
             <button onclick="openDepartmentLoginModal()" class="text-[10px] text-brand-forest ml-1 underline font-bold">Switch</button>
-            <button onclick="openRegisterModal()" class="text-[10px] text-amber-700 ml-1 font-bold bg-amber-100 px-1.5 py-0.5 rounded">+ Reg</button>
+            <button onclick="openRegisterModal()" class="text-[10px] text-amber-800 ml-1 font-extrabold bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-lg">+ Reg</button>
           </div>
         `;
       }
@@ -1655,25 +2552,29 @@
     }
 
     function switchView(viewName) {
-      ['landing', 'farmer', 'officer', 'admin'].forEach(v => {
+      const views = ['landing', 'dashboard', 'gallery', 'about', 'farmer', 'officer', 'admin'];
+      views.forEach(v => {
         const sec = document.getElementById(`view-${v}`);
         const btn = document.getElementById(`nav-${v}`);
-        if (v === viewName) {
-          sec.classList.remove('hidden');
-          if (btn) {
-            btn.classList.add('bg-white/20', 'text-white');
-            btn.classList.remove('text-white/85', 'hover:bg-white/10');
-          }
-        } else {
-          sec.classList.add('hidden');
-          if (btn) {
-            btn.classList.remove('bg-white/20');
-            btn.classList.add('text-white/85', 'hover:bg-white/10');
+        if (sec) {
+          if (v === viewName) {
+            sec.classList.remove('hidden');
+            if (btn) {
+              btn.classList.add('bg-white/20', 'text-white');
+              btn.classList.remove('text-white/85', 'hover:bg-white/10');
+            }
+          } else {
+            sec.classList.add('hidden');
+            if (btn) {
+              btn.classList.remove('bg-white/20');
+              btn.classList.add('text-white/85', 'hover:bg-white/10');
+            }
           }
         }
       });
       if (viewName === 'farmer' && !farmerMap) setTimeout(initFarmerMap, 100);
       if (viewName === 'admin' && !adminMap) setTimeout(initAdminMap, 100);
+      if (viewName === 'dashboard') setTimeout(initDashboardCharts, 100);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       lucide.createIcons();
     }
@@ -1691,13 +2592,20 @@
     }
 
     function openModal(id) {
-      document.getElementById(id).classList.remove('hidden');
-      document.getElementById(id).classList.add('flex');
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('hidden');
+        el.classList.add('flex');
+        lucide.createIcons();
+      }
     }
 
     function closeModal(id) {
-      document.getElementById(id).classList.add('hidden');
-      document.getElementById(id).classList.remove('flex');
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('hidden');
+        el.classList.remove('flex');
+      }
     }
 
     function recalcPremium() {
