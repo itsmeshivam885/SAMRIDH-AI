@@ -1930,6 +1930,36 @@
         <span id="login-error-message">Invalid username or password</span>
       </div>
 
+      <!-- 1-Click Express Login Bar for Quick Access -->
+      <div class="bg-gradient-to-r from-emerald-500/10 via-blue-500/10 to-amber-500/10 p-3.5 rounded-2xl border border-emerald-200 shadow-xs space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-extrabold text-brand-forest flex items-center space-x-1">
+            <span>⚡ 1-Click Express Sign In (एक-क्लिक त्वरित लॉगिन):</span>
+          </span>
+          <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">Instant Login</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-center">
+          <button type="button" onclick="quickRoleLogin('aryan.25bce10798', 'Aryan#25BCE10798!Sec2026')" class="py-2 px-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs shadow-xs transition-all flex items-center justify-center space-x-1">
+            <span>👨‍🌾 Aryan (Farmer)</span>
+          </button>
+          <button type="button" onclick="quickRoleLogin('shivam.25bce10736', 'Shivam#25BCE10736!Sec2026')" class="py-2 px-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-xs transition-all flex items-center justify-center space-x-1">
+            <span>👨‍🌾 Shivam (Farmer)</span>
+          </button>
+          <button type="button" onclick="quickRoleLogin('atharv.25bce10596', 'Atharv#25BCE10596!Sec2026')" class="py-2 px-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl text-xs shadow-xs transition-all flex items-center justify-center space-x-1">
+            <span>👨‍🌾 Atharv (Farmer)</span>
+          </button>
+          <button type="button" onclick="quickRoleLogin('krishna.25bce10117', 'Krishna#25BCE10117!Sec2026')" class="py-2 px-2 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs shadow-xs transition-all flex items-center justify-center space-x-1">
+            <span>📋 Krishna (Officer)</span>
+          </button>
+          <button type="button" onclick="quickRoleLogin('reshma.25bce10240', 'Reshma#25BCE10240!Sec2026')" class="py-2 px-2 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl text-xs shadow-xs transition-all flex items-center justify-center space-x-1">
+            <span>🛡️ Reshma (Insurer)</span>
+          </button>
+          <button type="button" onclick="quickRoleLogin('rakhi.25bce10780', 'Rakhi#25BCE10780!Sec2026')" class="py-2 px-2 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-xl text-xs shadow-xs transition-all flex items-center justify-center space-x-1">
+            <span>🗺️ Rakhi (Admin)</span>
+          </button>
+        </div>
+      </div>
+
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-gray-100 p-1.5 rounded-2xl text-xs font-semibold text-center">
         <button id="tab-btn-farmer" onclick="selectLoginTab('farmer')" class="py-2 px-1 rounded-xl transition-all bg-white text-brand-forest shadow-xs font-bold">
           👨‍🌾 Farmer
@@ -2738,6 +2768,22 @@
       }
     }
 
+    function quickRoleLogin(username, password) {
+      let roleKey = 'farmer';
+      if (username.startsWith('krishna')) roleKey = 'officer';
+      else if (username.startsWith('reshma')) roleKey = 'insurance';
+      else if (username.startsWith('rakhi')) roleKey = 'admin';
+
+      selectLoginTab(roleKey);
+      const inputPrefix = roleKey === 'insurance' ? 'insurer' : roleKey;
+      const uInput = document.getElementById(`${inputPrefix}-user-input`);
+      const pInput = document.getElementById(`${inputPrefix}-pass-input`);
+      if (uInput) uInput.value = username;
+      if (pInput) pInput.value = password;
+
+      performRoleLogin(roleKey);
+    }
+
     function showLoginError(message) {
       const errBox = document.getElementById('login-error-alert');
       const errText = document.getElementById('login-error-message');
@@ -2760,13 +2806,19 @@
         policyNo: 'PMFBY-2026-MP-25BCE10798',
         healthScore: 88,
         healthTag: 'Healthy Standing Canopy',
+        healthTag_hi: 'स्वस्थ खड़ी फसल',
         moisture: 54.2,
         claimStatus: 'No Active Claim',
+        claimStatus_hi: 'कोई सक्रिय दावा नहीं',
         claimPayout: '₹0.00 (Optimal)',
+        claimPayout_hi: '₹0.00 (सामान्य)',
         coords: [23.0185, 76.8821],
         advisoryTitle: 'Mid-Season Canopy Irrigation',
+        advisoryTitle_hi: 'फसल फली विकास एवं सिंचाई सलाह',
         advisoryBody: 'Soybean canopy at pod development stage. Apply light sprinkler irrigation to maintain soil moisture in Ashta parcel.',
-        greeting: '🌱 Hello Aryan Singh! I am connected to your Ashta farm telemetry (3.2 Ha Soybean). Ask me about crop diseases, soil moisture, or fertilizer applications.'
+        advisoryBody_hi: 'आष्टा खेत में सोयाबीन की फसल फली बनने की अवस्था पर है। मृदा नमी बनाए रखने के लिए हल्की फव्वारा सिंचाई करें।',
+        greeting: '🌱 Hello Aryan Singh! I am connected to your Ashta farm telemetry (3.2 Ha Soybean). Ask me about crop diseases, soil moisture, or fertilizer applications.',
+        greeting_hi: '🌱 नमस्ते आर्यन सिंह! मैं आपके आष्टा खेत टेलीमेट्री (3.2 हेक्टेयर सोयाबीन) से जुड़ा हुआ हूँ। मुझसे फसल बीमारी या खाद के बारे में पूछें।'
       },
       'shivam.25bce10736': {
         name: 'SHIVAM SINGH',
@@ -2778,13 +2830,19 @@
         policyNo: 'PMFBY-2026-MP-25BCE10736',
         healthScore: 58,
         healthTag: 'Inundation & Waterlogging',
+        healthTag_hi: 'जलभराव एवं भारी नुकसान',
         moisture: 89.5,
         claimStatus: 'Under Officer Review',
+        claimStatus_hi: 'पटवारी/अधिकारी समीक्षाधीन',
         claimPayout: '₹1,12,500.00 Estimated',
+        claimPayout_hi: '₹1,12,500.00 अनुमानित',
         coords: [23.0250, 76.8900],
         advisoryTitle: '72h SOS Flood Mitigation',
+        advisoryTitle_hi: '72 घंटे जलभराव राहत कार्रवाई',
         advisoryBody: 'Field inundated following 142mm heavy rain in Ichhawar. Joint Survey Officer assigned for physical assessment.',
-        greeting: '🌱 Hello Shivam Singh! Your 72h SOS claim (PMFBY-CLAIM-2026-MP-0736) for 4.5 Ha Paddy in Ichhawar is under review.'
+        advisoryBody_hi: 'इछावर में 142 मिमी भारी बारिश के बाद खेत में जलभराव हुआ है। भौतिक सर्वेक्षण हेतु अधिकारी नियुक्त किया गया है।',
+        greeting: '🌱 Hello Shivam Singh! Your 72h SOS claim (PMFBY-CLAIM-2026-MP-0736) for 4.5 Ha Paddy in Ichhawar is under review.',
+        greeting_hi: '🌱 नमस्ते शिवम सिंह! इछावर में 4.5 हेक्टेयर धान के लिए आपका 72 घंटे का SOS दावा (PMFBY-CLAIM-2026-MP-0736) समीक्षाधीन है।'
       },
       'atharv.25bce10596': {
         name: 'ATHARV BISHT',
@@ -2796,13 +2854,19 @@
         policyNo: 'PMFBY-2026-MP-25BCE10596',
         healthScore: 84,
         healthTag: 'Optimal Growth Stage',
+        healthTag_hi: 'उत्तम फसल विकास',
         moisture: 48.6,
         claimStatus: 'No Active Claim',
+        claimStatus_hi: 'कोई सक्रिय दावा नहीं',
         claimPayout: '₹0.00 (Normal)',
+        claimPayout_hi: '₹0.00 (सामान्य)',
         coords: [23.0110, 76.8750],
         advisoryTitle: 'Neem Spray Schedule',
+        advisoryTitle_hi: 'जैविक नीम तेल छिड़काव समय सारणी',
         advisoryBody: 'Maize crop entering grain filling stage in Shyampur. Apply organic neem oil spray to prevent stem borer infestation.',
-        greeting: '🌱 Hello Atharv Bisht! I am connected to your Shyampur farm telemetry (2.1 Ha Maize). Ask me anything!'
+        advisoryBody_hi: 'श्यामपुर में मक्का की फसल दाना भरने की अवस्था में है। तना छेदक कीट से बचाव के लिए जैविक नीम तेल का छिड़काव करें।',
+        greeting: '🌱 Hello Atharv Bisht! I am connected to your Shyampur farm telemetry (2.1 Ha Maize). Ask me anything!',
+        greeting_hi: '🌱 नमस्ते अथर्व बिष्ट! मैं आपके श्यामपुर खेत टेलीमेट्री (2.1 हेक्टेयर मक्का) से जुड़ा हूँ। फसल संबंधी कोई भी प्रश्न पूछें!'
       }
     };
 
@@ -2811,11 +2875,11 @@
       if (FARMER_DATABASE[key]) {
         return FARMER_DATABASE[key];
       }
-      
+
       const cleanName = (name || 'FARMER').toUpperCase();
       const cleanCode = code || `25BCE${Math.floor(10000 + Math.random() * 90000)}`;
       const cleanLoc = `${district || 'Sehore'} District, ${state || 'Madhya Pradesh'}`;
-      
+
       const newProfile = {
         name: cleanName,
         regNo: cleanCode,
@@ -2826,15 +2890,21 @@
         policyNo: `PMFBY-2026-${(state || 'MP').substring(0,2).toUpperCase()}-${cleanCode}`,
         healthScore: 87,
         healthTag: 'Healthy Verified Canopy',
+        healthTag_hi: 'सत्यापित स्वस्थ फसल',
         moisture: 52.0,
         claimStatus: 'No Active Claim',
+        claimStatus_hi: 'कोई सक्रिय दावा नहीं',
         claimPayout: '₹0.00 (Registered)',
+        claimPayout_hi: '₹0.00 (पंजीकृत)',
         coords: [23.0185, 76.8821],
         advisoryTitle: 'New Registration Telemetry Active',
+        advisoryTitle_hi: 'नया पंजीकरण खेत निगरानी सक्रिय',
         advisoryBody: 'Welcome to SAMRIDH-AI! PostGIS farm boundary established and Sentinel-2 satellite monitor online.',
-        greeting: `🌱 Hello ${cleanName}! Welcome to SAMRIDH-AI. Your farm profile is active. How can I assist you today?`
+        advisoryBody_hi: 'समृद्धि AI में आपका स्वागत है! खेत की सीमा निर्धारित की गई है तथा उपग्रह निगरानी चालू है।',
+        greeting: `🌱 Hello ${cleanName}! Welcome to SAMRIDH-AI. Your farm profile is active. How can I assist you today?`,
+        greeting_hi: `🌱 नमस्ते ${cleanName}! समृद्धि AI में आपका स्वागत है। आपका खेत प्रोफ़ाइल सक्रिय है।`
       };
-      
+
       FARMER_DATABASE[key] = newProfile;
       return newProfile;
     }
@@ -2862,9 +2932,11 @@
           </div>
         `;
 
+        const isHi = currentLanguage === 'hi';
+
         if (currentUser.surface === 'farmer' || currentUser.role === 'FARMER') {
           const profile = getOrCreateFarmerProfile(currentUser.code, currentUser.name, currentUser.state, currentUser.district);
-          
+
           const fName = document.getElementById('farmer-name');
           if (fName) fName.innerText = `${profile.name} (${profile.regNo})`;
 
@@ -2875,25 +2947,25 @@
           if (fHealth) fHealth.innerText = profile.healthScore;
 
           const fTag = document.getElementById('farmer-health-tag');
-          if (fTag) fTag.innerText = profile.healthTag;
+          if (fTag) fTag.innerText = (isHi && profile.healthTag_hi) ? profile.healthTag_hi : profile.healthTag;
 
           const cStatus = document.getElementById('claim-status-metric');
-          if (cStatus) cStatus.innerText = profile.claimStatus;
+          if (cStatus) cStatus.innerText = (isHi && profile.claimStatus_hi) ? profile.claimStatus_hi : profile.claimStatus;
 
           const cPayout = document.getElementById('claim-payout-metric');
-          if (cPayout) cPayout.innerText = profile.claimPayout;
+          if (cPayout) cPayout.innerText = (isHi && profile.claimPayout_hi) ? profile.claimPayout_hi : profile.claimPayout;
 
           const advTitle = document.getElementById('advisory-title');
-          if (advTitle) advTitle.innerText = profile.advisoryTitle;
+          if (advTitle) advTitle.innerText = (isHi && profile.advisoryTitle_hi) ? profile.advisoryTitle_hi : profile.advisoryTitle;
 
           const advBody = document.getElementById('advisory-body');
-          if (advBody) advBody.innerText = profile.advisoryBody;
+          if (advBody) advBody.innerText = (isHi && profile.advisoryBody_hi) ? profile.advisoryBody_hi : profile.advisoryBody;
 
           const doctorMsg = document.getElementById('crop-doctor-messages');
           if (doctorMsg) {
             doctorMsg.innerHTML = `
               <div class="bg-white p-2.5 rounded-lg shadow-xs border border-gray-200 text-gray-800">
-                ${profile.greeting}
+                ${(isHi && profile.greeting_hi) ? profile.greeting_hi : profile.greeting}
               </div>
             `;
           }
@@ -2904,7 +2976,7 @@
         } else if (currentUser.surface === 'officer' || currentUser.role === 'FIELD_OFFICER' || currentUser.role === 'INSURER') {
           const officerHead = document.getElementById('officer-header-sub');
           if (officerHead) {
-            const roleTitle = currentUser.role === 'INSURER' ? 'PMFBY Insurer' : 'Field Officer / Patwari';
+            const roleTitle = currentUser.role === 'INSURER' ? (isHi ? 'बीमा कंपनी अधिकारी' : 'PMFBY Insurer') : (isHi ? 'पटवारी / कृषि अधिकारी' : 'Field Officer / Patwari');
             officerHead.innerText = `Assigned Jurisdiction: Sehore District, MP • Active User: ${currentUser.name} (${roleTitle}) [Badge: ${currentUser.code}]`;
           }
         } else if (currentUser.surface === 'admin' || currentUser.role === 'SUPER_ADMIN') {
@@ -2918,58 +2990,51 @@
       }
     }
 
-
     function logoutUser() {
       currentUser = null;
       document.getElementById('session-banner').classList.add('hidden');
       document.getElementById('auth-container').innerHTML = `
         <button onclick="openDepartmentLoginModal()" class="bg-[#0A2540] hover:bg-slate-800 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5">
           <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
-          <span>Sign In</span>
+          <span>${currentLanguage === 'hi' ? 'विभाग साइन-इन' : 'Sign In'}</span>
         </button>
         <button onclick="openRegisterModal()" class="bg-[#FFC107] hover:bg-[#FFB300] text-gray-900 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-extrabold text-xs shadow transition-all flex items-center space-x-1.5 border border-amber-400">
           <i data-lucide="user-plus" class="w-3.5 h-3.5 text-gray-900"></i>
-          <span>Register</span>
+          <span>${currentLanguage === 'hi' ? 'पंजीकरण' : 'Register'}</span>
         </button>
       `;
       switchView('landing');
       if (window.lucide) lucide.createIcons();
     }
 
+    function toggleLanguage() {
+      currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
+      document.getElementById('lang-text').innerText = currentLanguage === 'en' ? 'हिन्दी (Hindi)' : 'English';
+      const isHi = currentLanguage === 'hi';
 
-
-
-    function updateSessionUI() {
-      if (currentUser) {
-        document.getElementById('session-banner').classList.remove('hidden');
-        document.getElementById('session-user-name').innerText = currentUser.name;
-        document.getElementById('session-user-role').innerText = currentUser.role;
-        document.getElementById('auth-container').innerHTML = `
-          <div class="flex items-center space-x-2 bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-300">
-            <span class="w-2 h-2 rounded-full bg-green-500"></span>
-            <span class="text-xs font-semibold text-gray-800">${currentUser.name.split(' ')[0]}</span>
-            <button onclick="openDepartmentLoginModal()" class="text-[10px] text-brand-forest ml-1 underline font-bold">Switch</button>
-            <button onclick="openRegisterModal()" class="text-[10px] text-amber-800 ml-1 font-extrabold bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-lg">+ Reg</button>
-          </div>
-        `;
+      // Update Nav Bar Items
+      if (!currentUser) {
+        logoutUser();
+      } else {
+        updateSessionUI();
       }
-    }
 
-    function logoutUser() {
-      currentUser = null;
-      document.getElementById('session-banner').classList.add('hidden');
-      document.getElementById('auth-container').innerHTML = `
-        <button onclick="openDepartmentLoginModal()" class="bg-[#0A2540] hover:bg-slate-800 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5">
-          <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
-          <span>Sign In</span>
-        </button>
-        <button onclick="openRegisterModal()" class="bg-[#FFC107] hover:bg-[#FFB300] text-gray-900 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-extrabold text-xs shadow transition-all flex items-center space-x-1.5 border border-amber-400">
-          <i data-lucide="user-plus" class="w-3.5 h-3.5 text-gray-900"></i>
-          <span>Register</span>
-        </button>
-      `;
-      switchView('landing');
-      lucide.createIcons();
+      const advTitleEl = document.getElementById('advisory-title');
+      if (advTitleEl && !currentUser) {
+        advTitleEl.innerText = isHi ? "तत्काल जल निकासी एवं फसल झुकाव प्रबंधन" : "Drainage Trench Clearance";
+      }
+
+      const advBodyEl = document.getElementById('advisory-body');
+      if (advBodyEl && !currentUser) {
+        advBodyEl.innerText = isHi ? "खेत के निचले हिस्से में जलभराव है। जड़ों को सड़ने से बचाने के लिए नालियों को खोलकर पानी निकालें।" : "Heavy precipitation expected. Clear peripheral field drainage trenches to prevent root-zone hypoxia in lower parcel.";
+      }
+
+      const inputDoctor = document.getElementById('crop-doctor-input');
+      if (inputDoctor) {
+        inputDoctor.placeholder = isHi ? "अपना प्रश्न लिखें (उदा. फसल पीली क्यों पड़ रही है?)..." : "Type question (उदा. फसल पीली क्यों है?)...";
+      }
+
+      if (window.lucide) lucide.createIcons();
     }
 
     function requireAuthOrSwitch(surface) {
