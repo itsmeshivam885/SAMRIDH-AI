@@ -2776,37 +2776,25 @@
 
         if (window.lucide) lucide.createIcons();
       }
-    }CE10240!Sec2026' },
-          'rakhi.25bce10780': { name: 'RAKHI TYAGI', role: 'SUPER_ADMIN', surface: 'admin', pass: 'Rakhi#25BCE10780!Sec2026' },
-        };
-
-        const matched = demoMap[username.toLowerCase()];
-        if (matched && password === matched.pass) {
-          currentUser = {
-            name: matched.name,
-            role: `${matched.role} (${username})`,
-            code: username,
-            surface: matched.surface
-          };
-          updateSessionUI();
-          closeModal('modal-dept-login');
-          switchView(matched.surface);
-        } else {
-          showLoginError("Invalid username or password");
-        }
-      }
     }
 
-    function showLoginError(message) {
-      const errBox = document.getElementById('login-error-alert');
-      const errText = document.getElementById('login-error-message');
-      if (errBox && errText) {
-        errText.innerText = message;
-        errBox.classList.remove('hidden');
-      } else {
-        alert("❌ " + message);
-      }
+    function logoutUser() {
+      currentUser = null;
+      document.getElementById('session-banner').classList.add('hidden');
+      document.getElementById('auth-container').innerHTML = `
+        <button onclick="openDepartmentLoginModal()" class="bg-[#0A2540] hover:bg-slate-800 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5">
+          <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+          <span>Sign In</span>
+        </button>
+        <button onclick="openRegisterModal()" class="bg-[#FFC107] hover:bg-[#FFB300] text-gray-900 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-extrabold text-xs shadow transition-all flex items-center space-x-1.5 border border-amber-400">
+          <i data-lucide="user-plus" class="w-3.5 h-3.5 text-gray-900"></i>
+          <span>Register</span>
+        </button>
+      `;
+      switchView('landing');
+      if (window.lucide) lucide.createIcons();
     }
+
 
 
 
