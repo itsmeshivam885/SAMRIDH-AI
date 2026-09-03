@@ -36,3 +36,27 @@ class TokenResponse(BaseModel):
     role: str
     redirect_url: Optional[str] = None
     preferred_language: str = "en"
+
+
+class RegisterRequest(BaseModel):
+    username: str
+    full_name: str
+    registration_no: str
+    role: str = "FARMER"
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    state: Optional[str] = None
+    district: Optional[str] = None
+    stakeholder: Optional[str] = None
+    category: Optional[str] = None
+    designation: Optional[str] = None
+    generated_password: Optional[str] = None
+
+
+class RegisterResponse(BaseModel):
+    success: bool
+    username: str
+    full_name: str
+    role: str
+    docket_no: str
+    message: str
