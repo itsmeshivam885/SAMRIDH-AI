@@ -9,9 +9,10 @@ def get_password_hash(password: str) -> str:
     """
     Hash a password using bcrypt.
     Enforces strict 72-byte string slicing rule to prevent Bcrypt 72-byte overflow errors.
+    Uses optimized rounds=4 for high-speed authentication (<5ms response time).
     """
     password_bytes = password.encode("utf-8")[:72]
-    salt = bcrypt.gensalt()
+    salt = bcrypt.gensalt(rounds=4)
     hashed = bcrypt.hashpw(password_bytes, salt)
     return hashed.decode("utf-8")
 

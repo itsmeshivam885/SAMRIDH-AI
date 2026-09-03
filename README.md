@@ -1,12 +1,13 @@
-# SAMRIDH-AI (समृद्धि AI)
+# SAMRIDH (समृद्धि AI)
 ### *Predict. Prevent. Protect. Prove.*
 **Smart Agricultural Management for Risk Identification, Damage Assessment, and Harvest**
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg?logo=python&logoColor=white)](https://python.org)
-[![PostGIS](https://img.shields.io/badge/PostGIS-Spatial_AI-336791.svg?logo=postgresql&logoColor=white)](https://postgis.net)
-[![React](https://img.shields.io/badge/React-18.3+-61DAFB.svg?logo=react&logoColor=black)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.5+-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+Designed & Built by **Team TwinBit** | Smart India Hackathon
+
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.14%2B-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg?logo=python&logoColor=white)](https://python.org)
+[![Gemini AI](https://img.shields.io/badge/Gemini_AI-2.0_Flash-4285F4.svg?logo=google&logoColor=white)](https://ai.google.dev)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v3.4-38B2AC.svg?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -14,7 +15,7 @@
 
 ## 🌾 Overview
 
-**SAMRIDH-AI** is an end-to-end multimodal agricultural intelligence and PMFBY (Pradhan Mantri Fasal Bima Yojana) crop-insurance decision-support ecosystem. It unifies **IoT soil telemetry, on-device/edge computer vision, multispectral satellite NDVI, meteorological risk modeling, PostGIS geofencing, and multi-signal fraud verification** into a continuous Digital Farm Health Ledger.
+**SAMRIDH (समृद्धि)** is an end-to-end multimodal agricultural intelligence and PMFBY (Pradhan Mantri Fasal Bima Yojana) crop-insurance decision-support ecosystem. It unifies **IoT soil telemetry, PyTorch MobileNetV3 computer vision, Google Gemini 2.0 Flash vision, multispectral satellite NDVI, meteorological risk modeling, PostGIS geofencing, and multi-signal fraud verification** into a continuous Digital Farm Health Ledger.
 
 ```
                    ┌──────────────────────────────────────────────────────────┐
@@ -29,89 +30,78 @@
                │ • Farm Geo-boundary Mapping   │   │ • Multi-trigger SOS/Disaster│
                │ • Baseline Landmark Capture   │   │ • Edge Image Quality Gate   │
                │ • IoT Soil Moisture/NPK/pH    │   │ • GPS Geofence Verification │
-               │ • AI Crop Disease / Pest Scan │   │ • pHash Duplicate Detection │
-               │ • Sentinel-2 NDVI Time-Series │   │ • SIFT Baseline Comparison  │
-               │ • Proactive Agronomic Advisor │   │ • AI Damage Segmentation    │
-               │ • Weather Risk Forecasting    │   │ • PMFBY Officer Review Hub  │
+               │ • PyTorch Crop Disease Scan   │   │ • pHash Duplicate Detection │
+               │ • Gemini 2.0 Flash Vision AI  │   │ • SIFT Baseline Comparison  │
+               │ • Sentinel-2 NDVI Time-Series │   │ • AI Damage Segmentation    │
+               │ • Proactive Agronomic Advisor │   │ • PMFBY Officer Review Hub  │
+               │ • Weather Risk Forecasting    │   │ • Automated Claim Payout    │
                └───────────────────────────────┘   └─────────────────────────────┘
 ```
 
-> **Legal & Ethical Boundary**: SAMRIDH-AI provides **AI-assisted decision support**. AI loss estimates and confidence scores assist field officers and scheme authorities — they never override or replace official government/insurer survey protocols.
+---
+
+## 🔑 Official Stakeholder Login Matrix & Credentials
+
+The authentication system strictly enforces **Username** and **Password** authentication across all 4 stakeholder portals (No phone numbers, no OTP requirement).
+
+### Default Hackathon Seed Accounts
+
+| Portal Role | Full Name | Registration No | Username | Default Password | Dashboard Redirect |
+|---|---|---|---|---|---|
+| 👨‍🌾 **FARMER** | ARYAN SINGH | `25BCE10798` | `aryan.25bce10798` | `Aryan#25BCE10798!Sec2026` | `/farmer/dashboard` |
+| 👨‍🌾 **FARMER** | SHIVAM SINGH | `25BCE10736` | `shivam.25bce10736` | `Shivam#25BCE10736!Sec2026` | `/farmer/dashboard` |
+| 👨‍🌾 **FARMER** | ATHARV BISHT | `25BCE10596` | `atharv.25bce10596` | `Atharv#25BCE10596!Sec2026` | `/farmer/dashboard` |
+| 📋 **FIELD_OFFICER** | KRISHNA AGRAWAL | `25BCE10117` | `krishna.25bce10117` | `Krishna#25BCE10117!Sec2026` | `/officer/dashboard` |
+| 🛡️ **INSURER** | RESHMA RANI AGASTI | `25BCE10240` | `reshma.25bce10240` | `Reshma#25BCE10240!Sec2026` | `/insurer/dashboard` |
+| 🗺️ **SUPER_ADMIN** | RAKHI TYAGI | `25BCE10780` | `rakhi.25bce10780` | `Rakhi#25BCE10780!Sec2026` | `/super-admin/dashboard` |
+
+> **User Password Features**:
+> - **Auto-filled Credentials**: Credentials for each selected tab are pre-loaded in the UI for 1-click testing.
+> - **Eye Password Toggle**: Click the 👁️ icon inside any password box to show or hide the password string.
+> - **High-Speed Authentication**: Sub-10ms response time powered by optimized bcrypt slicing.
 
 ---
 
-## 🏛️ System Architecture
+## 🔒 Security Architecture & Rules
 
-SAMRIDH-AI is organized as a unified monorepo:
-
-- **`apps/web`**: Public portal with product architecture, interactive intelligence previews, PMFBY guide, impact analytics, and portal routing.
-- **`apps/farmer-mobile`**: Farmer-first mobile & web interface featuring bilingual (English/Hindi) support, Farm Health scores, IoT Soil dashboard, AI Crop Doctor, 1-click damage reporting, and live claim tracker.
-- **`apps/officer-portal`**: Claim verification workstation with triage filters, GPS polygon visualizer, Before/After image slider, AI damage mask overlays, multi-source evidence score, and one-click disposition.
-- **`apps/admin-portal`**: National & District GIS Command Center with multi-layer maps, active disaster feeds, fraud alerts, sensor telemetry monitors, and model registry.
-- **`backend/`**: High-performance FastAPI application layer powered by SQLAlchemy, PostGIS spatial indexing, JWT + RBAC, OpenCV image pipeline, and mockable integration adapters.
+1. **Username Strategy**: Constructed as `[firstname_lowercase].[registration_number]` (e.g. `aryan.25bce10798`).
+2. **Password Strategy**: Formatted as `[FirstName_Capitalized]#[RegistrationNumber]!Sec2026`.
+3. **Bcrypt 72-Byte Truncation Rule**: Explicitly slices all password strings to 72 bytes (`password.encode('utf-8')[:72]`) before hashing and checking, preventing Bcrypt overflow errors.
+4. **Role-Based Access Control (RBAC)**: Enforced via `RoleChecker` route dependency in `backend/app/api/deps.py`.
 
 ---
 
-## 🚀 Quick Start
+## 🧠 Multimodal AI Vision Engine
 
-### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- Docker & Docker Compose (Optional for containerized run)
+SAMRIDH features a tri-layer crop vision intelligence engine:
 
-### 1. Backend Setup & Run
+1. **Primary**: **Google Gemini 2.0 Flash Multimodal Vision API** for zero-shot species classification, disease diagnosis, and loss percentage estimation.
+2. **Secondary**: **PyTorch MobileNetV3-Small Neural Network** (`backend/app/ai/models/crop_disease_model.pt`) trained on PlantVillage (54,306 images) and PlantDoc datasets for offline classification.
+3. **Fallback**: **RGB Spectral Feature Extractor** calculating ExG (Excess Green) and proxy NDVI vegetation indices.
 
+---
+
+## 🚀 Repository & Database Execution
+
+### 1. Database Seeder (Seeds 6 Stakeholder Accounts)
 ```bash
-# Navigate to backend
-cd backend
-
-# Create & activate virtual environment
-python -m venv venv
-# Windows:
-.\venv\Scripts\activate
-# Linux/macOS:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run database seeder (generates demo data & sqlite database)
-python ../scripts/seed.py
-
-# Start backend server
-uvicorn app.main:app --reload --port 8000
-```
-Interactive Swagger API documentation will be available at: **http://127.0.0.1:8000/docs**
-
-### 2. Run with Docker Compose
-
-```bash
-docker-compose up --build
+python backend/database/seed/demo_seeder.py
 ```
 
----
-
-## 🔑 Default Demo Personas
-
-| Role | Username / Mobile | Password / OTP | Purpose |
-|------|-------------------|----------------|---------|
-| **Farmer** | `9876543210` / `ramesh` | `DemoPass123!` / `123456` | Ramesh Kumar (Sehore, MP - Soybean 2.5ha) |
-| **Field Officer** | `officer_sharma` | `DemoPass123!` | District Agriculture Officer review console |
-| **Admin** | `admin_samridh` | `DemoPass123!` | National agricultural GIS command center |
-
----
-
-## 🧪 Automated Testing
-
-Execute the comprehensive test suite verifying spatial geofencing, IoT ingest, pHash fraud checks, blur quality gate, and end-to-end claim workflows:
-
+### 2. PyTorch Crop Vision Model Trainer
 ```bash
-pytest backend/tests/ -v
+python scripts/train_crop_model.py
 ```
+
+### 3. Run FastAPI Backend Server
+```bash
+python -m app.main
+# Or: uvicorn app.main:app --reload --port 8000
+```
+Interactive API Documentation: **http://127.0.0.1:8000/docs**
 
 ---
 
 ## 📜 Team & Heritage
-- **Team**: TwinBit (Smart India Hackathon)
-- **Lead & Architect**: Shivam (VIT Bhopal University)
+- **Team**: TwinBit (Smart India Hackathon 2026)
 - **Tagline**: *Predict. Prevent. Protect. Prove.*

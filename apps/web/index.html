@@ -959,7 +959,7 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
         <div>
           <h2 class="text-xl font-bold text-brand-forest">PMFBY Joint Survey & Loss Assessor Workbench</h2>
-          <p class="text-xs text-brand-muted">District: Sehore, MP • Assigned Officer: V. K. Sharma (Badge: OFFICER-MP-SEH-01)</p>
+          <p class="text-xs text-brand-muted" id="officer-header-sub">District: Sehore, MP • Assigned Officer: KRISHNA AGRAWAL (FIELD_OFFICER)</p>
         </div>
         <div class="flex items-center space-x-2">
           <span class="text-xs font-semibold bg-brand-gold/20 text-brand-forest px-3 py-1 rounded-full border border-brand-gold/40">
@@ -1058,7 +1058,7 @@
     <section id="view-admin" class="hidden space-y-6">
       <div class="border-b border-gray-200 pb-4">
         <h2 class="text-xl font-bold text-brand-forest">National & State Agronomy Command Center</h2>
-        <p class="text-xs text-brand-muted">Real-time geospatial analytics, active disaster footprints, and scheme integrity monitoring.</p>
+        <p class="text-xs text-brand-muted" id="admin-header-sub">Real-time geospatial analytics, active disaster footprints, and scheme integrity monitoring.</p>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -1942,14 +1942,14 @@
       <div id="login-panel-farmer" class="space-y-4 text-xs">
         <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200 text-emerald-900 space-y-1">
           <span class="font-bold block">🌾 Farmer Account Sign In</span>
-          <span class="text-[11px] text-emerald-800">Enter your assigned username and password to access the portal.</span>
+          <span class="text-[11px] text-emerald-800">Auto-filled with verified credentials. Click Sign In or choose a user below.</span>
         </div>
 
         <div>
           <label class="font-bold text-gray-700 block mb-1">Username (उपयोगकर्ता नाम)</label>
           <input id="farmer-user-input" type="text" value="aryan.25bce10798" placeholder="e.g. aryan.25bce10798" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brand-forest">
           <div class="flex gap-1.5 mt-1.5 text-[10px] text-emerald-700">
-            <span>Quick Select:</span>
+            <span>Select Farmer:</span>
             <button type="button" onclick="setLoginCredentials('farmer', 'aryan.25bce10798', 'Aryan#25BCE10798!Sec2026')" class="underline hover:font-bold">Aryan</button> •
             <button type="button" onclick="setLoginCredentials('farmer', 'shivam.25bce10736', 'Shivam#25BCE10736!Sec2026')" class="underline hover:font-bold">Shivam</button> •
             <button type="button" onclick="setLoginCredentials('farmer', 'atharv.25bce10596', 'Atharv#25BCE10596!Sec2026')" class="underline hover:font-bold">Atharv</button>
@@ -1958,7 +1958,12 @@
 
         <div>
           <label class="font-bold text-gray-700 block mb-1">Password (पासवर्ड)</label>
-          <input id="farmer-pass-input" type="password" value="Aryan#25BCE10798!Sec2026" placeholder="Password" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brand-forest">
+          <div class="relative">
+            <input id="farmer-pass-input" type="password" value="Aryan#25BCE10798!Sec2026" placeholder="Password" class="w-full pl-3.5 pr-10 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brand-forest">
+            <button type="button" onclick="togglePasswordVisibility('farmer-pass-input', 'eye-icon-farmer')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 focus:outline-none">
+              <i id="eye-icon-farmer" data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
         </div>
 
         <button onclick="performRoleLogin('farmer')" class="w-full py-3 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-xl text-xs shadow transition-all">
@@ -1980,7 +1985,12 @@
 
         <div>
           <label class="font-bold text-gray-700 block mb-1">Password</label>
-          <input id="officer-pass-input" type="password" value="Krishna#25BCE10117!Sec2026" placeholder="Password" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-blue-600">
+          <div class="relative">
+            <input id="officer-pass-input" type="password" value="Krishna#25BCE10117!Sec2026" placeholder="Password" class="w-full pl-3.5 pr-10 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-blue-600">
+            <button type="button" onclick="togglePasswordVisibility('officer-pass-input', 'eye-icon-officer')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 focus:outline-none">
+              <i id="eye-icon-officer" data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
         </div>
 
         <button onclick="performRoleLogin('officer')" class="w-full py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs shadow transition-all">
@@ -2002,7 +2012,12 @@
 
         <div>
           <label class="font-bold text-gray-700 block mb-1">Password</label>
-          <input id="insurer-pass-input" type="password" value="Reshma#25BCE10240!Sec2026" placeholder="Password" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-purple-600">
+          <div class="relative">
+            <input id="insurer-pass-input" type="password" value="Reshma#25BCE10240!Sec2026" placeholder="Password" class="w-full pl-3.5 pr-10 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-purple-600">
+            <button type="button" onclick="togglePasswordVisibility('insurer-pass-input', 'eye-icon-insurer')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 focus:outline-none">
+              <i id="eye-icon-insurer" data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
         </div>
 
         <button onclick="performRoleLogin('insurance')" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl text-xs shadow transition-all">
@@ -2024,7 +2039,12 @@
 
         <div>
           <label class="font-bold text-gray-700 block mb-1">Password</label>
-          <input id="admin-pass-input" type="password" value="Rakhi#25BCE10780!Sec2026" placeholder="Password" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-amber-600">
+          <div class="relative">
+            <input id="admin-pass-input" type="password" value="Rakhi#25BCE10780!Sec2026" placeholder="Password" class="w-full pl-3.5 pr-10 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-amber-600">
+            <button type="button" onclick="togglePasswordVisibility('admin-pass-input', 'eye-icon-admin')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 focus:outline-none">
+              <i id="eye-icon-admin" data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
         </div>
 
         <button onclick="performRoleLogin('admin')" class="w-full py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-xl text-xs shadow transition-all">
@@ -2537,24 +2557,6 @@
 
       const docketNo = `REG-PMFBY-2026-${state.substring(0,2).toUpperCase()}-${Math.floor(100000 + Math.random() * 900000)}`;
 
-      try {
-        await fetch(`${API_BASE}/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: code.toLowerCase().replace(/[^a-z0-9_]/g, '_') || `user_${phone}`,
-            phone_number: phone,
-            full_name: fullName,
-            password: password,
-            email: email,
-            role: mappedRole,
-            preferred_language: currentLanguage
-          })
-        });
-      } catch (err) {
-        console.warn("Backend API dispatch fallback active:", err);
-      }
-
       currentUser = {
         name: `${fullName} (${designation})`,
         role: `${stakeholder} • ${userCat}`,
@@ -2576,6 +2578,7 @@
     }
 
     function openDepartmentLoginModal(defaultTab = 'farmer') {
+
       const errBox = document.getElementById('login-error-alert');
       if (errBox) errBox.classList.add('hidden');
       selectLoginTab(defaultTab);
@@ -2585,32 +2588,69 @@
     function selectLoginTab(tab) {
       const errBox = document.getElementById('login-error-alert');
       if (errBox) errBox.classList.add('hidden');
+
+      const defaultCredentials = {
+        farmer: { user: 'aryan.25bce10798', pass: 'Aryan#25BCE10798!Sec2026' },
+        officer: { user: 'krishna.25bce10117', pass: 'Krishna#25BCE10117!Sec2026' },
+        insurance: { user: 'reshma.25bce10240', pass: 'Reshma#25BCE10240!Sec2026' },
+        admin: { user: 'rakhi.25bce10780', pass: 'Rakhi#25BCE10780!Sec2026' },
+      };
+
       ['farmer', 'officer', 'insurance', 'admin'].forEach(t => {
         const btn = document.getElementById(`tab-btn-${t}`);
         const panel = document.getElementById(`login-panel-${t}`);
         if (t === tab) {
           btn.className = "py-2 px-1 rounded-xl transition-all bg-white text-brand-forest shadow-xs font-bold";
           panel.classList.remove('hidden');
+
+          const creds = defaultCredentials[t];
+          if (creds) {
+            const inputPrefix = t === 'insurance' ? 'insurer' : t;
+            const uInput = document.getElementById(`${inputPrefix}-user-input`);
+            const pInput = document.getElementById(`${inputPrefix}-pass-input`);
+            if (uInput) uInput.value = creds.user;
+            if (pInput) pInput.value = creds.pass;
+          }
         } else {
           btn.className = "py-2 px-1 rounded-xl transition-all text-gray-600 hover:text-brand-forest";
           panel.classList.add('hidden');
         }
       });
+      if (window.lucide) lucide.createIcons();
     }
 
+
     function setLoginCredentials(role, username, password) {
-      document.getElementById(`${role}-user-input`).value = username;
-      document.getElementById(`${role}-pass-input`).value = password;
+      const inputPrefix = role === 'insurance' ? 'insurer' : role;
+      const uInput = document.getElementById(`${inputPrefix}-user-input`);
+      const pInput = document.getElementById(`${inputPrefix}-pass-input`);
+      if (uInput) uInput.value = username;
+      if (pInput) pInput.value = password;
       const errBox = document.getElementById('login-error-alert');
       if (errBox) errBox.classList.add('hidden');
+    }
+
+    function togglePasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        if (icon) icon.setAttribute('data-lucide', 'eye');
+      }
+      if (window.lucide) lucide.createIcons();
     }
 
     async function performRoleLogin(roleKey) {
       const errBox = document.getElementById('login-error-alert');
       if (errBox) errBox.classList.add('hidden');
 
-      let userInputId = `${roleKey}-user-input`;
-      let passInputId = `${roleKey}-pass-input`;
+      const inputPrefix = roleKey === 'insurance' ? 'insurer' : roleKey;
+      let userInputId = `${inputPrefix}-user-input`;
+      let passInputId = `${inputPrefix}-pass-input`;
 
       const usernameInput = document.getElementById(userInputId);
       const passwordInput = document.getElementById(passInputId);
@@ -2641,7 +2681,6 @@
         const token = payload.access_token;
         const fullName = payload.full_name || username;
         const role = payload.role || "FARMER";
-        const redirectUrl = payload.redirect_url || "/farmer/dashboard";
 
         if (token) localStorage.setItem('auth_token', token);
         localStorage.setItem('user_role', role);
@@ -2652,7 +2691,7 @@
 
         currentUser = {
           name: fullName,
-          role: `${role.replace('_', ' ')} (${username})`,
+          role: role,
           code: username,
           surface: surface
         };
@@ -2662,13 +2701,82 @@
         switchView(surface);
 
       } catch (err) {
-        // Direct local authentication fallback for demo offline environment
+        // High-speed local authentication fallback for offline demo environment
         const demoMap = {
           'aryan.25bce10798': { name: 'ARYAN SINGH', role: 'FARMER', surface: 'farmer', pass: 'Aryan#25BCE10798!Sec2026' },
           'shivam.25bce10736': { name: 'SHIVAM SINGH', role: 'FARMER', surface: 'farmer', pass: 'Shivam#25BCE10736!Sec2026' },
           'atharv.25bce10596': { name: 'ATHARV BISHT', role: 'FARMER', surface: 'farmer', pass: 'Atharv#25BCE10596!Sec2026' },
           'krishna.25bce10117': { name: 'KRISHNA AGRAWAL', role: 'FIELD_OFFICER', surface: 'officer', pass: 'Krishna#25BCE10117!Sec2026' },
           'reshma.25bce10240': { name: 'RESHMA RANI AGASTI', role: 'INSURER', surface: 'officer', pass: 'Reshma#25BCE10240!Sec2026' },
+          'rakhi.25bce10780': { name: 'RAKHI TYAGI', role: 'SUPER_ADMIN', surface: 'admin', pass: 'Rakhi#25BCE10780!Sec2026' },
+        };
+
+        const matched = demoMap[username.toLowerCase()];
+        if (matched && password === matched.pass) {
+          currentUser = {
+            name: matched.name,
+            role: matched.role,
+            code: username,
+            surface: matched.surface
+          };
+          updateSessionUI();
+          closeModal('modal-dept-login');
+          switchView(matched.surface);
+        } else {
+          showLoginError("Invalid username or password");
+        }
+      }
+    }
+
+    function showLoginError(message) {
+      const errBox = document.getElementById('login-error-alert');
+      const errText = document.getElementById('login-error-message');
+      if (errBox && errText) {
+        errText.innerText = message;
+        errBox.classList.remove('hidden');
+      } else {
+        alert("❌ " + message);
+      }
+    }
+
+    function updateSessionUI() {
+      if (currentUser) {
+        const sBanner = document.getElementById('session-banner');
+        if (sBanner) sBanner.classList.remove('hidden');
+
+        const sName = document.getElementById('session-user-name');
+        if (sName) sName.innerText = currentUser.name;
+
+        const sRole = document.getElementById('session-user-role');
+        if (sRole) sRole.innerText = `${currentUser.role} • ID: ${currentUser.code}`;
+
+        // Top Navigation Header Active User Badge
+        document.getElementById('auth-container').innerHTML = `
+          <div class="flex items-center space-x-2 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shadow-xs">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <div class="text-left">
+              <span class="text-xs font-extrabold text-emerald-950 block leading-none">${currentUser.name}</span>
+              <span class="text-[9px] font-extrabold text-emerald-700 block mt-0.5 uppercase">${currentUser.role}</span>
+            </div>
+            <button onclick="openDepartmentLoginModal()" class="text-[10px] text-brand-forest ml-2 underline font-bold hover:text-emerald-800">Switch</button>
+          </div>
+        `;
+
+        // Update Farmer Dashboard Header Name & Role Badge
+        const farmerNameEl = document.getElementById('farmer-name');
+        if (farmerNameEl) farmerNameEl.innerText = `${currentUser.name} (${currentUser.role})`;
+
+        // Update Officer Dashboard Header Name & Role Badge
+        const officerHeadEl = document.getElementById('officer-header-sub');
+        if (officerHeadEl) officerHeadEl.innerText = `Assigned Jurisdiction: Sehore District, MP • Logged in User: ${currentUser.name} (${currentUser.role}) [Reg: ${currentUser.code}]`;
+
+        // Update Admin Dashboard Header Name & Role Badge
+        const adminHeadEl = document.getElementById('admin-header-sub');
+        if (adminHeadEl) adminHeadEl.innerText = `National GIS Command Center • Logged in Admin: ${currentUser.name} (${currentUser.role}) [Reg: ${currentUser.code}]`;
+
+        if (window.lucide) lucide.createIcons();
+      }
+    }CE10240!Sec2026' },
           'rakhi.25bce10780': { name: 'RAKHI TYAGI', role: 'SUPER_ADMIN', surface: 'admin', pass: 'Rakhi#25BCE10780!Sec2026' },
         };
 
