@@ -1911,10 +1911,16 @@
           </div>
           <div>
             <h3 class="font-bold text-lg text-brand-forest">Department & Role Sign In</h3>
-            <p class="text-xs text-brand-muted">Select department and enter verified credentials</p>
+            <p class="text-xs text-brand-muted">Select role and enter verified username & password</p>
           </div>
         </div>
         <button onclick="closeModal('modal-dept-login')" class="text-gray-400 hover:text-gray-600 font-bold p-1">✕</button>
+      </div>
+
+      <!-- Login Error Alert Container -->
+      <div id="login-error-alert" class="hidden p-3.5 bg-red-50 border border-red-200 text-red-700 rounded-2xl text-xs font-semibold flex items-center space-x-2">
+        <span class="text-base">⚠️</span>
+        <span id="login-error-message">Invalid username or password</span>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-gray-100 p-1.5 rounded-2xl text-xs font-semibold text-center">
@@ -1935,80 +1941,94 @@
       <!-- Farmer -->
       <div id="login-panel-farmer" class="space-y-4 text-xs">
         <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200 text-emerald-900 space-y-1">
-          <span class="font-bold block">🌾 Farmer Mobile OTP Login</span>
-          <span class="text-[11px] text-emerald-800">Enter registered 10-digit mobile number to receive OTP.</span>
+          <span class="font-bold block">🌾 Farmer Account Sign In</span>
+          <span class="text-[11px] text-emerald-800">Enter your assigned username and password to access the portal.</span>
         </div>
 
         <div>
-          <label class="font-bold text-gray-700 block mb-1">Mobile Number (मोबाइल नंबर)</label>
-          <input id="farmer-phone-input" type="text" value="9876543210" placeholder="10-digit mobile number" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brand-forest">
+          <label class="font-bold text-gray-700 block mb-1">Username (उपयोगकर्ता नाम)</label>
+          <input id="farmer-user-input" type="text" value="aryan.25bce10798" placeholder="e.g. aryan.25bce10798" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brand-forest">
+          <div class="flex gap-1.5 mt-1.5 text-[10px] text-emerald-700">
+            <span>Quick Select:</span>
+            <button type="button" onclick="setLoginCredentials('farmer', 'aryan.25bce10798', 'Aryan#25BCE10798!Sec2026')" class="underline hover:font-bold">Aryan</button> •
+            <button type="button" onclick="setLoginCredentials('farmer', 'shivam.25bce10736', 'Shivam#25BCE10736!Sec2026')" class="underline hover:font-bold">Shivam</button> •
+            <button type="button" onclick="setLoginCredentials('farmer', 'atharv.25bce10596', 'Atharv#25BCE10596!Sec2026')" class="underline hover:font-bold">Atharv</button>
+          </div>
         </div>
 
-        <div id="otp-input-container" class="space-y-1">
-          <label class="font-bold text-gray-700 block mb-1">Enter 6-Digit OTP (ओटीपी दर्ज करें)</label>
-          <input id="farmer-otp-input" type="text" value="123456" placeholder="123456" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brand-forest tracking-widest font-mono">
-          <span class="text-[10px] text-gray-500">Demo OTP: <strong>123456</strong></span>
+        <div>
+          <label class="font-bold text-gray-700 block mb-1">Password (पासवर्ड)</label>
+          <input id="farmer-pass-input" type="password" value="Aryan#25BCE10798!Sec2026" placeholder="Password" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-brand-forest">
         </div>
 
-        <button onclick="performFarmerLogin()" class="w-full py-3 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-xl text-xs shadow transition-all">
-          Verify & Enter Farmer App &rarr;
+        <button onclick="performRoleLogin('farmer')" class="w-full py-3 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-xl text-xs shadow transition-all">
+          Sign In to Farmer Portal &rarr;
         </button>
       </div>
 
-      <!-- Officer -->
+      <!-- Field Officer -->
       <div id="login-panel-officer" class="hidden space-y-4 text-xs">
         <div class="bg-blue-50 p-3.5 rounded-2xl border border-blue-200 text-blue-900 space-y-1">
-          <span class="font-bold block">📋 District Agriculture Department / Patwari</span>
-          <span class="text-[11px] text-blue-800">Assigned Jurisdiction: Sehore District, Madhya Pradesh</span>
+          <span class="font-bold block">📋 Field Officer / Patwari Sign In</span>
+          <span class="text-[11px] text-blue-800">District Agriculture Department verification & loss assessment desk</span>
         </div>
+
         <div>
-          <label class="font-bold text-gray-700 block mb-1">Officer Username / Badge Number</label>
-          <input id="officer-user-input" type="text" value="officer_sharma" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
+          <label class="font-bold text-gray-700 block mb-1">Officer Username</label>
+          <input id="officer-user-input" type="text" value="krishna.25bce10117" placeholder="krishna.25bce10117" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-blue-600">
         </div>
+
         <div>
           <label class="font-bold text-gray-700 block mb-1">Password</label>
-          <input id="officer-pass-input" type="password" value="DemoPass123!" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
+          <input id="officer-pass-input" type="password" value="Krishna#25BCE10117!Sec2026" placeholder="Password" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-blue-600">
         </div>
-        <button onclick="performOfficerLogin()" class="w-full py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs shadow transition-all">
-          Login to Officer Review Console &rarr;
+
+        <button onclick="performRoleLogin('officer')" class="w-full py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl text-xs shadow transition-all">
+          Sign In to Officer Console &rarr;
         </button>
       </div>
 
       <!-- Insurer -->
       <div id="login-panel-insurance" class="hidden space-y-4 text-xs">
         <div class="bg-purple-50 p-3.5 rounded-2xl border border-purple-200 text-purple-900 space-y-1">
-          <span class="font-bold block">🛡️ PMFBY Insurance Company Desk</span>
-          <span class="text-[11px] text-purple-800">Agriculture Insurance Company of India (AIC) Gateway</span>
+          <span class="font-bold block">🛡️ PMFBY Insurer Sign In</span>
+          <span class="text-[11px] text-purple-800">Agriculture Insurance Company (AIC) claims workstation</span>
         </div>
+
         <div>
-          <label class="font-bold text-gray-700 block mb-1">Insurer Email / Portal ID</label>
-          <input type="text" value="aic.assessor@pmfby.gov.in" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
+          <label class="font-bold text-gray-700 block mb-1">Insurer Username</label>
+          <input id="insurer-user-input" type="text" value="reshma.25bce10240" placeholder="reshma.25bce10240" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-purple-600">
         </div>
+
         <div>
-          <label class="font-bold text-gray-700 block mb-1">Access Token / Password</label>
-          <input type="password" value="DemoPass123!" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
+          <label class="font-bold text-gray-700 block mb-1">Password</label>
+          <input id="insurer-pass-input" type="password" value="Reshma#25BCE10240!Sec2026" placeholder="Password" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-purple-600">
         </div>
-        <button onclick="performInsuranceLogin()" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl text-xs shadow transition-all">
-          Open Insurance Claim Workstation &rarr;
+
+        <button onclick="performRoleLogin('insurance')" class="w-full py-3 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl text-xs shadow transition-all">
+          Sign In to Insurance Workstation &rarr;
         </button>
       </div>
 
       <!-- Admin -->
       <div id="login-panel-admin" class="hidden space-y-4 text-xs">
         <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-200 text-amber-900 space-y-1">
-          <span class="font-bold block">🗺️ State / National Agronomy Administrator</span>
-          <span class="text-[11px] text-amber-800">Ministry of Agriculture & Farmers Welfare GIS Grid</span>
+          <span class="font-bold block">🗺️ Super Admin Sign In</span>
+          <span class="text-[11px] text-amber-800">National Agronomy Administration & GIS Command Center</span>
         </div>
+
         <div>
-          <label class="font-bold text-gray-700 block mb-1">Admin Username</label>
-          <input id="admin-user-input" type="text" value="admin_samridh" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
+          <label class="font-bold text-gray-700 block mb-1">Super Admin Username</label>
+          <input id="admin-user-input" type="text" value="rakhi.25bce10780" placeholder="rakhi.25bce10780" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-amber-600">
         </div>
+
         <div>
-          <label class="font-bold text-gray-700 block mb-1">Master Password</label>
-          <input id="admin-pass-input" type="password" value="DemoPass123!" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm">
+          <label class="font-bold text-gray-700 block mb-1">Password</label>
+          <input id="admin-pass-input" type="password" value="Rakhi#25BCE10780!Sec2026" placeholder="Password" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:border-amber-600">
         </div>
-        <button onclick="performAdminLogin()" class="w-full py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-xl text-xs shadow transition-all">
-          Access National GIS Command Center &rarr;
+
+        <button onclick="performRoleLogin('admin')" class="w-full py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-xl text-xs shadow transition-all">
+          Sign In to National GIS Command Center &rarr;
         </button>
       </div>
 
@@ -2556,11 +2576,15 @@
     }
 
     function openDepartmentLoginModal(defaultTab = 'farmer') {
+      const errBox = document.getElementById('login-error-alert');
+      if (errBox) errBox.classList.add('hidden');
       selectLoginTab(defaultTab);
       openModal('modal-dept-login');
     }
 
     function selectLoginTab(tab) {
+      const errBox = document.getElementById('login-error-alert');
+      if (errBox) errBox.classList.add('hidden');
       ['farmer', 'officer', 'insurance', 'admin'].forEach(t => {
         const btn = document.getElementById(`tab-btn-${t}`);
         const panel = document.getElementById(`login-panel-${t}`);
@@ -2574,33 +2598,109 @@
       });
     }
 
-    function performFarmerLogin() {
-      currentUser = { name: "Ramesh Kumar (रमेश कुमार)", role: "Farmer (किसान)", code: "FARMER-MP-2026-001", surface: "farmer" };
-      updateSessionUI();
-      closeModal('modal-dept-login');
-      switchView('farmer');
+    function setLoginCredentials(role, username, password) {
+      document.getElementById(`${role}-user-input`).value = username;
+      document.getElementById(`${role}-pass-input`).value = password;
+      const errBox = document.getElementById('login-error-alert');
+      if (errBox) errBox.classList.add('hidden');
     }
 
-    function performOfficerLogin() {
-      currentUser = { name: "V. K. Sharma (District Agriculture Officer)", role: "Field Officer (कृषि अधिकारी)", code: "OFFICER-MP-SEH-01", surface: "officer" };
-      updateSessionUI();
-      closeModal('modal-dept-login');
-      switchView('officer');
+    async function performRoleLogin(roleKey) {
+      const errBox = document.getElementById('login-error-alert');
+      if (errBox) errBox.classList.add('hidden');
+
+      let userInputId = `${roleKey}-user-input`;
+      let passInputId = `${roleKey}-pass-input`;
+
+      const usernameInput = document.getElementById(userInputId);
+      const passwordInput = document.getElementById(passInputId);
+      const username = usernameInput ? usernameInput.value.trim() : '';
+      const password = passwordInput ? passwordInput.value : '';
+
+      if (!username || !password) {
+        showLoginError("Invalid username or password");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          const msg = (errData && (errData.detail || (errData.error && errData.error.message))) || "Invalid username or password";
+          showLoginError(typeof msg === 'string' ? msg : "Invalid username or password");
+          return;
+        }
+
+        const data = await res.json();
+        const payload = data.data || data;
+        const token = payload.access_token;
+        const fullName = payload.full_name || username;
+        const role = payload.role || "FARMER";
+        const redirectUrl = payload.redirect_url || "/farmer/dashboard";
+
+        if (token) localStorage.setItem('auth_token', token);
+        localStorage.setItem('user_role', role);
+
+        let surface = 'farmer';
+        if (role === 'FIELD_OFFICER' || role === 'INSURER') surface = 'officer';
+        else if (role === 'SUPER_ADMIN') surface = 'admin';
+
+        currentUser = {
+          name: fullName,
+          role: `${role.replace('_', ' ')} (${username})`,
+          code: username,
+          surface: surface
+        };
+
+        updateSessionUI();
+        closeModal('modal-dept-login');
+        switchView(surface);
+
+      } catch (err) {
+        // Direct local authentication fallback for demo offline environment
+        const demoMap = {
+          'aryan.25bce10798': { name: 'ARYAN SINGH', role: 'FARMER', surface: 'farmer', pass: 'Aryan#25BCE10798!Sec2026' },
+          'shivam.25bce10736': { name: 'SHIVAM SINGH', role: 'FARMER', surface: 'farmer', pass: 'Shivam#25BCE10736!Sec2026' },
+          'atharv.25bce10596': { name: 'ATHARV BISHT', role: 'FARMER', surface: 'farmer', pass: 'Atharv#25BCE10596!Sec2026' },
+          'krishna.25bce10117': { name: 'KRISHNA AGRAWAL', role: 'FIELD_OFFICER', surface: 'officer', pass: 'Krishna#25BCE10117!Sec2026' },
+          'reshma.25bce10240': { name: 'RESHMA RANI AGASTI', role: 'INSURER', surface: 'officer', pass: 'Reshma#25BCE10240!Sec2026' },
+          'rakhi.25bce10780': { name: 'RAKHI TYAGI', role: 'SUPER_ADMIN', surface: 'admin', pass: 'Rakhi#25BCE10780!Sec2026' },
+        };
+
+        const matched = demoMap[username.toLowerCase()];
+        if (matched && password === matched.pass) {
+          currentUser = {
+            name: matched.name,
+            role: `${matched.role} (${username})`,
+            code: username,
+            surface: matched.surface
+          };
+          updateSessionUI();
+          closeModal('modal-dept-login');
+          switchView(matched.surface);
+        } else {
+          showLoginError("Invalid username or password");
+        }
+      }
     }
 
-    function performInsuranceLogin() {
-      currentUser = { name: "AIC PMFBY Loss Assessor", role: "Insurance Assessor (बीमा मूल्यांकनकर्ता)", code: "AIC-ASSESSOR-04", surface: "officer" };
-      updateSessionUI();
-      closeModal('modal-dept-login');
-      switchView('officer');
+    function showLoginError(message) {
+      const errBox = document.getElementById('login-error-alert');
+      const errText = document.getElementById('login-error-message');
+      if (errBox && errText) {
+        errText.innerText = message;
+        errBox.classList.remove('hidden');
+      } else {
+        alert("❌ " + message);
+      }
     }
 
-    function performAdminLogin() {
-      currentUser = { name: "Rajesh Verma (State Agronomy Coordinator)", role: "State Admin (राज्य नोडल अधिकारी)", code: "ADMIN-MP-NODAL", surface: "admin" };
-      updateSessionUI();
-      closeModal('modal-dept-login');
-      switchView('admin');
-    }
+
 
     function updateSessionUI() {
       if (currentUser) {
