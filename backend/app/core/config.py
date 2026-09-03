@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     DEMO_MODE: bool = True
 
+    # AI Vision API Keys
+    GEMINI_API_KEY: str = ""  # Set in Railway env: GEMINI_API_KEY=your_key
+
     # JWT & Auth
     SECRET_KEY: str = "samridh_ai_super_secret_jwt_signing_key_for_sih_hackathon_demo"
     ALGORITHM: str = "HS256"
