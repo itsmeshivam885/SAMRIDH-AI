@@ -237,7 +237,8 @@
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-2">
         <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        <span>Active Session: <strong id="session-user-name">Ramesh Kumar</strong> (<span id="session-user-role" class="text-brand-gold font-medium">Farmer</span>)</span>
+        <span>Active Session: <strong id="session-user-name">Guest User</strong> (<span id="session-user-role" class="text-brand-gold font-medium">Visitor</span>)</span>
+
       </div>
       <div class="flex items-center space-x-3">
         <button onclick="openDepartmentLoginModal()" class="underline hover:text-brand-gold text-[11px]">Switch Role</button>
@@ -847,8 +848,9 @@
             👨‍🌾
           </div>
           <div>
-            <h2 class="text-xl font-bold" id="farmer-name">Ramesh Kumar (रमेश कुमार)</h2>
-            <p class="text-xs text-white/80" id="farmer-loc">Farm-001 • 2.5 Hectares • Kothri Village, Sehore (MP) • Policy: PMFBY-2026-MP-984210</p>
+            <h2 class="text-xl font-bold" id="farmer-name">ARYAN SINGH (25BCE10798)</h2>
+            <p class="text-xs text-white/80" id="farmer-loc">FARM-MP-SEH-0798 • 3.2 Hectares • Ashta Village, Sehore (MP) • Policy: PMFBY-2026-MP-25BCE10798</p>
+
           </div>
         </div>
         <div class="flex items-center gap-3">
@@ -940,8 +942,9 @@
             </div>
             <div id="crop-doctor-messages" class="h-44 overflow-y-auto space-y-2.5 p-2 bg-gray-50 rounded-xl text-xs">
               <div class="bg-white p-2.5 rounded-lg shadow-xs border border-gray-200 text-gray-800">
-                🌱 <strong>Crop Doctor:</strong> Hello Ramesh! I am connected to your live farm telemetry. Ask me about crop diseases, soil moisture, or fertilizer applications.
+                🌱 <strong>Crop Doctor:</strong> Hello Farmer! I am connected to your live farm telemetry. Ask me about crop diseases, soil moisture, or fertilizer applications.
               </div>
+
             </div>
             <div class="flex space-x-2 pt-1">
               <input id="crop-doctor-input" type="text" placeholder="Type question (उदा. फसल पीली क्यों है?)..." class="flex-grow px-3 py-2 text-xs border border-gray-300 rounded-xl focus:outline-none focus:border-brand-forest" onkeypress="if(event.key==='Enter') askCropDoctor()">
@@ -977,9 +980,9 @@
                 <span class="font-bold text-xs text-brand-forest">PMFBY-CLAIM-2026-MP-0001</span>
                 <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold" id="officer-claim-tag">OFFICER REVIEW</span>
               </div>
-              <p class="text-xs text-gray-700 font-medium">Ramesh Kumar • Soybean (2.5 Ha)</p>
+              <p class="text-xs text-gray-700 font-medium" id="officer-queue-sub">SHIVAM SINGH • Paddy & Cotton (4.5 Ha)</p>
               <div class="flex items-center justify-between text-[11px] text-gray-500 pt-1">
-                <span>AI Loss: <strong id="officer-claim-loss">69.0%</strong></span>
+                <span>AI Loss: <strong id="officer-claim-loss">68.5%</strong></span>
                 <span class="text-emerald-700 font-bold" id="officer-claim-conf">Conf: 94% (High)</span>
               </div>
             </div>
@@ -990,12 +993,13 @@
           <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-5">
             <div class="flex items-center justify-between border-b border-gray-100 pb-3">
               <div>
-                <h3 class="font-bold text-base text-brand-forest">Claim Assessment Dossier: PMFBY-CLAIM-2026-MP-0001</h3>
-                <p class="text-xs text-brand-muted" id="officer-dossier-sub">Farmer: Ramesh Kumar • Cause: Severe Lodging & Waterlogging</p>
+                <h3 class="font-bold text-base text-brand-forest">Claim Assessment Dossier: PMFBY-CLAIM-2026-MP-0736</h3>
+                <p class="text-xs text-brand-muted" id="officer-dossier-sub">Farmer: SHIVAM SINGH (25BCE10736) • Cause: Inundation & Severe Lodging</p>
               </div>
               <span class="text-xs font-bold text-brand-forest bg-brand-cream px-3 py-1 rounded-lg border border-brand-leaf/30" id="officer-sanction-badge">
-                Est. Sanction: ₹82,800.00
+                Est. Sanction: ₹1,12,500.00
               </span>
+
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -1212,16 +1216,17 @@
           <div class="flex items-center justify-between border-b border-gray-200 pb-2">
             <div>
               <span class="text-[10px] text-gray-500 block uppercase">Docket Number</span>
-              <strong class="font-mono text-brand-forest">PMFBY-CLAIM-2026-MP-0001</strong>
+              <strong class="font-mono text-brand-forest">PMFBY-CLAIM-2026-MP-0736</strong>
             </div>
             <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full">OFFICER REVIEW</span>
           </div>
           <div class="grid grid-cols-2 gap-2 text-[11px]">
-            <div><span class="text-gray-500">Applicant:</span> <strong>Ramesh Kumar</strong></div>
-            <div><span class="text-gray-500">Crop / Area:</span> <strong>Soybean (2.5 Ha)</strong></div>
-            <div><span class="text-gray-500">Village/District:</span> <strong>Kothri, Sehore (MP)</strong></div>
-            <div><span class="text-gray-500">Estimated Payout:</span> <strong class="text-emerald-700">₹82,800.00</strong></div>
+            <div><span class="text-gray-500">Applicant:</span> <strong>SHIVAM SINGH</strong></div>
+            <div><span class="text-gray-500">Crop / Area:</span> <strong>Paddy & Cotton (4.5 Ha)</strong></div>
+            <div><span class="text-gray-500">Village/District:</span> <strong>Ichhawar, Sehore (MP)</strong></div>
+            <div><span class="text-gray-500">Estimated Payout:</span> <strong class="text-emerald-700">₹1,12,500.00</strong></div>
           </div>
+
         </div>
       </div>
     </div>
@@ -1483,7 +1488,8 @@
                 <label class="block text-xs font-bold text-gray-800 mb-1.5">
                   Full Name (पूरा नाम) <span class="text-red-500 font-bold">*</span>
                 </label>
-                <input id="reg-fullname" type="text" placeholder="e.g. Ramesh Kumar / Dr. Rajesh Verma" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input id="reg-fullname" type="text" placeholder="e.g. Aryan Singh / Dr. Rajesh Verma" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+
               </div>
 
               <div>
@@ -1594,7 +1600,8 @@
       
       <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-left space-y-1.5 text-xs">
         <div class="flex justify-between"><span class="text-gray-500">Docket Number:</span><strong class="font-mono text-brand-forest" id="success-docket">REG-PMFBY-2026-MP-001</strong></div>
-        <div class="flex justify-between"><span class="text-gray-500">Registered Name:</span><strong id="success-name">Ramesh Kumar</strong></div>
+        <div class="flex justify-between"><span class="text-gray-500">Registered Name:</span><strong id="success-name">Registered Farmer</strong></div>
+
         <div class="flex justify-between"><span class="text-gray-500">Stakeholder:</span><strong class="text-emerald-900" id="success-stakeholder">BANK / AIC</strong></div>
         <div class="flex justify-between"><span class="text-gray-500">Designation:</span><strong id="success-role">Branch Manager</strong></div>
       </div>
@@ -2558,11 +2565,14 @@
       const docketNo = `REG-PMFBY-2026-${state.substring(0,2).toUpperCase()}-${Math.floor(100000 + Math.random() * 900000)}`;
 
       currentUser = {
-        name: `${fullName} (${designation})`,
-        role: `${stakeholder} • ${userCat}`,
+        name: fullName,
+        role: mappedRole === 'officer' ? 'FIELD_OFFICER' : (mappedRole === 'admin' ? 'SUPER_ADMIN' : 'FARMER'),
         code: code,
-        surface: mappedSurface
+        surface: mappedSurface,
+        state: state,
+        district: district
       };
+
 
       updateSessionUI();
 
@@ -2739,6 +2749,96 @@
       }
     }
 
+    const FARMER_DATABASE = {
+      'aryan.25bce10798': {
+        name: 'ARYAN SINGH',
+        regNo: '25BCE10798',
+        location: 'Ashta Village, Sehore (MP)',
+        farmCode: 'FARM-MP-SEH-0798',
+        area: '3.2 Hectares',
+        crops: 'Soybean & Wheat (सोयाबीन एवं गेहूं)',
+        policyNo: 'PMFBY-2026-MP-25BCE10798',
+        healthScore: 88,
+        healthTag: 'Healthy Standing Canopy',
+        moisture: 54.2,
+        claimStatus: 'No Active Claim',
+        claimPayout: '₹0.00 (Optimal)',
+        coords: [23.0185, 76.8821],
+        advisoryTitle: 'Mid-Season Canopy Irrigation',
+        advisoryBody: 'Soybean canopy at pod development stage. Apply light sprinkler irrigation to maintain soil moisture in Ashta parcel.',
+        greeting: '🌱 Hello Aryan Singh! I am connected to your Ashta farm telemetry (3.2 Ha Soybean). Ask me about crop diseases, soil moisture, or fertilizer applications.'
+      },
+      'shivam.25bce10736': {
+        name: 'SHIVAM SINGH',
+        regNo: '25BCE10736',
+        location: 'Ichhawar Village, Sehore (MP)',
+        farmCode: 'FARM-MP-SEH-0736',
+        area: '4.5 Hectares',
+        crops: 'Paddy & Cotton (धान एवं कपास)',
+        policyNo: 'PMFBY-2026-MP-25BCE10736',
+        healthScore: 58,
+        healthTag: 'Inundation & Waterlogging',
+        moisture: 89.5,
+        claimStatus: 'Under Officer Review',
+        claimPayout: '₹1,12,500.00 Estimated',
+        coords: [23.0250, 76.8900],
+        advisoryTitle: '72h SOS Flood Mitigation',
+        advisoryBody: 'Field inundated following 142mm heavy rain in Ichhawar. Joint Survey Officer assigned for physical assessment.',
+        greeting: '🌱 Hello Shivam Singh! Your 72h SOS claim (PMFBY-CLAIM-2026-MP-0736) for 4.5 Ha Paddy in Ichhawar is under review.'
+      },
+      'atharv.25bce10596': {
+        name: 'ATHARV BISHT',
+        regNo: '25BCE10596',
+        location: 'Shyampur Village, Sehore (MP)',
+        farmCode: 'FARM-MP-SEH-0596',
+        area: '2.1 Hectares',
+        crops: 'Maize & Mustard (मक्का एवं सरसों)',
+        policyNo: 'PMFBY-2026-MP-25BCE10596',
+        healthScore: 84,
+        healthTag: 'Optimal Growth Stage',
+        moisture: 48.6,
+        claimStatus: 'No Active Claim',
+        claimPayout: '₹0.00 (Normal)',
+        coords: [23.0110, 76.8750],
+        advisoryTitle: 'Neem Spray Schedule',
+        advisoryBody: 'Maize crop entering grain filling stage in Shyampur. Apply organic neem oil spray to prevent stem borer infestation.',
+        greeting: '🌱 Hello Atharv Bisht! I am connected to your Shyampur farm telemetry (2.1 Ha Maize). Ask me anything!'
+      }
+    };
+
+    function getOrCreateFarmerProfile(code, name, state, district) {
+      const key = (code || '').toLowerCase();
+      if (FARMER_DATABASE[key]) {
+        return FARMER_DATABASE[key];
+      }
+      
+      const cleanName = (name || 'FARMER').toUpperCase();
+      const cleanCode = code || `25BCE${Math.floor(10000 + Math.random() * 90000)}`;
+      const cleanLoc = `${district || 'Sehore'} District, ${state || 'Madhya Pradesh'}`;
+      
+      const newProfile = {
+        name: cleanName,
+        regNo: cleanCode,
+        location: cleanLoc,
+        farmCode: `FARM-${(state || 'MP').substring(0,2).toUpperCase()}-${cleanCode}`,
+        area: '2.8 Hectares',
+        crops: 'Soybean & Gram (सोयाबीन एवं चना)',
+        policyNo: `PMFBY-2026-${(state || 'MP').substring(0,2).toUpperCase()}-${cleanCode}`,
+        healthScore: 87,
+        healthTag: 'Healthy Verified Canopy',
+        moisture: 52.0,
+        claimStatus: 'No Active Claim',
+        claimPayout: '₹0.00 (Registered)',
+        coords: [23.0185, 76.8821],
+        advisoryTitle: 'New Registration Telemetry Active',
+        advisoryBody: 'Welcome to SAMRIDH-AI! PostGIS farm boundary established and Sentinel-2 satellite monitor online.',
+        greeting: `🌱 Hello ${cleanName}! Welcome to SAMRIDH-AI. Your farm profile is active. How can I assist you today?`
+      };
+      
+      FARMER_DATABASE[key] = newProfile;
+      return newProfile;
+    }
+
     function updateSessionUI() {
       if (currentUser) {
         const sBanner = document.getElementById('session-banner');
@@ -2753,7 +2853,7 @@
         // Top Navigation Header Active User Badge
         document.getElementById('auth-container').innerHTML = `
           <div class="flex items-center space-x-2 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 shadow-xs">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
             <div class="text-left">
               <span class="text-xs font-extrabold text-emerald-950 block leading-none">${currentUser.name}</span>
               <span class="text-[9px] font-extrabold text-emerald-700 block mt-0.5 uppercase">${currentUser.role}</span>
@@ -2762,21 +2862,62 @@
           </div>
         `;
 
-        // Update Farmer Dashboard Header Name & Role Badge
-        const farmerNameEl = document.getElementById('farmer-name');
-        if (farmerNameEl) farmerNameEl.innerText = `${currentUser.name} (${currentUser.role})`;
+        if (currentUser.surface === 'farmer' || currentUser.role === 'FARMER') {
+          const profile = getOrCreateFarmerProfile(currentUser.code, currentUser.name, currentUser.state, currentUser.district);
+          
+          const fName = document.getElementById('farmer-name');
+          if (fName) fName.innerText = `${profile.name} (${profile.regNo})`;
 
-        // Update Officer Dashboard Header Name & Role Badge
-        const officerHeadEl = document.getElementById('officer-header-sub');
-        if (officerHeadEl) officerHeadEl.innerText = `Assigned Jurisdiction: Sehore District, MP • Logged in User: ${currentUser.name} (${currentUser.role}) [Reg: ${currentUser.code}]`;
+          const fLoc = document.getElementById('farmer-loc');
+          if (fLoc) fLoc.innerText = `${profile.farmCode} • ${profile.area} • ${profile.location} • Policy: ${profile.policyNo}`;
 
-        // Update Admin Dashboard Header Name & Role Badge
-        const adminHeadEl = document.getElementById('admin-header-sub');
-        if (adminHeadEl) adminHeadEl.innerText = `National GIS Command Center • Logged in Admin: ${currentUser.name} (${currentUser.role}) [Reg: ${currentUser.code}]`;
+          const fHealth = document.getElementById('farmer-health-metric');
+          if (fHealth) fHealth.innerText = profile.healthScore;
+
+          const fTag = document.getElementById('farmer-health-tag');
+          if (fTag) fTag.innerText = profile.healthTag;
+
+          const cStatus = document.getElementById('claim-status-metric');
+          if (cStatus) cStatus.innerText = profile.claimStatus;
+
+          const cPayout = document.getElementById('claim-payout-metric');
+          if (cPayout) cPayout.innerText = profile.claimPayout;
+
+          const advTitle = document.getElementById('advisory-title');
+          if (advTitle) advTitle.innerText = profile.advisoryTitle;
+
+          const advBody = document.getElementById('advisory-body');
+          if (advBody) advBody.innerText = profile.advisoryBody;
+
+          const doctorMsg = document.getElementById('crop-doctor-messages');
+          if (doctorMsg) {
+            doctorMsg.innerHTML = `
+              <div class="bg-white p-2.5 rounded-lg shadow-xs border border-gray-200 text-gray-800">
+                ${profile.greeting}
+              </div>
+            `;
+          }
+
+          if (farmerMap) {
+            farmerMap.setView(profile.coords, 15);
+          }
+        } else if (currentUser.surface === 'officer' || currentUser.role === 'FIELD_OFFICER' || currentUser.role === 'INSURER') {
+          const officerHead = document.getElementById('officer-header-sub');
+          if (officerHead) {
+            const roleTitle = currentUser.role === 'INSURER' ? 'PMFBY Insurer' : 'Field Officer / Patwari';
+            officerHead.innerText = `Assigned Jurisdiction: Sehore District, MP • Active User: ${currentUser.name} (${roleTitle}) [Badge: ${currentUser.code}]`;
+          }
+        } else if (currentUser.surface === 'admin' || currentUser.role === 'SUPER_ADMIN') {
+          const adminHead = document.getElementById('admin-header-sub');
+          if (adminHead) {
+            adminHead.innerText = `National Agronomy Command Center • Logged in Nodal Admin: ${currentUser.name} (SUPER_ADMIN) [ID: ${currentUser.code}]`;
+          }
+        }
 
         if (window.lucide) lucide.createIcons();
       }
     }
+
 
     function logoutUser() {
       currentUser = null;
@@ -3135,20 +3276,21 @@
       farmerMap = L.map('farmer-map').setView([23.0185, 76.8821], 15);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(farmerMap);
       const farmPolygonCoords = [[23.0175, 76.8810], [23.0175, 76.8835], [23.0195, 76.8835], [23.0195, 76.8810]];
-      L.polygon(farmPolygonCoords, { color: '#1B5E20', fillColor: '#3E8E41', fillOpacity: 0.35, weight: 3 }).addTo(farmerMap).bindPopup("<strong>Farm-001</strong><br>Soybean 2.5 Ha • Ramesh Kumar");
-      L.marker([23.0185, 76.8821]).addTo(farmerMap).bindPopup("<strong>SoilNode Pro #001</strong><br>Moisture: 52.4% • Status: Optimal").openPopup();
+      L.polygon(farmPolygonCoords, { color: '#1B5E20', fillColor: '#3E8E41', fillOpacity: 0.35, weight: 3 }).addTo(farmerMap).bindPopup("<strong>Verified Farm Boundary</strong><br>Telemetry Active");
+      L.marker([23.0185, 76.8821]).addTo(farmerMap).bindPopup("<strong>SoilNode Pro #001</strong><br>Moisture: 54.2% • Status: Optimal").openPopup();
     }
 
     function initAdminMap() {
       adminMap = L.map('admin-map').setView([23.1, 76.8], 9);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(adminMap);
       const farms = [
-        { name: "Farm-001 (Ramesh Kumar)", coords: [23.0185, 76.8821], crop: "Soybean (2.5 Ha)", risk: "Disaster Zone" },
-        { name: "Farm-002 (Bhopal Parcel)", coords: [23.2599, 77.4126], crop: "Wheat (3.2 Ha)", risk: "Normal" },
-        { name: "Farm-003 (Dewas Field)", coords: [22.9676, 76.0534], crop: "Paddy (1.8 Ha)", risk: "Normal" },
-        { name: "Farm-004 (Ujjain Mustard)", coords: [23.1765, 75.7885], crop: "Mustard (4.0 Ha)", risk: "Normal" },
-        { name: "Farm-005 (Hoshangabad)", coords: [22.7519, 77.7289], crop: "Pulses (2.2 Ha)", risk: "Normal" },
+        { name: "Farm-001 (Shivam Singh)", coords: [23.0250, 76.8900], crop: "Paddy & Cotton (4.5 Ha)", risk: "Disaster Zone" },
+        { name: "Farm-002 (Aryan Singh)", coords: [23.0185, 76.8821], crop: "Soybean (3.2 Ha)", risk: "Normal" },
+        { name: "Farm-003 (Atharv Bisht)", coords: [23.0110, 76.8750], crop: "Maize (2.1 Ha)", risk: "Normal" },
+        { name: "Farm-004 (Bhopal Parcel)", coords: [23.2599, 77.4126], crop: "Wheat (3.2 Ha)", risk: "Normal" },
+        { name: "Farm-005 (Ujjain Field)", coords: [23.1765, 75.7885], crop: "Mustard (4.0 Ha)", risk: "Normal" },
       ];
+
       farms.forEach(f => {
         const color = f.risk === "Disaster Zone" ? "#E53935" : "#1B5E20";
         L.circleMarker(f.coords, { radius: 8, fillColor: color, color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.8 }).addTo(adminMap).bindPopup(`<strong>${f.name}</strong><br>${f.crop}<br>Status: ${f.risk}`);
