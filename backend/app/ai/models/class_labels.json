@@ -1,0 +1,17 @@
+{
+  "0": "Cotton_Bacterial_Blight",
+  "1": "Cotton_Bollworm",
+  "2": "Drought_Desiccated_Scorch",
+  "3": "Flood_Submerged_Canopy",
+  "4": "Potato_Early_Blight",
+  "5": "Potato_Late_Blight",
+  "6": "Rice_Bacterial_Blight",
+  "7": "Rice_Blast",
+  "8": "Soybean_Healthy",
+  "9": "Soybean_Rust",
+  "10": "Soybean_Yellow_Mosaic",
+  "11": "Tomato_Early_Blight",
+  "12": "Tomato_Healthy",
+  "13": "Wheat_Healthy",
+  "14": "Wheat_Yellow_Rust"
+}

@@ -45,3 +45,10 @@ dist-ssr/
 # OS
 .DS_Store
 Thumbs.db
+
+# Training image corpora (multi-GB; re-download via scripts/download_datasets.py)
+datasets/_staging/
+datasets/train/
+datasets/plantvillage_raw/
+datasets/plantdoc_raw/
+datasets/**/*.zip
