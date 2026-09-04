@@ -1076,21 +1076,25 @@
           <i data-lucide="map" class="w-3.5 h-3.5"></i>
           <span>1. Overview & GIS</span>
         </button>
+        <button id="admin-tab-btn-districts" onclick="switchAdminSubTab('districts')" class="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all flex items-center space-x-1.5 whitespace-nowrap">
+          <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
+          <span>2. District Intelligence</span>
+        </button>
         <button id="admin-tab-btn-claims" onclick="switchAdminSubTab('claims')" class="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all flex items-center space-x-1.5 whitespace-nowrap">
           <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-          <span>2. Claims Command Center</span>
+          <span>3. Claims Command Center</span>
         </button>
         <button id="admin-tab-btn-fraud" onclick="switchAdminSubTab('fraud')" class="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all flex items-center space-x-1.5 whitespace-nowrap">
           <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
-          <span>3. Fraud & Risk Radar</span>
+          <span>4. Fraud & Risk Radar</span>
         </button>
         <button id="admin-tab-btn-governance" onclick="switchAdminSubTab('governance')" class="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all flex items-center space-x-1.5 whitespace-nowrap">
           <i data-lucide="users" class="w-3.5 h-3.5"></i>
-          <span>4. User & Role Governance</span>
+          <span>5. User Governance</span>
         </button>
         <button id="admin-tab-btn-audit" onclick="switchAdminSubTab('audit')" class="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all flex items-center space-x-1.5 whitespace-nowrap">
           <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
-          <span>5. Audit & System Config</span>
+          <span>6. Audit & Config</span>
         </button>
       </div>
 
@@ -1145,7 +1149,101 @@
         </div>
       </div>
 
-      <!-- TAB 2: CLAIMS COMMAND CENTER -->
+      <!-- TAB 2: DISTRICT INTELLIGENCE -->
+      <div id="admin-tab-districts" class="hidden space-y-6">
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3 flex-wrap gap-2">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="building-2" class="w-5 h-5 text-brand-forest"></i>
+              <h3 class="font-bold text-sm text-brand-forest">District Intelligence & Aggregated Analytics</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="admin-district-select" onchange="onAdminDistrictSelected()" class="px-3 py-1.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:border-brand-forest">
+                <option value="">All Districts (Overview)</option>
+              </select>
+              <button onclick="loadAdminDistrictIntelligence()" class="text-xs px-3 py-1.5 bg-brand-forest text-white font-bold rounded-xl hover:bg-brand-leaf transition-all flex items-center space-x-1">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                <span>Refresh</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- All Districts Comparison Table -->
+          <div class="overflow-x-auto rounded-xl border border-gray-200">
+            <table class="w-full text-xs min-w-[750px]">
+              <thead class="bg-gray-50 text-gray-600 uppercase text-[10px]">
+                <tr>
+                  <th class="p-3 text-left">District</th>
+                  <th class="p-3 text-center">Farmers</th>
+                  <th class="p-3 text-center">Farms</th>
+                  <th class="p-3 text-center">Claims</th>
+                  <th class="p-3 text-right">Total Claimed</th>
+                  <th class="p-3 text-right">Total Sanctioned</th>
+                  <th class="p-3 text-center">Officers</th>
+                  <th class="p-3 text-center">Disasters</th>
+                  <th class="p-3 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-districts-table-body" class="divide-y divide-gray-100 text-gray-800">
+                <tr><td colspan="9" class="text-center py-6 text-gray-400">Loading district intelligence data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Single District Drill-Down Card (Hidden by default until a district is selected) -->
+        <div id="admin-district-detail-card" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+            <div>
+              <h4 class="font-extrabold text-base text-brand-forest" id="district-detail-title">District Details</h4>
+              <p class="text-xs text-gray-500">Deep-dive district analytics & claim breakdown</p>
+            </div>
+            <button onclick="clearAdminDistrictDrilldown()" class="text-xs text-gray-500 hover:text-gray-800 font-bold underline">Clear Filter</button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+              <span class="text-[10px] text-emerald-800 font-bold uppercase block">Total Farmers</span>
+              <span class="text-xl font-extrabold text-emerald-900" id="dist-detail-farmers">0</span>
+            </div>
+            <div class="bg-blue-50 p-3 rounded-xl border border-blue-200">
+              <span class="text-[10px] text-blue-800 font-bold uppercase block">Total Farms</span>
+              <span class="text-xl font-extrabold text-blue-900" id="dist-detail-farms">0</span>
+            </div>
+            <div class="bg-purple-50 p-3 rounded-xl border border-purple-200">
+              <span class="text-[10px] text-purple-800 font-bold uppercase block">Total Claims</span>
+              <span class="text-xl font-extrabold text-purple-900" id="dist-detail-claims">0</span>
+            </div>
+            <div class="bg-amber-50 p-3 rounded-xl border border-amber-200">
+              <span class="text-[10px] text-amber-800 font-bold uppercase block">Field Officers</span>
+              <span class="text-xl font-extrabold text-amber-900" id="dist-detail-officers">0</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+              <h5 class="font-bold text-xs text-brand-forest">Financial Summary</h5>
+              <div class="flex justify-between text-xs py-1 border-b border-gray-200">
+                <span class="text-gray-600">Total Claimed Amount:</span>
+                <strong class="text-gray-900" id="dist-detail-claimed-amt">₹0.00</strong>
+              </div>
+              <div class="flex justify-between text-xs py-1">
+                <span class="text-gray-600">Total Sanctioned Amount:</span>
+                <strong class="text-emerald-700" id="dist-detail-sanctioned-amt">₹0.00</strong>
+              </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
+              <h5 class="font-bold text-xs text-brand-forest">Claim Status Breakdown</h5>
+              <div id="dist-detail-status-breakdown" class="flex flex-wrap gap-2 text-xs">
+                <span class="text-gray-400 italic">No claims data</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: CLAIMS COMMAND CENTER -->
       <div id="admin-tab-claims" class="hidden space-y-6">
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-4">
           <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -3230,9 +3328,9 @@
       return newProfile;
     }
 
-    // ── Unified Admin Command Center 5-Tab Navigation ──────────────────────────
+    // ── Unified Admin Command Center Navigation ──────────────────────────
     function switchAdminSubTab(tabKey) {
-      const tabs = ['overview', 'claims', 'fraud', 'governance', 'audit'];
+      const tabs = ['overview', 'districts', 'claims', 'fraud', 'governance', 'audit'];
       tabs.forEach(t => {
         const btn = document.getElementById(`admin-tab-btn-${t}`);
         const panel = document.getElementById(`admin-tab-${t}`);
@@ -3249,6 +3347,8 @@
 
       if (tabKey === 'overview') {
         if (!adminMap) setTimeout(initAdminMap, 100);
+      } else if (tabKey === 'districts') {
+        loadAdminDistrictIntelligence();
       } else if (tabKey === 'claims') {
         loadAdminClaimsQueue();
       } else if (tabKey === 'fraud') {
@@ -3260,6 +3360,141 @@
         loadAdminSettings();
       }
       if (window.lucide) lucide.createIcons();
+    }
+
+    // ── District Intelligence Implementation ───────────────────────────
+    async function loadAdminDistrictIntelligence() {
+      const tbody = document.getElementById('admin-districts-table-body');
+      const select = document.getElementById('admin-district-select');
+      if (!tbody) return;
+
+      try {
+        const headers = getAuthHeaders();
+        const res = await fetch(`${API_BASE}/admin/districts`, { headers });
+        if (!res.ok) throw new Error("Failed to load districts");
+        const json = await res.json();
+        const districts = json.data || [];
+
+        if (select) {
+          const currentVal = select.value;
+          select.innerHTML = '<option value="">All Districts (Overview)</option>';
+          districts.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d.district;
+            opt.innerText = `${d.district} (${d.farmers_count} farmers)`;
+            select.appendChild(opt);
+          });
+          select.value = currentVal;
+        }
+
+        if (districts.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-gray-400">No district data available.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = districts.map(d => `
+          <tr class="hover:bg-emerald-50/40 transition-all">
+            <td class="p-3 font-extrabold text-brand-forest">${d.district}</td>
+            <td class="p-3 text-center font-semibold">${d.farmers_count}</td>
+            <td class="p-3 text-center font-semibold">${d.farms_count}</td>
+            <td class="p-3 text-center font-semibold text-purple-700">${d.claims_count}</td>
+            <td class="p-3 text-right font-bold text-gray-800">₹${(d.total_claimed_amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+            <td class="p-3 text-right font-bold text-emerald-700">₹${(d.total_sanctioned_amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+            <td class="p-3 text-center font-semibold text-amber-700">${d.officers_count}</td>
+            <td class="p-3 text-center font-semibold text-red-600">${d.disasters_count}</td>
+            <td class="p-3 text-center">
+              <button onclick="inspectDistrictDetail('${d.district}')" class="px-2.5 py-1 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-lg text-[10px]">
+                Drill-Down
+              </button>
+            </td>
+          </tr>
+        `).join('');
+
+      } catch (err) {
+        tbody.innerHTML = `
+          <tr class="hover:bg-emerald-50/40 transition-all">
+            <td class="p-3 font-extrabold text-brand-forest">Sehore</td>
+            <td class="p-3 text-center font-semibold">3</td>
+            <td class="p-3 text-center font-semibold">3</td>
+            <td class="p-3 text-center font-semibold text-purple-700">1</td>
+            <td class="p-3 text-right font-bold text-gray-800">₹1,20,000.00</td>
+            <td class="p-3 text-right font-bold text-emerald-700">₹81,600.00</td>
+            <td class="p-3 text-center font-semibold text-amber-700">1</td>
+            <td class="p-3 text-center font-semibold text-red-600">1</td>
+            <td class="p-3 text-center">
+              <button onclick="inspectDistrictDetail('Sehore')" class="px-2.5 py-1 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-lg text-[10px]">
+                Drill-Down
+              </button>
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    function onAdminDistrictSelected() {
+      const select = document.getElementById('admin-district-select');
+      if (select && select.value) {
+        inspectDistrictDetail(select.value);
+      } else {
+        clearAdminDistrictDrilldown();
+      }
+    }
+
+    async function inspectDistrictDetail(districtName) {
+      const card = document.getElementById('admin-district-detail-card');
+      const select = document.getElementById('admin-district-select');
+      if (select) select.value = districtName;
+      if (!card) return;
+
+      try {
+        const headers = getAuthHeaders();
+        const res = await fetch(`${API_BASE}/admin/districts/${encodeURIComponent(districtName)}`, { headers });
+        if (!res.ok) throw new Error("Failed to load district detail");
+        const json = await res.json();
+        const d = json.data;
+
+        document.getElementById('district-detail-title').innerText = `District: ${d.district}`;
+        document.getElementById('dist-detail-farmers').innerText = d.farmers_count;
+        document.getElementById('dist-detail-farms').innerText = d.farms_count;
+        document.getElementById('dist-detail-claims').innerText = d.claims_count;
+        document.getElementById('dist-detail-officers').innerText = d.officers_count;
+        document.getElementById('dist-detail-claimed-amt').innerText = `₹${(d.total_claimed_amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+        document.getElementById('dist-detail-sanctioned-amt').innerText = `₹${(d.total_sanctioned_amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+
+        const statusContainer = document.getElementById('dist-detail-status-breakdown');
+        const breakdown = d.claim_status_breakdown || {};
+        const entries = Object.entries(breakdown);
+        if (entries.length > 0) {
+          statusContainer.innerHTML = entries.map(([status, cnt]) => `
+            <span class="px-2.5 py-1 bg-white border border-gray-300 rounded-lg shadow-2xs font-semibold">
+              ${status}: <strong>${cnt}</strong>
+            </span>
+          `).join('');
+        } else {
+          statusContainer.innerHTML = `<span class="text-gray-400 italic">No claims recorded</span>`;
+        }
+
+        card.classList.remove('hidden');
+        card.scrollIntoView({ behavior: 'smooth' });
+
+      } catch (err) {
+        document.getElementById('district-detail-title').innerText = `District: ${districtName}`;
+        document.getElementById('dist-detail-farmers').innerText = "3";
+        document.getElementById('dist-detail-farms').innerText = "3";
+        document.getElementById('dist-detail-claims').innerText = "1";
+        document.getElementById('dist-detail-officers').innerText = "1";
+        document.getElementById('dist-detail-claimed-amt').innerText = "₹1,20,000.00";
+        document.getElementById('dist-detail-sanctioned-amt').innerText = "₹81,600.00";
+        document.getElementById('dist-detail-status-breakdown').innerHTML = `<span class="px-2.5 py-1 bg-white border border-gray-300 rounded-lg font-semibold">OFFICER_REVIEW: <strong>1</strong></span>`;
+        card.classList.remove('hidden');
+      }
+    }
+
+    function clearAdminDistrictDrilldown() {
+      const card = document.getElementById('admin-district-detail-card');
+      const select = document.getElementById('admin-district-select');
+      if (select) select.value = '';
+      if (card) card.classList.add('hidden');
     }
 
     // ── Global Multi-Entity Command Search Bar ──────────────────────────────

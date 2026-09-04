@@ -100,3 +100,34 @@ def test_admin_audit_logs_and_settings():
     )
     assert put_resp.status_code == 200
     assert put_resp.json()["data"]["value"] == "14"
+
+
+def test_admin_district_intelligence():
+    login_resp = client.post(
+        "/api/v1/auth/login",
+        json={"username": "rakhi.25bce10780", "password": "Rakhi#25BCE10780!Sec2026"}
+    )
+    token = login_resp.json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
+    # 1. District Summaries GET /districts
+    dist_resp = client.get("/api/v1/admin/districts", headers=headers)
+    assert dist_resp.status_code == 200
+    dist_list = dist_resp.json()["data"]
+    assert isinstance(dist_list, list)
+    assert len(dist_list) > 0
+    first_district = dist_list[0]["district"]
+
+    # 2. District Drill-Down GET /districts/{district_name}
+    detail_resp = client.get(f"/api/v1/admin/districts/{first_district}", headers=headers)
+    assert detail_resp.status_code == 200
+    detail = detail_resp.json()["data"]
+    assert detail["district"].lower() == first_district.lower()
+    assert "total_farmers" in detail
+    assert "total_farms" in detail
+    assert "claim_status_breakdown" in detail
+
+    # 3. Unknown District 404
+    unknown_resp = client.get("/api/v1/admin/districts/NonExistentDistrict99", headers=headers)
+    assert unknown_resp.status_code == 404
+

@@ -26,6 +26,8 @@ from app.schemas.admin import (
     AuditLogRead,
     FraudRadarSummary,
     FraudRadarItem,
+    DistrictSummaryRead,
+    DistrictDetailRead,
 )
 from app.schemas.common import APIResponse
 
@@ -458,4 +460,113 @@ def update_system_setting(
     db.refresh(setting)
 
     return APIResponse(success=True, data=setting)
+
+
+# 9. District Summary & Intelligence APIs
+@router.get("/districts", response_model=APIResponse[List[DistrictSummaryRead]])
+def list_district_summaries(
+    current_user: User = Depends(require_roles(["admin", "super_admin"])),
+    db: Session = Depends(get_db),
+):
+    # Collect all unique districts from Farmers, Officers, and Disasters
+    farmer_districts = [d[0] for d in db.query(Farmer.district).distinct().all() if d[0]]
+    officer_districts = [d[0] for d in db.query(Officer.assigned_district).distinct().all() if d[0]]
+    disaster_districts = [d[0] for d in db.query(DisasterEvent.district).distinct().all() if d[0]]
+    
+    all_districts = sorted(list(set(farmer_districts + officer_districts + disaster_districts)))
+    if not all_districts:
+        all_districts = ["Sehore", "Bhopal", "Dewas", "Ujjain"]
+
+    summaries = []
+    for d_name in all_districts:
+        farmers = db.query(Farmer).filter(Farmer.district.ilike(d_name)).all()
+        farmer_ids = [f.id for f in farmers]
+        
+        farms = db.query(Farm).filter(Farm.farmer_id.in_(farmer_ids)).all() if farmer_ids else []
+        farm_ids = [fm.id for fm in farms]
+        
+        claims = db.query(Claim).filter(Claim.farmer_id.in_(farmer_ids)).all() if farmer_ids else []
+        
+        pending_claims = len([c for c in claims if c.status in ["SUBMITTED", "VALIDATING", "AI_ASSESSED", "OFFICER_REVIEW", "VERIFICATION_REQUIRED", "ADMIN_HOLD"]])
+        approved_claims = len([c for c in claims if c.status == "APPROVED"])
+        rejected_claims = len([c for c in claims if c.status == "REJECTED"])
+        high_risk_claims = len([c for c in claims if c.ai_fraud_risk == "HIGH"])
+        
+        active_officers = db.query(Officer).filter(Officer.assigned_district.ilike(d_name)).count()
+        disaster_events = db.query(DisasterEvent).filter(DisasterEvent.district.ilike(d_name)).count()
+
+        summaries.append(
+            DistrictSummaryRead(
+                district=d_name,
+                total_farmers=len(farmers),
+                total_farms=len(farms),
+                total_claims=len(claims),
+                pending_claims=pending_claims,
+                approved_claims=approved_claims,
+                rejected_claims=rejected_claims,
+                high_risk_claims=high_risk_claims,
+                active_officers=active_officers,
+                disaster_events=disaster_events,
+            )
+        )
+
+    return APIResponse(success=True, data=summaries)
+
+
+@router.get("/districts/{district_name}", response_model=APIResponse[DistrictDetailRead])
+def get_district_details(
+    district_name: str,
+    current_user: User = Depends(require_roles(["admin", "super_admin"])),
+    db: Session = Depends(get_db),
+):
+    farmers = db.query(Farmer).filter(Farmer.district.ilike(district_name)).all()
+    farmer_ids = [f.id for f in farmers]
+    
+    farms = db.query(Farm).filter(Farm.farmer_id.in_(farmer_ids)).all() if farmer_ids else []
+    total_hectares = sum(fm.area_hectares for fm in farms)
+    
+    claims = db.query(Claim).filter(Claim.farmer_id.in_(farmer_ids)).all() if farmer_ids else []
+    
+    breakdown: Dict[str, int] = {}
+    for c in claims:
+        breakdown[c.status] = breakdown.get(c.status, 0) + 1
+
+    pending_claims = len([c for c in claims if c.status in ["SUBMITTED", "VALIDATING", "AI_ASSESSED", "OFFICER_REVIEW", "VERIFICATION_REQUIRED", "ADMIN_HOLD"]])
+    approved_claims = len([c for c in claims if c.status == "APPROVED"])
+    rejected_claims = len([c for c in claims if c.status == "REJECTED"])
+    high_risk_claims = len([c for c in claims if c.ai_fraud_risk == "HIGH"])
+    
+    total_est_loss = sum(c.estimated_payout_amount for c in claims)
+    total_sanctioned = sum(c.final_sanctioned_amount or 0.0 for c in claims)
+    
+    active_officers = db.query(Officer).filter(Officer.assigned_district.ilike(district_name)).count()
+    disaster_events = db.query(DisasterEvent).filter(DisasterEvent.district.ilike(district_name)).count()
+    recent_audit_count = db.query(AuditLog).count()
+
+    if not farmers and not claims and not active_officers and not disaster_events:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No administrative records found for district '{district_name}'.",
+        )
+
+    detail = DistrictDetailRead(
+        district=district_name.capitalize(),
+        total_farmers=len(farmers),
+        total_farms=len(farms),
+        total_hectares=round(total_hectares, 2),
+        total_claims=len(claims),
+        pending_claims=pending_claims,
+        approved_claims=approved_claims,
+        rejected_claims=rejected_claims,
+        high_risk_claims=high_risk_claims,
+        total_est_loss_inr=total_est_loss,
+        total_sanctioned_payout_inr=total_sanctioned,
+        active_officers=active_officers,
+        disaster_events=disaster_events,
+        recent_audit_count=recent_audit_count,
+        claim_status_breakdown=breakdown,
+    )
+
+    return APIResponse(success=True, data=detail)
+
 

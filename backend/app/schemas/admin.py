@@ -100,3 +100,35 @@ class FraudRadarSummary(BaseModel):
     unresolved_count: int
     items: List[FraudRadarItem] = []
 
+
+class DistrictSummaryRead(BaseModel):
+    district: str
+    total_farmers: int
+    total_farms: int
+    total_claims: int
+    pending_claims: int
+    approved_claims: int
+    rejected_claims: int
+    high_risk_claims: int
+    active_officers: int
+    disaster_events: int
+
+
+class DistrictDetailRead(BaseModel):
+    district: str
+    total_farmers: int
+    total_farms: int
+    total_hectares: float
+    total_claims: int
+    pending_claims: int
+    approved_claims: int
+    rejected_claims: int
+    high_risk_claims: int
+    total_est_loss_inr: float
+    total_sanctioned_payout_inr: float
+    active_officers: int
+    disaster_events: int
+    recent_audit_count: int
+    claim_status_breakdown: Dict[str, int] = {}
+
+
