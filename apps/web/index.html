@@ -204,12 +204,6 @@
           </button>
 
 
-
-          <button id="nav-admin" onclick="requireAuthOrSwitch('admin')" class="px-3 py-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 whitespace-nowrap">
-            <i data-lucide="map" class="w-3.5 h-3.5"></i>
-            <span>National GIS</span>
-          </button>
-
           <button id="nav-register-menu" onclick="openRegisterModal()" class="px-3 py-1.5 rounded-lg text-brand-gold bg-brand-gold/15 hover:bg-brand-gold/25 font-bold border border-brand-gold/40 transition-all flex items-center space-x-1 whitespace-nowrap">
             <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
             <span>Register</span>
@@ -1839,9 +1833,9 @@
 
               <div>
                 <label class="block text-xs font-bold text-gray-800 mb-1.5">
-                  Official Designation (पदनाम) <span class="text-red-500 font-bold">*</span>
+                  Official Designation (पदनाम) <span class="text-gray-400 font-normal text-[11px]">(Optional / ऐच्छिक)</span>
                 </label>
-                <input id="reg-designation" type="text" placeholder="e.g. Branch Manager / Field Loss Assessor" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input id="reg-designation" type="text" placeholder="e.g. Branch Manager / Field Loss Assessor" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500">
               </div>
 
               <div>
