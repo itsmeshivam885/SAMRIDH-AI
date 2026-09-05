@@ -15,10 +15,14 @@ class AdminDashboardStats(BaseModel):
     claims_under_review: int
     claims_approved: int
     claims_rejected: int
+    claims_admin_hold: int = 0
     total_estimated_loss_inr: float
     total_sanctioned_payout_inr: float
     high_risk_fraud_flags_count: int
     district_wise_claim_density: Dict[str, int] = {}
+    district_wise_area_ha: Dict[str, float] = {}
+    claim_status_pipeline: Dict[str, int] = {}
+    claims_pending_review_count: int = 0
 
 
 class UserStatusUpdate(BaseModel):

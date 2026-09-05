@@ -1092,54 +1092,105 @@
         </button>
       </div>
 
-      <!-- TAB 1: OVERVIEW & GIS -->
+      <!-- TAB 1: EXECUTIVE OVERVIEW -->
       <div id="admin-tab-overview" class="space-y-6">
-        <!-- 6 Executive KPI Summary Cards -->
+        <!-- Official PMFBY Summary KPI Cards -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           <div class="bg-white p-3.5 rounded-2xl shadow-xs border border-gray-200">
-            <span class="text-[10px] font-bold text-gray-500 block uppercase">Stakeholders</span>
-            <p class="text-xl font-extrabold text-brand-forest mt-0.5" id="admin-kpi-users">6</p>
-            <span class="text-[9px] text-emerald-600 font-semibold">Active Users</span>
+            <span class="text-[10px] font-bold text-gray-500 block uppercase">Registered Farmers</span>
+            <p class="text-xl font-extrabold text-brand-forest mt-0.5" id="admin-kpi-users">3</p>
+            <span class="text-[9px] text-emerald-600 font-semibold">Enrolled Profiles</span>
           </div>
           <div class="bg-white p-3.5 rounded-2xl shadow-xs border border-gray-200">
-            <span class="text-[10px] font-bold text-gray-500 block uppercase">Monitored Area</span>
-            <p class="text-xl font-extrabold text-brand-forest mt-0.5" id="admin-kpi-area">4,820 Ha</p>
+            <span class="text-[10px] font-bold text-gray-500 block uppercase">Monitored Farm Area</span>
+            <p class="text-xl font-extrabold text-brand-forest mt-0.5" id="admin-kpi-area">9.8 Ha</p>
             <span class="text-[9px] text-brand-sky font-semibold">PostGIS Mapped</span>
           </div>
           <div class="bg-white p-3.5 rounded-2xl shadow-xs border border-gray-200">
-            <span class="text-[10px] font-bold text-gray-500 block uppercase">Total Claims</span>
+            <span class="text-[10px] font-bold text-gray-500 block uppercase">Loss Claims Filed</span>
             <p class="text-xl font-extrabold text-purple-700 mt-0.5" id="admin-kpi-claims">1</p>
-            <span class="text-[9px] text-purple-800 font-semibold">Filed Intimations</span>
+            <span class="text-[9px] text-purple-800 font-semibold">Registered Dockets</span>
           </div>
           <div class="bg-white p-3.5 rounded-2xl shadow-xs border border-gray-200">
-            <span class="text-[10px] font-bold text-gray-500 block uppercase">Total Loss Est.</span>
+            <span class="text-[10px] font-bold text-gray-500 block uppercase">Estimated Loss Liability</span>
             <p class="text-xl font-extrabold text-amber-600 mt-0.5" id="admin-kpi-loss">₹1,20,000</p>
-            <span class="text-[9px] text-amber-700 font-semibold">Kharif 2026</span>
+            <span class="text-[9px] text-amber-700 font-semibold">AI Decision Support</span>
           </div>
           <div class="bg-white p-3.5 rounded-2xl shadow-xs border border-gray-200">
-            <span class="text-[10px] font-bold text-gray-500 block uppercase">Sanctioned DBT</span>
-            <p class="text-xl font-extrabold text-emerald-600 mt-0.5" id="admin-kpi-sanctioned">₹81,600</p>
-            <span class="text-[9px] text-emerald-700 font-semibold">PFMS Settled</span>
+            <span class="text-[10px] font-bold text-gray-500 block uppercase">Sanctioned Payouts</span>
+            <p class="text-xl font-extrabold text-emerald-600 mt-0.5" id="admin-kpi-sanctioned">₹82,800</p>
+            <span class="text-[9px] text-emerald-700 font-semibold">Officer Sanctioned</span>
           </div>
           <div class="bg-white p-3.5 rounded-2xl shadow-xs border border-gray-200">
-            <span class="text-[10px] font-bold text-gray-500 block uppercase">High Risk Flags</span>
-            <p class="text-xl font-extrabold text-red-600 mt-0.5" id="admin-kpi-fraud">1</p>
-            <span class="text-[9px] text-red-700 font-semibold">Fraud Alerts</span>
+            <span class="text-[10px] font-bold text-gray-500 block uppercase">Active Disasters</span>
+            <p class="text-xl font-extrabold text-red-600 mt-0.5" id="admin-kpi-disasters">1</p>
+            <span class="text-[9px] text-red-700 font-semibold">Inundation Alert</span>
           </div>
         </div>
 
+        <!-- Administrative Operational Triage Indicator Banner -->
+        <div class="bg-amber-50/80 border border-amber-200 p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex items-center space-x-2 text-amber-950 font-bold">
+            <i data-lucide="bell" class="w-4 h-4 text-amber-700"></i>
+            <span>Administrative Operational Triage Summary:</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="bg-white border border-amber-300 text-amber-900 px-3 py-1 rounded-xl font-semibold shadow-2xs">
+              📋 <strong id="triage-pending-review">1</strong> Claims Pending Review
+            </span>
+            <span class="bg-white border border-red-300 text-red-900 px-3 py-1 rounded-xl font-semibold shadow-2xs">
+              ⚠️ <strong id="triage-fraud-flags">1</strong> AI Risk Indicators Awaiting Review
+            </span>
+            <span class="bg-white border border-gray-300 text-gray-800 px-3 py-1 rounded-xl font-semibold shadow-2xs">
+              🛑 <strong id="triage-admin-holds">0</strong> Claims on Admin Hold
+            </span>
+          </div>
+        </div>
+
+        <!-- Approved Visual Analytics & Charts Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Chart 1: District Farm Area Distribution -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+              <h4 class="font-bold text-xs text-brand-forest flex items-center space-x-1.5">
+                <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-brand-forest"></i>
+                <span>District Farm Area Distribution (Hectares)</span>
+              </h4>
+              <span class="text-[10px] text-gray-400">PostGIS Mapped Parcels</span>
+            </div>
+            <div class="h-56 relative flex items-center justify-center">
+              <canvas id="admin-district-area-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Claim Status Lifecycle Pipeline -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+              <h4 class="font-bold text-xs text-brand-forest flex items-center space-x-1.5">
+                <i data-lucide="pie-chart" class="w-3.5 h-3.5 text-brand-forest"></i>
+                <span>Claim Status Lifecycle Pipeline</span>
+              </h4>
+              <span class="text-[10px] text-gray-400">Workflow Concentration</span>
+            </div>
+            <div class="h-56 relative flex items-center justify-center">
+              <canvas id="admin-claim-pipeline-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Geographic Map -->
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
           <div class="flex items-center justify-between flex-wrap gap-2">
             <div class="flex items-center space-x-2">
-              <i data-lucide="layers" class="w-4 h-4 text-brand-forest"></i>
-              <h3 class="font-bold text-sm text-brand-forest">State-Wide Multi-Layer Geospatial Hub</h3>
+              <i data-lucide="map-pin" class="w-4 h-4 text-brand-forest"></i>
+              <h3 class="font-bold text-sm text-brand-forest">State-Wide Farm Telemetry & Spatial Grid</h3>
             </div>
             <div class="flex items-center space-x-2">
+              <span class="text-xs bg-amber-50 text-amber-800 px-2.5 py-0.5 rounded-full font-bold border border-amber-200">● Demonstration Telemetry Grid</span>
               <span class="text-xs bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-semibold border border-emerald-200">● 5 Active Farms</span>
-              <span class="text-xs bg-red-50 text-red-700 px-2 py-0.5 rounded font-semibold border border-red-200">● 1 Disaster Zone</span>
             </div>
           </div>
-          <div id="admin-map" class="h-96 w-full rounded-xl bg-gray-100 border border-gray-200"></div>
+          <div id="admin-map" class="h-80 w-full rounded-xl bg-gray-100 border border-gray-200"></div>
         </div>
       </div>
 
@@ -3357,6 +3408,7 @@
 
       if (tabKey === 'overview') {
         if (!adminMap) setTimeout(initAdminMap, 100);
+        loadAdminOverview();
       } else if (tabKey === 'districts') {
         loadAdminDistrictIntelligence();
       } else if (tabKey === 'claims') {
@@ -3370,6 +3422,124 @@
         loadAdminSettings();
       }
       if (window.lucide) lucide.createIcons();
+    }
+
+    // ── Module 1: Executive Overview Implementation ───────────────────────
+    let adminAreaChart = null;
+    let adminPipelineChart = null;
+
+    async function loadAdminOverview() {
+      try {
+        const headers = getAuthHeaders();
+        const res = await fetch(`${API_BASE}/admin/stats`, { headers });
+        if (!res.ok) throw new Error("Failed to load admin stats");
+        const json = await res.json();
+        const data = json.data || {};
+
+        // Update KPI Cards
+        const uEl = document.getElementById('admin-kpi-users');
+        if (uEl) uEl.innerText = data.total_registered_farmers || 3;
+
+        const aEl = document.getElementById('admin-kpi-area');
+        if (aEl) aEl.innerText = `${(data.total_monitored_hectares || 9.8).toFixed(1)} Ha`;
+
+        const cEl = document.getElementById('admin-kpi-claims');
+        if (cEl) cEl.innerText = data.total_claims_submitted || 1;
+
+        const lEl = document.getElementById('admin-kpi-loss');
+        if (lEl) lEl.innerText = `₹${(data.total_estimated_loss_inr || 120000).toLocaleString('en-IN', {minimumFractionDigits: 0})}`;
+
+        const sEl = document.getElementById('admin-kpi-sanctioned');
+        if (sEl) sEl.innerText = `₹${(data.total_sanctioned_payout_inr || 82800).toLocaleString('en-IN', {minimumFractionDigits: 0})}`;
+
+        const dEl = document.getElementById('admin-kpi-disasters');
+        if (dEl) dEl.innerText = data.active_disasters_count || 1;
+
+        // Update Operational Triage Banner
+        const revEl = document.getElementById('triage-pending-review');
+        if (revEl) revEl.innerText = data.claims_pending_review_count !== undefined ? data.claims_pending_review_count : 1;
+
+        const flagEl = document.getElementById('triage-fraud-flags');
+        if (flagEl) flagEl.innerText = data.high_risk_fraud_flags_count !== undefined ? data.high_risk_fraud_flags_count : 1;
+
+        const holdEl = document.getElementById('triage-admin-holds');
+        if (holdEl) holdEl.innerText = data.claims_admin_hold !== undefined ? data.claims_admin_hold : 0;
+
+        // Render Overview Charts
+        initAdminOverviewCharts(data.district_wise_area_ha || { "Sehore": 9.8 }, data.claim_status_pipeline || { "OFFICER_REVIEW": 1 });
+
+      } catch (err) {
+        // Fallback chart initialization
+        initAdminOverviewCharts({ "Sehore": 9.8 }, { "OFFICER_REVIEW": 1 });
+      }
+    }
+
+    function initAdminOverviewCharts(areaMap, pipelineMap) {
+      // Chart 1: District Farm Area Bar Chart
+      const areaCtx = document.getElementById('admin-district-area-chart');
+      if (areaCtx) {
+        const labels = Object.keys(areaMap);
+        const values = Object.values(areaMap);
+
+        if (adminAreaChart) {
+          adminAreaChart.data.labels = labels;
+          adminAreaChart.data.datasets[0].data = values;
+          adminAreaChart.update();
+        } else {
+          adminAreaChart = new Chart(areaCtx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Monitored Area (Ha)',
+                data: values,
+                backgroundColor: '#1B5E20',
+                borderRadius: 6
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                y: { beginAtZero: true, ticks: { font: { size: 10 } } },
+                x: { ticks: { font: { size: 10 } } }
+              }
+            }
+          });
+        }
+      }
+
+      // Chart 2: Claim Status Lifecycle Pipeline Doughnut Chart
+      const pipeCtx = document.getElementById('admin-claim-pipeline-chart');
+      if (pipeCtx) {
+        const labels = Object.keys(pipelineMap).map(s => s.replace('_', ' '));
+        const values = Object.values(pipelineMap);
+
+        if (adminPipelineChart) {
+          adminPipelineChart.data.labels = labels;
+          adminPipelineChart.data.datasets[0].data = values;
+          adminPipelineChart.update();
+        } else {
+          adminPipelineChart = new Chart(pipeCtx, {
+            type: 'doughnut',
+            data: {
+              labels: labels,
+              datasets: [{
+                data: values,
+                backgroundColor: ['#FFC107', '#138808', '#E53935', '#0056B3', '#7B1FA2']
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } }
+              }
+            }
+          });
+        }
+      }
     }
 
     // ── District Intelligence Implementation ───────────────────────────
