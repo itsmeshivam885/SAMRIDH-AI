@@ -1211,8 +1211,8 @@
             <div class="flex flex-wrap items-center gap-2 flex-grow sm:flex-grow-0">
               <!-- State Filter -->
               <select id="insurer-state-filter" onchange="filterInsurerQueue()" class="px-2.5 py-1.5 border border-gray-200 rounded-xl bg-gray-50 font-bold text-gray-800 focus:outline-none focus:border-purple-600">
-                <option value="all">All States (सभी राज्य)</option>
-                <option value="Madhya Pradesh" selected>Madhya Pradesh (मध्य प्रदेश)</option>
+                <option value="all" selected>All States (सभी राज्य)</option>
+                <option value="Madhya Pradesh">Madhya Pradesh (मध्य प्रदेश)</option>
                 <option value="Maharashtra">Maharashtra (महाराष्ट्र)</option>
                 <option value="Rajasthan">Rajasthan (राजस्थान)</option>
                 <option value="Uttar Pradesh">Uttar Pradesh (उत्तर प्रदेश)</option>
@@ -1221,9 +1221,11 @@
 
               <!-- District Filter -->
               <select id="insurer-district-filter" onchange="filterInsurerQueue()" class="px-2.5 py-1.5 border border-gray-200 rounded-xl bg-gray-50 font-bold text-gray-800 focus:outline-none focus:border-purple-600">
-                <option value="all">All Districts (सभी जिले)</option>
-                <option value="Sehore" selected>Sehore (सीहोर)</option>
+                <option value="all" selected>All Districts (सभी जिले)</option>
+                <option value="Sehore">Sehore (सीहोर)</option>
                 <option value="Bhopal">Bhopal (भोपाल)</option>
+                <option value="Pune">Pune (पुणे)</option>
+                <option value="Kota">Kota (कोटा)</option>
                 <option value="Ujjain">Ujjain (उज्जैन)</option>
                 <option value="Indore">Indore (इंदौर)</option>
                 <option value="Vidisha">Vidisha (विदिशा)</option>
@@ -1246,96 +1248,173 @@
           <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
             <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
               <h3 class="font-bold text-sm text-gray-800">PMFBY Claim Settlement Queue</h3>
-              <span class="text-[10px] text-gray-500 font-semibold" id="insurer-queue-count">Showing 3 Claims</span>
+              <span class="text-[10px] text-gray-500 font-semibold" id="insurer-queue-count">Showing 5 Claims</span>
             </div>
             <div class="overflow-x-auto">
               <table class="w-full text-xs">
                 <thead class="bg-gray-50 border-b border-gray-100">
                   <tr>
-                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Claim & Location</th>
-                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Farmer Details</th>
-                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Officer Audit Trace</th>
-                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">AI Loss & Conf</th>
-                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Action</th>
+                    <th class="text-left px-3.5 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Claim & Location</th>
+                    <th class="text-left px-3.5 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Farmer Details</th>
+                    <th class="text-left px-3.5 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Assigned Officer Audit</th>
+                    <th class="text-left px-3.5 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Sanction & AI Loss</th>
+                    <th class="text-left px-3.5 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="text-left px-3.5 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="insurer-triage-body" class="divide-y divide-gray-50">
                   <!-- Row 1: Shivam Singh -->
                   <tr class="hover:bg-gray-50 transition-colors" data-state="Madhya Pradesh" data-district="Sehore" data-priority="high" data-status="officer_approved">
-                    <td class="px-4 py-3 font-bold text-gray-800">
+                    <td class="px-3.5 py-3 font-bold text-gray-800">
                       <span class="block font-mono text-purple-700">CLM-MP-0736</span>
                       <span class="text-[10px] text-gray-500 font-normal">Madhya Pradesh • Sehore</span>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <p class="font-semibold text-gray-800">Shivam Singh</p>
                       <p class="text-gray-500 text-[10px]">Soybean (2.5 Ha) • Khasra 18B</p>
+                      <p class="text-purple-700 text-[9px] font-mono">KCC-MP-SEH-88210</p>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <span class="font-bold text-emerald-800 text-[11px] block">✓ Approved by Officer</span>
-                      <span class="text-gray-500 text-[10px] block">Krishna Agrawal (Loss Assessor)</span>
+                      <span class="text-gray-600 text-[10px] block font-medium">Krishna Agrawal (BADGE-25BCE10117)</span>
                     </td>
-                    <td class="px-4 py-3">
-                      <p class="font-bold text-red-600 text-xs">68.5% Loss</p>
-                      <p class="text-emerald-700 text-[10px] font-bold">Conf: 94%</p>
+                    <td class="px-3.5 py-3">
+                      <p class="font-extrabold text-amber-700 text-xs">₹1,12,500.00</p>
+                      <p class="text-red-600 text-[10px] font-bold">68.5% Loss (Conf 94%)</p>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px] block text-center" id="status-pill-CLM-MP-0736">OFFICER SANCTIONED</span>
                     </td>
-                    <td class="px-4 py-3">
-                      <button onclick="showInsurerDossier('shivam.25bce10736')" class="bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all shadow-xs">Review & Pay</button>
+                    <td class="px-3.5 py-3">
+                      <div class="flex items-center gap-1.5">
+                        <button onclick="showInsurerDossier('shivam.25bce10736')" class="bg-purple-600 hover:bg-purple-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all shadow-xs">Review</button>
+                        <button onclick="approveClaimDirect('shivam.25bce10736')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-2 py-1 rounded-lg transition-all shadow-xs" title="Approve & Settlement">Approve</button>
+                        <button onclick="rejectClaimDirect('shivam.25bce10736')" class="bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-bold px-2 py-1 rounded-lg transition-all" title="Reject Claim">Reject</button>
+                      </div>
                     </td>
                   </tr>
 
                   <!-- Row 2: Aryan Singh -->
                   <tr class="hover:bg-gray-50 transition-colors" data-state="Madhya Pradesh" data-district="Sehore" data-priority="medium" data-status="officer_approved">
-                    <td class="px-4 py-3 font-bold text-gray-800">
+                    <td class="px-3.5 py-3 font-bold text-gray-800">
                       <span class="block font-mono text-purple-700">CLM-MP-0741</span>
                       <span class="text-[10px] text-gray-500 font-normal">Madhya Pradesh • Sehore</span>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <p class="font-semibold text-gray-800">Aryan Singh</p>
                       <p class="text-gray-500 text-[10px]">Soybean (3.2 Ha) • Khasra 04A</p>
+                      <p class="text-purple-700 text-[9px] font-mono">KCC-MP-SEH-44120</p>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <span class="font-bold text-emerald-800 text-[11px] block">✓ Approved by Officer</span>
-                      <span class="text-gray-500 text-[10px] block">Krishna Agrawal (Loss Assessor)</span>
+                      <span class="text-gray-600 text-[10px] block font-medium">Krishna Agrawal (BADGE-25BCE10117)</span>
                     </td>
-                    <td class="px-4 py-3">
-                      <p class="font-bold text-amber-600 text-xs">42.1% Loss</p>
-                      <p class="text-emerald-700 text-[10px] font-bold">Conf: 91%</p>
+                    <td class="px-3.5 py-3">
+                      <p class="font-extrabold text-amber-700 text-xs">₹68,400.00</p>
+                      <p class="text-amber-600 text-[10px] font-bold">42.1% Loss (Conf 91%)</p>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px] block text-center" id="status-pill-CLM-MP-0741">OFFICER SANCTIONED</span>
                     </td>
-                    <td class="px-4 py-3">
-                      <button onclick="showInsurerDossier('aryan.25bce10798')" class="bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all shadow-xs">Review & Pay</button>
+                    <td class="px-3.5 py-3">
+                      <div class="flex items-center gap-1.5">
+                        <button onclick="showInsurerDossier('aryan.25bce10798')" class="bg-purple-600 hover:bg-purple-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all shadow-xs">Review</button>
+                        <button onclick="approveClaimDirect('aryan.25bce10798')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-2 py-1 rounded-lg transition-all shadow-xs" title="Approve & Settlement">Approve</button>
+                        <button onclick="rejectClaimDirect('aryan.25bce10798')" class="bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-bold px-2 py-1 rounded-lg transition-all" title="Reject Claim">Reject</button>
+                      </div>
                     </td>
                   </tr>
 
                   <!-- Row 3: Atharv Bisht -->
                   <tr class="hover:bg-gray-50 transition-colors" data-state="Madhya Pradesh" data-district="Sehore" data-priority="high" data-status="officer_approved">
-                    <td class="px-4 py-3 font-bold text-gray-800">
+                    <td class="px-3.5 py-3 font-bold text-gray-800">
                       <span class="block font-mono text-purple-700">CLM-MP-0752</span>
                       <span class="text-[10px] text-gray-500 font-normal">Madhya Pradesh • Sehore</span>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <p class="font-semibold text-gray-800">Atharv Bisht</p>
                       <p class="text-gray-500 text-[10px]">Maize (2.1 Ha) • Khasra 12C</p>
+                      <p class="text-purple-700 text-[9px] font-mono">KCC-MP-SEH-19023</p>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <span class="font-bold text-emerald-800 text-[11px] block">✓ Approved by Officer</span>
-                      <span class="text-gray-500 text-[10px] block">Krishna Agrawal (Loss Assessor)</span>
+                      <span class="text-gray-600 text-[10px] block font-medium">Krishna Agrawal (BADGE-25BCE10117)</span>
                     </td>
-                    <td class="px-4 py-3">
-                      <p class="font-bold text-red-600 text-xs">57.8% Loss</p>
-                      <p class="text-emerald-700 text-[10px] font-bold">Conf: 96%</p>
+                    <td class="px-3.5 py-3">
+                      <p class="font-extrabold text-amber-700 text-xs">₹92,100.00</p>
+                      <p class="text-red-600 text-[10px] font-bold">57.8% Loss (Conf 96%)</p>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-3.5 py-3">
                       <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px] block text-center" id="status-pill-CLM-MP-0752">OFFICER SANCTIONED</span>
                     </td>
-                    <td class="px-4 py-3">
-                      <button onclick="showInsurerDossier('atharv.25bce10596')" class="bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all shadow-xs">Review & Pay</button>
+                    <td class="px-3.5 py-3">
+                      <div class="flex items-center gap-1.5">
+                        <button onclick="showInsurerDossier('atharv.25bce10596')" class="bg-purple-600 hover:bg-purple-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all shadow-xs">Review</button>
+                        <button onclick="approveClaimDirect('atharv.25bce10596')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-2 py-1 rounded-lg transition-all shadow-xs" title="Approve & Settlement">Approve</button>
+                        <button onclick="rejectClaimDirect('atharv.25bce10596')" class="bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-bold px-2 py-1 rounded-lg transition-all" title="Reject Claim">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row 4: Rajesh Patel (Maharashtra) -->
+                  <tr class="hover:bg-gray-50 transition-colors" data-state="Maharashtra" data-district="Pune" data-priority="high" data-status="officer_approved">
+                    <td class="px-3.5 py-3 font-bold text-gray-800">
+                      <span class="block font-mono text-purple-700">CLM-MH-0812</span>
+                      <span class="text-[10px] text-gray-500 font-normal">Maharashtra • Pune</span>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <p class="font-semibold text-gray-800">Rajesh Patel</p>
+                      <p class="text-gray-500 text-[10px]">Paddy & Sugarcane (4.0 Ha) • Khasra 44D</p>
+                      <p class="text-purple-700 text-[9px] font-mono">KCC-MH-PUN-77182</p>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <span class="font-bold text-emerald-800 text-[11px] block">✓ Approved by Officer</span>
+                      <span class="text-gray-600 text-[10px] block font-medium">Sunita Deshmukh (BADGE-25BCE10888)</span>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <p class="font-extrabold text-amber-700 text-xs">₹1,45,000.00</p>
+                      <p class="text-red-600 text-[10px] font-bold">72.4% Loss (Conf 97%)</p>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px] block text-center" id="status-pill-CLM-MH-0812">OFFICER SANCTIONED</span>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <div class="flex items-center gap-1.5">
+                        <button onclick="showInsurerDossier('rajesh.25bce10888')" class="bg-purple-600 hover:bg-purple-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all shadow-xs">Review</button>
+                        <button onclick="approveClaimDirect('rajesh.25bce10888')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-2 py-1 rounded-lg transition-all shadow-xs" title="Approve & Settlement">Approve</button>
+                        <button onclick="rejectClaimDirect('rajesh.25bce10888')" class="bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-bold px-2 py-1 rounded-lg transition-all" title="Reject Claim">Reject</button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row 5: Vikram Rathore (Rajasthan) -->
+                  <tr class="hover:bg-gray-50 transition-colors" data-state="Rajasthan" data-district="Kota" data-priority="medium" data-status="officer_approved">
+                    <td class="px-3.5 py-3 font-bold text-gray-800">
+                      <span class="block font-mono text-purple-700">CLM-RJ-0943</span>
+                      <span class="text-[10px] text-gray-500 font-normal">Rajasthan • Kota</span>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <p class="font-semibold text-gray-800">Vikram Rathore</p>
+                      <p class="text-gray-500 text-[10px]">Bt Cotton (3.5 Ha) • Khasra 09F</p>
+                      <p class="text-purple-700 text-[9px] font-mono">KCC-RJ-KOT-99120</p>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <span class="font-bold text-emerald-800 text-[11px] block">✓ Approved by Officer</span>
+                      <span class="text-gray-600 text-[10px] block font-medium">Rameshwar Mina (BADGE-25BCE10999)</span>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <p class="font-extrabold text-amber-700 text-xs">₹1,28,000.00</p>
+                      <p class="text-amber-600 text-[10px] font-bold">51.0% Loss (Conf 92%)</p>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px] block text-center" id="status-pill-CLM-RJ-0943">OFFICER SANCTIONED</span>
+                    </td>
+                    <td class="px-3.5 py-3">
+                      <div class="flex items-center gap-1.5">
+                        <button onclick="showInsurerDossier('vikram.25bce10999')" class="bg-purple-600 hover:bg-purple-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all shadow-xs">Review</button>
+                        <button onclick="approveClaimDirect('vikram.25bce10999')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-2 py-1 rounded-lg transition-all shadow-xs" title="Approve & Settlement">Approve</button>
+                        <button onclick="rejectClaimDirect('vikram.25bce10999')" class="bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-bold px-2 py-1 rounded-lg transition-all" title="Reject Claim">Reject</button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -1417,7 +1496,10 @@
               <button onclick="insurerAssignVisit()" class="px-4 py-2.5 border border-gray-300 rounded-xl text-xs font-bold text-gray-700 hover:bg-gray-100 transition-all flex items-center gap-1.5">
                 <i data-lucide="map-pin" class="w-4 h-4"></i> Request Secondary Joint Survey
               </button>
-              <button onclick="officerAction('APPROVED')" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition-all flex items-center gap-2 ml-auto">
+              <button onclick="insurerRejectCurrentClaim()" class="px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5">
+                <i data-lucide="x-circle" class="w-4 h-4"></i> Reject Claim
+              </button>
+              <button onclick="insurerApproveCurrentClaim()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition-all flex items-center gap-2 ml-auto">
                 <i data-lucide="check-circle-2" class="w-4 h-4"></i>
                 <span id="ins-approve-btn-text">Approve & Release DBT Settlement (PFMS Payout)</span>
               </button>
@@ -4000,9 +4082,12 @@
       document.getElementById('officer-damage-preview').style.backgroundImage = `linear-gradient(rgba(229,57,53,0.3), rgba(0,0,0,0.6)), url('${previewUrl}')`;
     }
 
+    let currentInsurerClaimKey = 'shivam.25bce10736';
+
     const OFFICER_CLAIMS_DATA = {
       'shivam.25bce10736': {
         claimId: 'PMFBY-CLAIM-2026-MP-0736',
+        claimIdShort: 'CLM-MP-0736',
         farmerName: 'Shivam Singh',
         farmerId: '25BCE10736',
         aadhaar: 'XXXXXXXX9012',
@@ -4015,6 +4100,11 @@
         sownDates: 'Sown: 20-June-2026 | Est. Harvest: 25-October-2026',
         cause: 'Inundation & Severe Lodging',
         sanction: 'Est. Sanction: ₹1,12,500.00',
+        sanctionAmt: '₹1,12,500.00',
+        officerName: 'Krishna Agrawal',
+        officerBadge: 'BADGE-25BCE10117',
+        officerDesignation: 'District Loss Assessor (Sehore, MP)',
+        officerStatus: '✓ Approved by Officer',
         nitrogen: '42 kg/ha (Deficient)',
         nitrogenRec: '* Rec: Apply 15 kg/acre Urea',
         pk: 'P: 28 (Opt) | K: 36 (Good)',
@@ -4027,12 +4117,17 @@
         satDelta: '✓ ΔNDVI Anomaly: -0.34 (Validates Claim)',
         geofence: '✓ PASSED (Plot 18B)',
         phash: '✓ PASSED (Unique Image)',
+        conf: '94% (High)',
+        lossPct: '68.5%',
+        state: 'Madhya Pradesh',
+        district: 'Sehore',
         maskTag: 'AI Segmented: 68.5% Loss',
         baselineTag: 'Baseline: Jun 20, 2026 (Soybean)',
         bgUrl: 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80'
       },
       'aryan.25bce10798': {
         claimId: 'PMFBY-CLAIM-2026-MP-0741',
+        claimIdShort: 'CLM-MP-0741',
         farmerName: 'Aryan Singh',
         farmerId: '25BCE10798',
         aadhaar: 'XXXXXXXX5432',
@@ -4045,6 +4140,11 @@
         sownDates: 'Sown: 18-June-2026 | Est. Harvest: 20-October-2026',
         cause: 'Pest Infestation & Yellowing',
         sanction: 'Est. Sanction: ₹68,400.00',
+        sanctionAmt: '₹68,400.00',
+        officerName: 'Krishna Agrawal',
+        officerBadge: 'BADGE-25BCE10117',
+        officerDesignation: 'District Loss Assessor (Sehore, MP)',
+        officerStatus: '✓ Approved by Officer',
         nitrogen: '58 kg/ha (Optimum)',
         nitrogenRec: '* Rec: Maintain current fertigation',
         pk: 'P: 32 (Opt) | K: 40 (Opt)',
@@ -4057,12 +4157,17 @@
         satDelta: '✓ ΔNDVI Anomaly: -0.26 (Pest Damage Confirmed)',
         geofence: '✓ PASSED (Plot 04A)',
         phash: '✓ PASSED (Unique Image)',
+        conf: '91% (High)',
+        lossPct: '42.1%',
+        state: 'Madhya Pradesh',
+        district: 'Sehore',
         maskTag: 'AI Segmented: 42.1% Loss',
         baselineTag: 'Baseline: Jun 18, 2026 (Soybean)',
         bgUrl: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=600&q=80'
       },
       'atharv.25bce10596': {
         claimId: 'PMFBY-CLAIM-2026-MP-0752',
+        claimIdShort: 'CLM-MP-0752',
         farmerName: 'Atharv Bisht',
         farmerId: '25BCE10596',
         aadhaar: 'XXXXXXXX1190',
@@ -4075,6 +4180,11 @@
         sownDates: 'Sown: 22-June-2026 | Est. Harvest: 28-October-2026',
         cause: 'Flood & Root Zone Hypoxia',
         sanction: 'Est. Sanction: ₹92,100.00',
+        sanctionAmt: '₹92,100.00',
+        officerName: 'Krishna Agrawal',
+        officerBadge: 'BADGE-25BCE10117',
+        officerDesignation: 'District Loss Assessor (Sehore, MP)',
+        officerStatus: '✓ Approved by Officer',
         nitrogen: '35 kg/ha (Deficient)',
         nitrogenRec: '* Rec: Apply 12 kg/acre Urea post-drainage',
         pk: 'P: 22 (Opt) | K: 30 (Good)',
@@ -4087,9 +4197,93 @@
         satDelta: '✓ ΔNDVI Anomaly: -0.28 (Hypoxia Validated)',
         geofence: '✓ PASSED (Plot 12C)',
         phash: '✓ PASSED (Unique Image)',
+        conf: '96% (High)',
+        lossPct: '57.8%',
+        state: 'Madhya Pradesh',
+        district: 'Sehore',
         maskTag: 'AI Segmented: 57.8% Loss',
         baselineTag: 'Baseline: Jun 22, 2026 (Maize)',
         bgUrl: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80'
+      },
+      'rajesh.25bce10888': {
+        claimId: 'PMFBY-CLAIM-2026-MH-0812',
+        claimIdShort: 'CLM-MH-0812',
+        farmerName: 'Rajesh Patel',
+        farmerId: '25BCE10888',
+        aadhaar: 'XXXXXXXX7711',
+        mobile: '+91 97XXXXXX88',
+        kcc: 'KCC-MH-PUN-77182',
+        address: 'Baramati Village, District Pune, Maharashtra',
+        khasra: 'Plot 44D / Survey 204',
+        area: '4.0 Hectares',
+        crop: 'Kharif Sugarcane & Paddy',
+        sownDates: 'Sown: 10-June-2026 | Est. Harvest: 15-November-2026',
+        cause: 'Unseasonal Hailstorm & Crop Submersion',
+        sanction: 'Est. Sanction: ₹1,45,000.00',
+        sanctionAmt: '₹1,45,000.00',
+        officerName: 'Sunita Deshmukh',
+        officerBadge: 'BADGE-25BCE10888',
+        officerDesignation: 'Senior Field Officer (Pune, MH)',
+        officerStatus: '✓ Approved by Officer',
+        nitrogen: '48 kg/ha (Optimum)',
+        nitrogenRec: '* Rec: Balanced NPK application',
+        pk: 'P: 30 (Opt) | K: 42 (Opt)',
+        phMoisture: 'pH: 7.1 | Moisture: 44.0% (Sufficient)',
+        weatherTempRh: '26°C / 89% Relative Hum.',
+        weatherRain: '165 mm in 24h (Extreme)',
+        weatherRisk: '⚠️ Risk: Hailstorm Damage + Submersion Warning',
+        satPre: '0.81 (Healthy)',
+        satPost: '0.35 (Severe Drop)',
+        satDelta: '✓ ΔNDVI Anomaly: -0.46 (Hail Damage Confirmed)',
+        geofence: '✓ PASSED (Plot 44D)',
+        phash: '✓ PASSED (Unique Image)',
+        conf: '97% (High)',
+        lossPct: '72.4%',
+        state: 'Maharashtra',
+        district: 'Pune',
+        maskTag: 'AI Segmented: 72.4% Loss',
+        baselineTag: 'Baseline: Jun 10, 2026 (Sugarcane)',
+        bgUrl: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80'
+      },
+      'vikram.25bce10999': {
+        claimId: 'PMFBY-CLAIM-2026-RJ-0943',
+        claimIdShort: 'CLM-RJ-0943',
+        farmerName: 'Vikram Rathore',
+        farmerId: '25BCE10999',
+        aadhaar: 'XXXXXXXX3344',
+        mobile: '+91 96XXXXXX99',
+        kcc: 'KCC-RJ-KOT-99120',
+        address: 'Sangod Tehsil, District Kota, Rajasthan',
+        khasra: 'Plot 09F / Survey 312',
+        area: '3.5 Hectares',
+        crop: 'Kharif Cotton (Bt Cotton)',
+        sownDates: 'Sown: 15-June-2026 | Est. Harvest: 30-October-2026',
+        cause: 'Pink Bollworm & Drought Stress',
+        sanction: 'Est. Sanction: ₹1,28,000.00',
+        sanctionAmt: '₹1,28,000.00',
+        officerName: 'Rameshwar Mina',
+        officerBadge: 'BADGE-25BCE10999',
+        officerDesignation: 'District Agricultural Officer (Kota, RJ)',
+        officerStatus: '✓ Approved by Officer',
+        nitrogen: '30 kg/ha (Deficient)',
+        nitrogenRec: '* Rec: Foliar spray of 2% Urea',
+        pk: 'P: 18 (Deficient) | K: 28 (Good)',
+        phMoisture: 'pH: 7.8 | Moisture: 18.5% (Dry)',
+        weatherTempRh: '34°C / 42% Relative Hum.',
+        weatherRain: '12 mm in 24h (Deficit)',
+        weatherRisk: '⚠️ Risk: High Moisture Deficit + Pest Attack Warning',
+        satPre: '0.74 (Healthy)',
+        satPost: '0.45 (Moderate Drop)',
+        satDelta: '✓ ΔNDVI Anomaly: -0.29 (Stress Confirmed)',
+        geofence: '✓ PASSED (Plot 09F)',
+        phash: '✓ PASSED (Unique Image)',
+        conf: '92% (High)',
+        lossPct: '51.0%',
+        state: 'Rajasthan',
+        district: 'Kota',
+        maskTag: 'AI Segmented: 51.0% Loss',
+        baselineTag: 'Baseline: Jun 15, 2026 (Cotton)',
+        bgUrl: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=600&q=80'
       }
     };
 
@@ -4233,6 +4427,49 @@
       }
     }
 
+    function insurerApproveCurrentClaim() {
+      if (!currentInsurerClaimKey) currentInsurerClaimKey = 'shivam.25bce10736';
+      const data = OFFICER_CLAIMS_DATA[currentInsurerClaimKey];
+      const claimId = data ? (data.claimIdShort || 'CLM-MP-0736') : 'CLM-MP-0736';
+
+      const pill = document.getElementById(`status-pill-${claimId}`);
+      if (pill) {
+        pill.innerText = "DBT DISBURSED (PFMS SUCCESS)";
+        pill.className = "bg-emerald-600 text-white px-2.5 py-0.5 rounded-full font-bold text-[10px] block text-center shadow-xs";
+      }
+
+      alert(`✓ Claim ${claimId} APPROVED & SETTLED by PMFBY Insurer!\nSanctioned Amount ${data ? data.sanctionAmt : '₹1,12,500.00'} released via PFMS Direct Benefit Transfer.\nReceipt dispatched to ${data ? data.farmerName : 'Farmer'}'s KCC account.`);
+    }
+
+    function insurerRejectCurrentClaim() {
+      if (!currentInsurerClaimKey) currentInsurerClaimKey = 'shivam.25bce10736';
+      const data = OFFICER_CLAIMS_DATA[currentInsurerClaimKey];
+      const claimId = data ? (data.claimIdShort || 'CLM-MP-0736') : 'CLM-MP-0736';
+
+      const pill = document.getElementById(`status-pill-${claimId}`);
+      if (pill) {
+        pill.innerText = "REJECTED BY INSURER";
+        pill.className = "bg-red-600 text-white px-2.5 py-0.5 rounded-full font-bold text-[10px] block text-center shadow-xs";
+      }
+
+      alert(`⚠️ Claim ${claimId} REJECTED by PMFBY Insurer.\nAudit notice dispatched to Field Officer (${data ? data.officerName : 'Krishna Agrawal'}) and Farmer.`);
+    }
+
+    function approveClaimDirect(farmerKey) {
+      showInsurerDossier(farmerKey);
+      insurerApproveCurrentClaim();
+    }
+
+    function rejectClaimDirect(farmerKey) {
+      showInsurerDossier(farmerKey);
+      insurerRejectCurrentClaim();
+    }
+
+    function requestVisitDirect(farmerKey) {
+      showInsurerDossier(farmerKey);
+      insurerAssignVisit();
+    }
+
     function filterInsurerQueue() {
       const state = document.getElementById('insurer-state-filter').value;
       const district = document.getElementById('insurer-district-filter').value;
@@ -4268,12 +4505,13 @@
     }
 
     function showInsurerDossier(farmerKey) {
+      currentInsurerClaimKey = farmerKey;
       const data = OFFICER_CLAIMS_DATA[farmerKey];
       if (!data) return;
 
       // Header
-      document.getElementById('insurer-dossier-title').innerText = `${data.claimId} • ${data.farmerName.toUpperCase()} • ${data.cause}`;
-      document.getElementById('insurer-dossier-liability').innerText = data.sanction.replace('Est. Sanction: ', '');
+      document.getElementById('insurer-dossier-title').innerText = `${data.claimIdShort || data.claimId} • ${data.farmerName.toUpperCase()} • ${data.cause}`;
+      document.getElementById('insurer-dossier-liability').innerText = data.sanctionAmt || data.sanction.replace('Est. Sanction: ', '');
 
       // Farmer Credentials
       document.getElementById('ins-farmer-name').innerText = `${data.farmerName} (ID: ${data.farmerId})`;
@@ -4285,17 +4523,17 @@
       document.getElementById('ins-farmer-address').innerText = data.address;
 
       // Officer Approval Audit Trace
-      document.getElementById('ins-officer-name').innerText = "KRISHNA AGRAWAL";
-      document.getElementById('ins-officer-badge').innerText = "BADGE-25BCE10117";
+      document.getElementById('ins-officer-name').innerText = data.officerName || "KRISHNA AGRAWAL";
+      document.getElementById('ins-officer-badge').innerText = data.officerBadge || "BADGE-25BCE10117";
       document.getElementById('ins-officer-status-tag').innerText = "OFFICER SANCTIONED FOR PFMS DBT";
       document.getElementById('ins-officer-time').innerText = "05 Sep 2026, 17:00 IST";
 
       // Verification Matrix
       document.getElementById('ins-telemetry-n').innerText = data.nitrogen;
       document.getElementById('ins-weather-rain').innerText = data.weatherRain;
-      document.getElementById('ins-dossier-ndvi').innerText = data.satDelta.split(': ')[1] || data.satPost;
+      document.getElementById('ins-dossier-ndvi').innerText = data.satDelta ? (data.satDelta.split(': ')[1] || data.satPost) : data.satPost;
       document.getElementById('ins-phash-status').innerText = data.phash;
-      document.getElementById('ins-dossier-ai-conf').innerText = data.conf;
+      document.getElementById('ins-dossier-ai-conf').innerText = data.conf || "94% (High)";
 
       // Image & Mask Label
       document.getElementById('ins-dossier-mask-label').innerText = data.maskTag;
@@ -4310,11 +4548,17 @@
     }
 
     function insurerAssignVisit() {
-      alert("✓ Secondary Joint Survey team assigned. Notification sent to District Agriculture Office.");
-    }
+      if (!currentInsurerClaimKey) currentInsurerClaimKey = 'shivam.25bce10736';
+      const data = OFFICER_CLAIMS_DATA[currentInsurerClaimKey];
+      const claimId = data ? (data.claimIdShort || 'CLM-MP-0736') : 'CLM-MP-0736';
 
-    function insurerViewReports() {
-      alert("✓ Generating daily Risk & SLA Compliance Report...");
+      const pill = document.getElementById(`status-pill-${claimId}`);
+      if (pill) {
+        pill.innerText = "RE-INSPECTION REQUESTED";
+        pill.className = "bg-amber-500 text-white px-2.5 py-0.5 rounded-full font-bold text-[10px] block text-center shadow-xs";
+      }
+
+      alert(`✓ Secondary Joint Field Survey team assigned for claim ${claimId}.\nNotification sent to District Agriculture Officer (${data ? data.officerName : 'Krishna Agrawal'}).`);
     }
 
     function initFarmerMap() {
