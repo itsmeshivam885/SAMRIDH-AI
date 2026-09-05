@@ -838,14 +838,18 @@
 
           </div>
         </div>
-        <div class="flex items-center gap-3">
-          <button onclick="openModal('modal-crop-scan')" class="bg-white text-brand-forest hover:bg-brand-cream px-4 py-2.5 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-2">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="openModal('modal-crop-scan')" class="bg-white text-brand-forest hover:bg-brand-cream px-3.5 py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5">
             <i data-lucide="scan" class="w-4 h-4"></i>
-            <span>AI Crop Health Scan (फसल जांचें)</span>
+            <span>Scan Crop (फसल जांचें)</span>
           </button>
-          <button onclick="openModal('modal-report-damage')" class="bg-brand-red text-white hover:bg-red-700 px-4 py-2.5 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-2 animate-pulse">
+          <button onclick="openModal('modal-report-damage')" class="bg-brand-red text-white hover:bg-red-700 px-3.5 py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5 animate-pulse">
             <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-            <span>Report Damage / 72h SOS (नुकसान दर्ज करें)</span>
+            <span>Add Claim / 72h SOS (दावा दर्ज करें)</span>
+          </button>
+          <button onclick="openModal('modal-register-farm')" class="bg-brand-gold text-brand-forest hover:bg-amber-400 px-3.5 py-2 rounded-xl font-bold text-xs shadow transition-all flex items-center space-x-1.5 border border-amber-300">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>Register Field / Crop (खेत पंजीकृत करें)</span>
           </button>
         </div>
       </div>
@@ -944,79 +948,172 @@
 
     <!-- SURFACE 6: OFFICER WORKBENCH -->
     <section id="view-officer" class="hidden space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-gray-200 pb-4">
         <div>
           <h2 class="text-xl font-bold text-brand-forest">PMFBY Joint Survey & Loss Assessor Workbench</h2>
           <p class="text-xs text-brand-muted" id="officer-header-sub">District: Sehore, MP • Assigned Officer: KRISHNA AGRAWAL (FIELD_OFFICER)</p>
         </div>
-        <div class="flex items-center space-x-2">
-          <span class="text-xs font-semibold bg-brand-gold/20 text-brand-forest px-3 py-1 rounded-full border border-brand-gold/40">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs font-semibold bg-brand-gold/20 text-brand-forest px-3 py-1.5 rounded-xl border border-brand-gold/40">
             Pending Triage: 1 Claim
           </span>
+          <button onclick="openModal('modal-crop-scan')" class="bg-white hover:bg-gray-100 text-brand-forest border border-gray-300 px-3 py-1.5 rounded-xl font-bold text-xs shadow-xs transition-all flex items-center space-x-1.5" title="Perform assisted crop scan for farmer">
+            <i data-lucide="scan" class="w-3.5 h-3.5"></i>
+            <span>📸 Assisted Scan</span>
+          </button>
+          <button onclick="openModal('modal-report-damage')" class="bg-red-50 hover:bg-red-100 text-brand-red border border-red-200 px-3 py-1.5 rounded-xl font-bold text-xs shadow-xs transition-all flex items-center space-x-1.5" title="File 72h SOS claim on behalf of farmer">
+            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+            <span>⚠️ File Farmer Claim</span>
+          </button>
+          <button onclick="openModal('modal-register-farm')" class="bg-emerald-50 hover:bg-emerald-100 text-brand-forest border border-emerald-300 px-3 py-1.5 rounded-xl font-bold text-xs shadow-xs transition-all flex items-center space-x-1.5" title="Register farmer land parcel / crop">
+            <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+            <span>🌾 Register Farmer Parcel</span>
+          </button>
         </div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left: Active Claims Queue (All System Farmers) -->
         <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 space-y-3">
-          <h3 class="font-bold text-xs uppercase tracking-wider text-brand-muted">Active Claims Queue</h3>
-          <div class="space-y-2">
-            <div class="p-3.5 rounded-xl border border-brand-leaf bg-emerald-50/40 cursor-pointer hover:shadow transition-all space-y-1.5">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-xs uppercase tracking-wider text-brand-muted">Active Claims Queue (3 Farmers)</h3>
+            <span class="text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-bold">Kharif 2026</span>
+          </div>
+          <div class="space-y-2.5" id="officer-queue-container">
+            <!-- Farmer 1: Shivam Singh -->
+            <div onclick="selectOfficerClaim('shivam.25bce10736')" id="officer-card-shivam.25bce10736" class="officer-claim-card active p-3.5 rounded-xl border border-brand-leaf bg-emerald-50/60 cursor-pointer hover:shadow transition-all space-y-1.5 border-l-4 border-l-brand-forest">
               <div class="flex items-center justify-between">
-                <span class="font-bold text-xs text-brand-forest">PMFBY-CLAIM-2026-MP-0001</span>
-                <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold" id="officer-claim-tag">OFFICER REVIEW</span>
+                <span class="font-bold text-xs text-brand-forest">PMFBY-CLAIM-2026-MP-0736</span>
+                <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">OFFICER REVIEW</span>
               </div>
-              <p class="text-xs text-gray-700 font-medium" id="officer-queue-sub">SHIVAM SINGH • Paddy & Cotton (4.5 Ha)</p>
-              <div class="flex items-center justify-between text-[11px] text-gray-500 pt-1">
-                <span>AI Loss: <strong id="officer-claim-loss">68.5%</strong></span>
-                <span class="text-emerald-700 font-bold" id="officer-claim-conf">Conf: 94% (High)</span>
+              <p class="text-xs text-gray-900 font-bold">SHIVAM SINGH • Kharif Soybean (2.5 Ha)</p>
+              <p class="text-[11px] text-gray-500">Khajuri Village, Sehore • Plot 18B</p>
+              <div class="flex items-center justify-between text-[11px] text-gray-500 pt-1 border-t border-emerald-100">
+                <span>AI Loss: <strong class="text-red-600">68.5%</strong></span>
+                <span class="text-emerald-700 font-bold">Conf: 94% (High)</span>
+              </div>
+            </div>
+
+            <!-- Farmer 2: Aryan Singh -->
+            <div onclick="selectOfficerClaim('aryan.25bce10798')" id="officer-card-aryan.25bce10798" class="officer-claim-card p-3.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 cursor-pointer hover:shadow transition-all space-y-1.5 border-l-4 border-l-amber-500">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-xs text-gray-800">PMFBY-CLAIM-2026-MP-0741</span>
+                <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">OFFICER REVIEW</span>
+              </div>
+              <p class="text-xs text-gray-900 font-bold">ARYAN SINGH • Kharif Soybean (3.2 Ha)</p>
+              <p class="text-[11px] text-gray-500">Ashta Village, Sehore • Plot 04A</p>
+              <div class="flex items-center justify-between text-[11px] text-gray-500 pt-1 border-t border-gray-100">
+                <span>AI Loss: <strong class="text-amber-600">42.1%</strong></span>
+                <span class="text-emerald-700 font-bold">Conf: 91% (Med)</span>
+              </div>
+            </div>
+
+            <!-- Farmer 3: Atharv Bisht -->
+            <div onclick="selectOfficerClaim('atharv.25bce10596')" id="officer-card-atharv.25bce10596" class="officer-claim-card p-3.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 cursor-pointer hover:shadow transition-all space-y-1.5 border-l-4 border-l-brand-red">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-xs text-gray-800">PMFBY-CLAIM-2026-MP-0752</span>
+                <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">OFFICER REVIEW</span>
+              </div>
+              <p class="text-xs text-gray-900 font-bold">ATHARV BISHT • Kharif Maize (2.1 Ha)</p>
+              <p class="text-[11px] text-gray-500">Shyampur Village, Sehore • Plot 12C</p>
+              <div class="flex items-center justify-between text-[11px] text-gray-500 pt-1 border-t border-gray-100">
+                <span>AI Loss: <strong class="text-red-600">57.8%</strong></span>
+                <span class="text-emerald-700 font-bold">Conf: 96% (High)</span>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Right: Comprehensive Dossier -->
         <div class="lg:col-span-2 space-y-6">
           <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-5">
-            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 pb-3 gap-2">
               <div>
-                <h3 class="font-bold text-base text-brand-forest">Claim Assessment Dossier: PMFBY-CLAIM-2026-MP-0736</h3>
-                <p class="text-xs text-brand-muted" id="officer-dossier-sub">Farmer: SHIVAM SINGH (25BCE10736) • Cause: Inundation & Severe Lodging</p>
+                <h3 class="font-bold text-base text-brand-forest" id="officer-dossier-claim-id">Claim Assessment Dossier: PMFBY-CLAIM-2026-MP-0736</h3>
+                <p class="text-xs text-brand-muted" id="officer-dossier-sub">Farmer: SHIVAM SINGH (25BCE10736) • Inundation & Severe Lodging</p>
               </div>
-              <span class="text-xs font-bold text-brand-forest bg-brand-cream px-3 py-1 rounded-lg border border-brand-leaf/30" id="officer-sanction-badge">
+              <span class="text-xs font-bold text-brand-forest bg-brand-cream px-3 py-1 rounded-lg border border-brand-leaf/30 self-start sm:self-auto" id="officer-sanction-badge">
                 Est. Sanction: ₹1,12,500.00
               </span>
-
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-center">
-                <span class="text-[10px] font-semibold text-gray-500 block uppercase">1. GPS Geofence</span>
-                <span class="text-xs font-bold text-emerald-700">✓ INSIDE (0.0m)</span>
+            <!-- SECTION 1 & 2: FARMER IDENTITY & LAND REGISTRATION GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200 text-xs">
+              <div class="space-y-1.5 border-r md:border-r border-gray-200 pr-2">
+                <span class="font-extrabold text-brand-forest uppercase tracking-wider text-[10px] block">1. Farmer Identity & Credentials</span>
+                <p class="text-gray-800"><strong>Name:</strong> <span id="officer-farmer-name">Shivam Singh (ID: 25BCE10736)</span></p>
+                <p class="text-gray-800" id="officer-farmer-aadhaar-mobile"><strong>Aadhaar:</strong> XXXXXXXX9012 | <strong>Mobile:</strong> +91 98XXXXXX02</p>
+                <p class="text-gray-800"><strong>KCC No:</strong> <span class="font-mono text-purple-700 font-bold" id="officer-farmer-kcc">KCC-MP-SEH-88210</span></p>
+                <p class="text-gray-600 text-[11px]"><strong>Address:</strong> <span id="officer-farmer-address">Village Khajuri, Block Sehore, District Sehore, MP</span></p>
               </div>
-              <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-center">
-                <span class="text-[10px] font-semibold text-gray-500 block uppercase">2. Duplicate pHash</span>
-                <span class="text-xs font-bold text-emerald-700" id="officer-phash-status">✓ UNIQUE (Dist 32)</span>
+              <div class="space-y-1.5 pl-0 md:pl-2">
+                <span class="font-extrabold text-brand-forest uppercase tracking-wider text-[10px] block">2. Land & Crop Registration</span>
+                <p class="text-gray-800"><strong>Land Record:</strong> <span id="officer-land-khasra">Khasra Plot 18B / Survey 101</span></p>
+                <p class="text-gray-800"><strong>Cultivated Area:</strong> <span id="officer-land-area">2.5 Hectares</span></p>
+                <p class="text-gray-800"><strong>Registered Crop:</strong> <span id="officer-land-crop">Kharif Soybean (JS 20-34 Variety)</span></p>
+                <p class="text-gray-600 text-[11px]" id="officer-land-dates"><strong>Sown:</strong> 20-June-2026 | <strong>Est. Harvest:</strong> 25-October-2026</p>
+                <p class="text-emerald-700 text-[10px] font-bold">✓ GIS Boundary: Locked PostGIS Cadastral Polygon</p>
               </div>
-              <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-center">
-                <span class="text-[10px] font-semibold text-gray-500 block uppercase">3. SIFT Baseline</span>
-                <span class="text-xs font-bold text-emerald-700">✓ 89% Match</span>
+            </div>
+
+            <!-- SECTION 3 & 4 & 5: TELEMETRY, MICROCLIMATE & SATELLITE -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <!-- 3. IoT Soil Telemetry -->
+              <div class="bg-blue-50/50 p-3 rounded-xl border border-blue-100 space-y-1">
+                <span class="font-extrabold text-blue-900 uppercase text-[10px] block">3. IoT Soil Telemetry</span>
+                <p class="text-gray-800"><strong>N (Nitrogen):</strong> <span class="text-amber-700 font-bold" id="officer-telemetry-n">42 kg/ha (Deficient)</span></p>
+                <p class="text-[10px] text-amber-800 italic" id="officer-telemetry-n-rec">* Rec: Apply 15 kg/acre Urea</p>
+                <p class="text-gray-700" id="officer-telemetry-pk"><strong>P:</strong> 28 (Opt) | <strong>K:</strong> 36 (Good)</p>
+                <p class="text-gray-700" id="officer-telemetry-ph-m"><strong>pH:</strong> 6.8 | <strong>Moisture:</strong> 31% (Suff.)</p>
               </div>
-              <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 text-center">
-                <span class="text-[10px] font-semibold text-gray-500 block uppercase">4. Satellite NDVI</span>
-                <span class="text-xs font-bold text-amber-700">⚠️ -32.5% Drop</span>
+
+              <!-- 4. Weather & Microclimate -->
+              <div class="bg-amber-50/50 p-3 rounded-xl border border-amber-100 space-y-1">
+                <span class="font-extrabold text-amber-900 uppercase text-[10px] block">4. Weather & Microclimate</span>
+                <p class="text-gray-800"><strong>Temp/RH:</strong> <span id="officer-weather-temp-rh">28°C / 84% Relative Hum.</span></p>
+                <p class="text-red-700 font-bold" id="officer-weather-rain"><strong>IMD Rain:</strong> 142 mm in 24h (Flood)</p>
+                <p class="text-[10px] text-red-800 font-semibold" id="officer-weather-risk">⚠️ Risk: High Humidity + Rain → Fungal Rust Risk Warning</p>
+              </div>
+
+              <!-- 5. Satellite Remote Sensing -->
+              <div class="bg-purple-50/50 p-3 rounded-xl border border-purple-100 space-y-1">
+                <span class="font-extrabold text-purple-900 uppercase text-[10px] block">5. Satellite Remote Sensing</span>
+                <p class="text-gray-800"><strong>Pre-NDVI:</strong> <span id="officer-sat-pre">0.72 (Healthy)</span></p>
+                <p class="text-red-700 font-bold"><strong>Post-NDVI:</strong> <span id="officer-sat-post">0.38 (Severe Loss Drop)</span></p>
+                <p class="text-[10px] text-purple-800 font-bold" id="officer-sat-delta">✓ ΔNDVI Anomaly: -0.34 (Validates Claim)</p>
+              </div>
+            </div>
+
+            <!-- SECTION 6: EVIDENCE & ANTI-FRAUD VERIFICATION -->
+            <div class="space-y-2">
+              <span class="font-extrabold text-brand-forest uppercase tracking-wider text-[10px] block">6. Evidence & Anti-Fraud Verification Gate</span>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
+                <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                  <span class="text-[10px] font-semibold text-gray-500 block uppercase">GPS Geofence</span>
+                  <span class="text-xs font-bold text-emerald-700" id="officer-geofence-status">✓ PASSED (Plot 18B)</span>
+                </div>
+                <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                  <span class="text-[10px] font-semibold text-gray-500 block uppercase">64-bit Anti-Fraud pHash</span>
+                  <span class="text-xs font-bold text-emerald-700" id="officer-phash-status">✓ PASSED (Unique Image)</span>
+                </div>
+                <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200 col-span-2 sm:col-span-1">
+                  <span class="text-[10px] font-semibold text-gray-500 block uppercase">Laplacian Blur Check</span>
+                  <span class="text-xs font-bold text-emerald-700">✓ PASSED (Sharp Image)</span>
+                </div>
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="space-y-1.5">
                 <span class="text-xs font-bold text-brand-forest">Sowing Baseline (Reference Landmark)</span>
-                <div class="h-48 rounded-xl bg-gray-200 border border-gray-300 flex items-center justify-center text-center p-4 relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80')">
-                  <span class="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-full absolute bottom-3 left-3">Baseline: Jun 22, 2026</span>
+                <div class="h-44 rounded-xl bg-gray-200 border border-gray-300 flex items-center justify-center text-center p-4 relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80')">
+                  <span class="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-full absolute bottom-3 left-3" id="officer-baseline-tag">Baseline: Jun 20, 2026 (Soybean)</span>
                 </div>
               </div>
               <div class="space-y-1.5">
                 <span class="text-xs font-bold text-brand-red">Damage Evidence & AI Mask (SegFormer)</span>
-                <div id="officer-damage-preview" class="h-48 rounded-xl bg-gray-200 border border-brand-red/40 flex items-center justify-center text-center p-4 relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(229,57,53,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80')">
-                  <span class="text-xs font-bold text-white bg-brand-red px-3 py-1 rounded-full absolute bottom-3 left-3" id="officer-mask-tag">AI Segmented: 69.0% Lodged</span>
+                <div id="officer-damage-preview" class="h-44 rounded-xl bg-gray-200 border border-brand-red/40 flex items-center justify-center text-center p-4 relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(229,57,53,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80')">
+                  <span class="text-xs font-bold text-white bg-brand-red px-3 py-1 rounded-full absolute bottom-3 left-3" id="officer-mask-tag">AI Segmented: 68.5% Loss</span>
                 </div>
               </div>
             </div>
@@ -1039,6 +1136,352 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SURFACE 6B: INSURER WORKSTATION -->
+    <section id="view-insurer" class="hidden space-y-5">
+
+      <!-- Insurer Header -->
+      <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-3 border-b border-gray-200 pb-4">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">🛡️ PMFBY Insurer Command & Risk Workstation</h2>
+          <p class="text-xs text-gray-500 mt-0.5" id="insurer-header-sub">National PMFBY Insurer Portal • Active Jurisdiction: Madhya Pradesh (Sehore District)</p>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-[11px] font-bold bg-purple-100 text-purple-700 px-3 py-1 rounded-full border border-purple-200">INSURER ACCESS</span>
+          <span class="text-[11px] font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full border border-emerald-200" id="insurer-approved-badge">3 Officer Approved</span>
+          <button onclick="openModal('modal-crop-scan')" class="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-3 py-1 rounded-full font-bold text-[11px] transition-all flex items-center space-x-1" title="Perform assisted crop scan for farmer">
+            <i data-lucide="scan" class="w-3 h-3"></i>
+            <span>📸 Assisted Scan</span>
+          </button>
+          <button onclick="openModal('modal-report-damage')" class="bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3 py-1 rounded-full font-bold text-[11px] transition-all flex items-center space-x-1" title="File claim on behalf of farmer">
+            <i data-lucide="alert-triangle" class="w-3 h-3"></i>
+            <span>⚠️ File Claim</span>
+          </button>
+          <button onclick="openModal('modal-register-farm')" class="bg-purple-50 hover:bg-purple-100 text-purple-800 border border-purple-200 px-3 py-1 rounded-full font-bold text-[11px] transition-all flex items-center space-x-1" title="Register farmer land parcel / crop">
+            <i data-lucide="plus-circle" class="w-3 h-3"></i>
+            <span>🌾 Register Parcel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Cards Row -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Active Policies</p>
+          <p class="text-2xl font-extrabold text-gray-900 mt-1">48,620</p>
+          <p class="text-[10px] text-emerald-600 font-semibold mt-0.5">Kharif 2026</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Claims Received</p>
+          <p class="text-2xl font-extrabold text-gray-900 mt-1">1,284</p>
+          <p class="text-[10px] text-blue-600 font-semibold mt-0.5">Kharif 2026</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Officer Sanctioned</p>
+          <p class="text-2xl font-extrabold text-emerald-600 mt-1" id="kpi-officer-approved-count">312</p>
+          <p class="text-[10px] text-emerald-700 font-semibold mt-0.5">Ready for Insurer Payout</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Field Visits</p>
+          <p class="text-2xl font-extrabold text-gray-900 mt-1">64</p>
+          <p class="text-[10px] text-purple-600 font-semibold mt-0.5">18 scheduled today</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Settlement Rate</p>
+          <p class="text-2xl font-extrabold text-emerald-600 mt-1">94.6%</p>
+          <p class="text-[10px] text-emerald-600 font-semibold mt-0.5">Within SLA</p>
+        </div>
+      </div>
+
+      <!-- Main Two-Column Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+        <!-- LEFT: Claims Triage Queue + Dossier -->
+        <div class="lg:col-span-2 space-y-4">
+
+          <!-- State & District Filters Bar -->
+          <div class="bg-white p-3.5 rounded-2xl border border-gray-200 shadow-sm flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="filter" class="w-4 h-4 text-purple-700"></i>
+              <span class="font-extrabold text-gray-800">Filter Jurisdictions:</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 flex-grow sm:flex-grow-0">
+              <!-- State Filter -->
+              <select id="insurer-state-filter" onchange="filterInsurerQueue()" class="px-2.5 py-1.5 border border-gray-200 rounded-xl bg-gray-50 font-bold text-gray-800 focus:outline-none focus:border-purple-600">
+                <option value="all">All States (सभी राज्य)</option>
+                <option value="Madhya Pradesh" selected>Madhya Pradesh (मध्य प्रदेश)</option>
+                <option value="Maharashtra">Maharashtra (महाराष्ट्र)</option>
+                <option value="Rajasthan">Rajasthan (राजस्थान)</option>
+                <option value="Uttar Pradesh">Uttar Pradesh (उत्तर प्रदेश)</option>
+                <option value="Gujarat">Gujarat (गुजरात)</option>
+              </select>
+
+              <!-- District Filter -->
+              <select id="insurer-district-filter" onchange="filterInsurerQueue()" class="px-2.5 py-1.5 border border-gray-200 rounded-xl bg-gray-50 font-bold text-gray-800 focus:outline-none focus:border-purple-600">
+                <option value="all">All Districts (सभी जिले)</option>
+                <option value="Sehore" selected>Sehore (सीहोर)</option>
+                <option value="Bhopal">Bhopal (भोपाल)</option>
+                <option value="Ujjain">Ujjain (उज्जैन)</option>
+                <option value="Indore">Indore (इंदौर)</option>
+                <option value="Vidisha">Vidisha (विदिशा)</option>
+              </select>
+
+              <!-- Priority / Status Filter -->
+              <select id="insurer-triage-filter" onchange="filterInsurerQueue()" class="px-2.5 py-1.5 border border-gray-200 rounded-xl bg-gray-50 font-bold text-gray-800 focus:outline-none focus:border-purple-600">
+                <option value="all">All Claim Statuses</option>
+                <option value="officer_approved">Officer Approved (Pending Settlement)</option>
+                <option value="high">High Risk Priority</option>
+                <option value="medium">Medium Priority</option>
+              </select>
+            </div>
+            <button onclick="insurerExportClaims()" class="bg-purple-50 hover:bg-purple-100 text-purple-800 font-bold px-3 py-1.5 rounded-xl border border-purple-200 transition-all flex items-center gap-1">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Export CSV
+            </button>
+          </div>
+
+          <!-- Claims Triage Queue Table -->
+          <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+              <h3 class="font-bold text-sm text-gray-800">PMFBY Claim Settlement Queue</h3>
+              <span class="text-[10px] text-gray-500 font-semibold" id="insurer-queue-count">Showing 3 Claims</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs">
+                <thead class="bg-gray-50 border-b border-gray-100">
+                  <tr>
+                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Claim & Location</th>
+                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Farmer Details</th>
+                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Officer Audit Trace</th>
+                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">AI Loss & Conf</th>
+                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="text-left px-4 py-2.5 font-semibold text-gray-500 uppercase tracking-wider">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="insurer-triage-body" class="divide-y divide-gray-50">
+                  <!-- Row 1: Shivam Singh -->
+                  <tr class="hover:bg-gray-50 transition-colors" data-state="Madhya Pradesh" data-district="Sehore" data-priority="high" data-status="officer_approved">
+                    <td class="px-4 py-3 font-bold text-gray-800">
+                      <span class="block font-mono text-purple-700">CLM-MP-0736</span>
+                      <span class="text-[10px] text-gray-500 font-normal">Madhya Pradesh • Sehore</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <p class="font-semibold text-gray-800">Shivam Singh</p>
+                      <p class="text-gray-500 text-[10px]">Soybean (2.5 Ha) • Khasra 18B</p>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="font-bold text-emerald-800 text-[11px] block">✓ Approved by Officer</span>
+                      <span class="text-gray-500 text-[10px] block">Krishna Agrawal (Loss Assessor)</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <p class="font-bold text-red-600 text-xs">68.5% Loss</p>
+                      <p class="text-emerald-700 text-[10px] font-bold">Conf: 94%</p>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px] block text-center" id="status-pill-CLM-MP-0736">OFFICER SANCTIONED</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <button onclick="showInsurerDossier('shivam.25bce10736')" class="bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all shadow-xs">Review & Pay</button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 2: Aryan Singh -->
+                  <tr class="hover:bg-gray-50 transition-colors" data-state="Madhya Pradesh" data-district="Sehore" data-priority="medium" data-status="officer_approved">
+                    <td class="px-4 py-3 font-bold text-gray-800">
+                      <span class="block font-mono text-purple-700">CLM-MP-0741</span>
+                      <span class="text-[10px] text-gray-500 font-normal">Madhya Pradesh • Sehore</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <p class="font-semibold text-gray-800">Aryan Singh</p>
+                      <p class="text-gray-500 text-[10px]">Soybean (3.2 Ha) • Khasra 04A</p>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="font-bold text-emerald-800 text-[11px] block">✓ Approved by Officer</span>
+                      <span class="text-gray-500 text-[10px] block">Krishna Agrawal (Loss Assessor)</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <p class="font-bold text-amber-600 text-xs">42.1% Loss</p>
+                      <p class="text-emerald-700 text-[10px] font-bold">Conf: 91%</p>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px] block text-center" id="status-pill-CLM-MP-0741">OFFICER SANCTIONED</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <button onclick="showInsurerDossier('aryan.25bce10798')" class="bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all shadow-xs">Review & Pay</button>
+                    </td>
+                  </tr>
+
+                  <!-- Row 3: Atharv Bisht -->
+                  <tr class="hover:bg-gray-50 transition-colors" data-state="Madhya Pradesh" data-district="Sehore" data-priority="high" data-status="officer_approved">
+                    <td class="px-4 py-3 font-bold text-gray-800">
+                      <span class="block font-mono text-purple-700">CLM-MP-0752</span>
+                      <span class="text-[10px] text-gray-500 font-normal">Madhya Pradesh • Sehore</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <p class="font-semibold text-gray-800">Atharv Bisht</p>
+                      <p class="text-gray-500 text-[10px]">Maize (2.1 Ha) • Khasra 12C</p>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="font-bold text-emerald-800 text-[11px] block">✓ Approved by Officer</span>
+                      <span class="text-gray-500 text-[10px] block">Krishna Agrawal (Loss Assessor)</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <p class="font-bold text-red-600 text-xs">57.8% Loss</p>
+                      <p class="text-emerald-700 text-[10px] font-bold">Conf: 96%</p>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px] block text-center" id="status-pill-CLM-MP-0752">OFFICER SANCTIONED</span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <button onclick="showInsurerDossier('atharv.25bce10596')" class="bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all shadow-xs">Review & Pay</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Claim Assessment Dossier Panel (Full Farmer + Officer Trace) -->
+          <div id="insurer-dossier-panel" class="hidden bg-white rounded-2xl border border-purple-200 shadow-md overflow-hidden space-y-4">
+            <div class="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-purple-900 to-purple-800 text-white">
+              <div>
+                <h3 class="font-bold text-sm" id="insurer-dossier-title">CLM-MP-0736 • SHIVAM SINGH • Inundation & Severe Lodging</h3>
+                <p class="text-[11px] text-purple-200 mt-0.5">DBT Sanction Amount: <strong id="insurer-dossier-liability" class="text-amber-300">₹1,12,500.00</strong></p>
+              </div>
+              <button onclick="closeInsurerDossier()" class="text-purple-200 hover:text-white transition-all p-1 rounded-lg hover:bg-white/10">
+                <i data-lucide="x" class="w-5 h-5"></i>
+              </button>
+            </div>
+
+            <!-- FARMER IDENTITY & OFFICER APPROVAL TRACE GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-5 text-xs">
+              <!-- Farmer Credentials Box -->
+              <div class="bg-purple-50/60 p-3.5 rounded-xl border border-purple-200 space-y-1.5">
+                <span class="font-extrabold text-purple-900 uppercase tracking-wider text-[10px] block">👨‍🌾 Farmer Identity & Land Credentials</span>
+                <p class="text-gray-800"><strong>Name:</strong> <span id="ins-farmer-name">Shivam Singh (ID: 25BCE10736)</span></p>
+                <p class="text-gray-800" id="ins-farmer-aadhaar-mobile"><strong>Aadhaar:</strong> XXXXXXXX9012 | <strong>Mobile:</strong> +91 98XXXXXX02</p>
+                <p class="text-gray-800"><strong>KCC No:</strong> <span class="font-mono text-purple-700 font-bold" id="ins-farmer-kcc">KCC-MP-SEH-88210</span></p>
+                <p class="text-gray-800"><strong>Land Parcel:</strong> <span id="ins-land-khasra">Khasra Plot 18B / Survey 101</span> (<span id="ins-land-area">2.5 Ha</span>)</p>
+                <p class="text-gray-600 text-[11px]"><strong>Crop:</strong> <span id="ins-land-crop">Kharif Soybean (JS 20-34 Variety)</span></p>
+                <p class="text-gray-600 text-[11px]" id="ins-farmer-address"><strong>Location:</strong> Village Khajuri, Block Sehore, MP</p>
+              </div>
+
+              <!-- Officer Approval Audit Trace Box -->
+              <div class="bg-emerald-50/60 p-3.5 rounded-xl border border-emerald-200 space-y-1.5">
+                <span class="font-extrabold text-emerald-900 uppercase tracking-wider text-[10px] block">👮 Field Officer Approval Audit Trace</span>
+                <p class="text-gray-800"><strong>Approving Officer:</strong> <span class="font-bold text-emerald-900" id="ins-officer-name">KRISHNA AGRAWAL</span></p>
+                <p class="text-gray-800"><strong>Officer Badge No:</strong> <span class="font-mono text-emerald-800 font-bold" id="ins-officer-badge">BADGE-25BCE10117</span></p>
+                <p class="text-gray-800"><strong>Designation:</strong> District Loss Assessor (Sehore, MP)</p>
+                <p class="text-gray-800"><strong>Sanction Status:</strong> <span class="bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded font-extrabold text-[10px]" id="ins-officer-status-tag">OFFICER SANCTIONED FOR PFMS DBT</span></p>
+                <p class="text-gray-600 text-[11px]"><strong>Approval Timestamp:</strong> <span id="ins-officer-time">05 Sep 2026, 17:00 IST</span></p>
+                <p class="text-emerald-800 text-[10px] italic">"Verified ground loss & Satellite NDVI. Recommended direct DBT disbursement."</p>
+              </div>
+            </div>
+
+            <!-- Multimodal Verification Matrix Badges -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 px-5 text-xs text-center">
+              <div class="bg-blue-50 border border-blue-200 rounded-xl p-2">
+                <p class="text-[9px] font-bold text-gray-500 uppercase">IoT Soil NPK</p>
+                <p class="text-[10px] font-extrabold text-blue-800 mt-0.5" id="ins-telemetry-n">N: 42 (Deficient)</p>
+              </div>
+              <div class="bg-amber-50 border border-amber-200 rounded-lg p-2">
+                <p class="text-[9px] font-bold text-gray-500 uppercase">IMD Rainfall</p>
+                <p class="text-[10px] font-extrabold text-amber-800 mt-0.5" id="ins-weather-rain">142mm (Flood)</p>
+              </div>
+              <div class="bg-purple-50 border border-purple-200 rounded-lg p-2">
+                <p class="text-[9px] font-bold text-gray-500 uppercase">Satellite NDVI</p>
+                <p class="text-[10px] font-extrabold text-purple-800 mt-0.5" id="ins-dossier-ndvi">-0.34 (-34%)</p>
+              </div>
+              <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-2">
+                <p class="text-[9px] font-bold text-gray-500 uppercase">pHash Anti-Fraud</p>
+                <p class="text-[10px] font-extrabold text-emerald-700 mt-0.5" id="ins-phash-status">✓ PASSED</p>
+              </div>
+              <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-2 col-span-2 sm:col-span-1">
+                <p class="text-[9px] font-bold text-gray-500 uppercase">AI Confidence</p>
+                <p class="text-[10px] font-extrabold text-emerald-800 mt-0.5" id="ins-dossier-ai-conf">94% (High)</p>
+              </div>
+            </div>
+
+            <!-- Damage Evidence & SegFormer Mask -->
+            <div class="px-5 space-y-1.5">
+              <p class="text-xs font-bold text-red-700">SegFormer AI Ground Loss Mask & Satellite Layer</p>
+              <div id="ins-damage-preview" class="h-44 rounded-xl border border-red-200 relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(229,57,53,0.25),rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80')">
+                <span id="ins-dossier-mask-label" class="absolute bottom-3 left-3 text-xs font-bold text-white bg-red-600 px-3 py-1 rounded-full shadow">AI Segmented: 68.5% Loss</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center gap-3 px-5 py-4 border-t border-gray-100 bg-gray-50">
+              <button onclick="insurerAssignVisit()" class="px-4 py-2.5 border border-gray-300 rounded-xl text-xs font-bold text-gray-700 hover:bg-gray-100 transition-all flex items-center gap-1.5">
+                <i data-lucide="map-pin" class="w-4 h-4"></i> Request Secondary Joint Survey
+              </button>
+              <button onclick="officerAction('APPROVED')" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-md transition-all flex items-center gap-2 ml-auto">
+                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                <span id="ins-approve-btn-text">Approve & Release DBT Settlement (PFMS Payout)</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="space-y-4">
+
+          <!-- Field Visit Management -->
+          <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 space-y-3">
+            <h3 class="font-bold text-sm text-gray-800 border-b border-gray-100 pb-2">Field Visit Management</h3>
+            <div class="border border-gray-200 rounded-xl p-3 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-gray-700">Visit #FV-1024</span>
+                <span class="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold">Pending</span>
+              </div>
+              <p class="text-[11px] text-gray-500">Claim: <strong class="text-gray-700">CLM-MP-0736</strong></p>
+              <p class="text-[11px] text-gray-500">Location: <strong class="text-gray-700">Sehore</strong></p>
+              <p class="text-[11px] text-gray-500">Preferred date: <strong class="text-gray-700">06 Sep 2026</strong></p>
+              <div class="space-y-1">
+                <label class="text-[10px] font-semibold text-gray-500 uppercase">Select Officer</label>
+                <select id="fv-officer-select" class="w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-300">
+                  <option value="">— Select Officer —</option>
+                  <option value="k_agrawal">Krishna Agrawal (Sehore)</option>
+                  <option value="r_sharma">Rajesh Sharma (Bhopal)</option>
+                  <option value="m_verma">Meena Verma (Vidisha)</option>
+                </select>
+              </div>
+              <button onclick="insurerAssignVisit()" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all">Assign Visit</button>
+            </div>
+          </div>
+
+          <!-- Risk & Fraud Monitor -->
+          <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 space-y-3">
+            <h3 class="font-bold text-sm text-gray-800 border-b border-gray-100 pb-2">Risk & Fraud Monitor</h3>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between bg-red-50 border border-red-100 rounded-xl px-3 py-2.5">
+                <div>
+                  <p class="text-[10px] font-bold text-gray-500 uppercase">High-Risk Claims</p>
+                  <p class="text-xl font-extrabold text-red-600">87</p>
+                </div>
+                <i data-lucide="alert-triangle" class="w-6 h-6 text-red-400"></i>
+              </div>
+              <div class="flex items-center justify-between bg-orange-50 border border-orange-100 rounded-xl px-3 py-2.5">
+                <div>
+                  <p class="text-[10px] font-bold text-gray-500 uppercase">Fraud Flags</p>
+                  <p class="text-xl font-extrabold text-orange-600">19</p>
+                </div>
+                <i data-lucide="shield-alert" class="w-6 h-6 text-orange-400"></i>
+              </div>
+              <div class="flex items-center justify-between bg-emerald-50 border border-emerald-100 rounded-xl px-3 py-2.5">
+                <div>
+                  <p class="text-[10px] font-bold text-gray-500 uppercase">SLA Compliance</p>
+                  <p class="text-xl font-extrabold text-emerald-600">94.6%</p>
+                </div>
+                <i data-lucide="shield-check" class="w-6 h-6 text-emerald-400"></i>
+              </div>
+            </div>
+            <button onclick="insurerViewReports()" class="w-full py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl transition-all">View Insurer Reports</button>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1850,6 +2293,74 @@
     </div>
   </div>
 
+  <!-- MODAL: REGISTER FARM / CROP -->
+  <div id="modal-register-farm" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl border border-gray-100 max-h-[95vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <div class="w-9 h-9 rounded-xl bg-amber-100 text-brand-forest flex items-center justify-center">
+            <i data-lucide="sprout" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-brand-forest">Register Land Parcel & Crop (खेत एवं फसल पंजीकरण)</h3>
+            <p class="text-[11px] text-gray-500">PMFBY Cadastral PostGIS Land & Crop Registration</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-register-farm')" class="text-gray-400 hover:text-gray-600 font-bold p-1">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="font-bold text-gray-700 block mb-1">Land Record (Khasra / Khatauni No) *</label>
+          <input id="reg-farm-khasra" type="text" value="Plot 18B / Survey 101" placeholder="e.g. Plot 18B / Survey 101" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:border-brand-forest">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-gray-700 block mb-1">Cultivated Area (Hectares) *</label>
+            <input id="reg-farm-area" type="number" step="0.1" value="2.5" placeholder="e.g. 2.5" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:border-brand-forest">
+          </div>
+          <div>
+            <label class="font-bold text-gray-700 block mb-1">Season</label>
+            <select id="reg-farm-season" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:border-brand-forest">
+              <option value="Kharif 2026">Kharif 2026</option>
+              <option value="Rabi 2026-27">Rabi 2026-27</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-gray-700 block mb-1">Registered Crop & Variety *</label>
+          <input id="reg-farm-crop" type="text" value="Kharif Soybean (JS 20-34 Variety)" placeholder="e.g. Kharif Soybean (JS 20-34 Variety)" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:border-brand-forest">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-gray-700 block mb-1">Sowing Date</label>
+            <input id="reg-farm-sowing" type="date" value="2026-06-20" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:border-brand-forest">
+          </div>
+          <div>
+            <label class="font-bold text-gray-700 block mb-1">Est. Harvest Date</label>
+            <input id="reg-farm-harvest" type="date" value="2026-10-25" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs font-semibold focus:outline-none focus:border-brand-forest">
+          </div>
+        </div>
+
+        <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 space-y-1">
+          <span class="font-extrabold text-emerald-900 text-xs flex items-center space-x-1.5">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-700"></i>
+            <span>PostGIS Cadastral Geofence Boundary</span>
+          </span>
+          <p class="text-[11px] text-emerald-800">Coordinates locked: <strong>23.0250°N, 76.8900°E</strong> (Village Khajuri, Block Sehore, MP)</p>
+        </div>
+
+        <button onclick="submitFarmRegistration()" class="w-full py-3 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-xl text-xs shadow transition-all flex items-center justify-center space-x-2">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span>Lock Boundary & Complete PMFBY Crop Registration</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: CALCULATOR -->
   <div id="modal-calculator" class="fixed inset-0 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-5 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
@@ -2620,7 +3131,7 @@
       // ── Determine role & surface ──────────────────────────────────────────────
       let mappedRole = "FARMER";
       let mappedSurface = "farmer";
-      if (["BANK", "INSURANCE COMPANY", "STATE GOVERNMENT", "STATE PROJECT OFFICER"].includes(stakeholder)) {
+      if (["BANK", "STATE GOVERNMENT", "STATE PROJECT OFFICER"].includes(stakeholder)) {
         mappedRole = "FIELD_OFFICER";
         mappedSurface = "officer";
       } else if (["MNCFC", "MNCFC_ADMIN", "WEATHER DATA PROVIDER"].includes(stakeholder)) {
@@ -2628,7 +3139,7 @@
         mappedSurface = "admin";
       } else if (stakeholder === "INSURANCE COMPANY") {
         mappedRole = "INSURER";
-        mappedSurface = "officer";
+        mappedSurface = "insurer";
       }
 
       // ── Auto-generate Username & Password ──────────────────────────────────────
@@ -2815,7 +3326,8 @@
           localStorage.setItem('user_role', role);
 
           let surface = 'farmer';
-          if (role === 'FIELD_OFFICER' || role === 'INSURER') surface = 'officer';
+          if (role === 'FIELD_OFFICER') surface = 'officer';
+          else if (role === 'INSURER') surface = 'insurer';
           else if (role === 'SUPER_ADMIN') surface = 'admin';
 
           currentUser = {
@@ -2854,7 +3366,7 @@
           'shivam.25bce10736': { name: 'SHIVAM SINGH', role: 'FARMER', surface: 'farmer', pass: 'Shivam#25BCE10736!Sec2026' },
           'atharv.25bce10596': { name: 'ATHARV BISHT', role: 'FARMER', surface: 'farmer', pass: 'Atharv#25BCE10596!Sec2026' },
           'krishna.25bce10117': { name: 'KRISHNA AGRAWAL', role: 'FIELD_OFFICER', surface: 'officer', pass: 'Krishna#25BCE10117!Sec2026' },
-          'reshma.25bce10240': { name: 'RESHMA RANI AGASTI', role: 'INSURER', surface: 'officer', pass: 'Reshma#25BCE10240!Sec2026' },
+          'reshma.25bce10240': { name: 'RESHMA RANI AGASTI', role: 'INSURER', surface: 'insurer', pass: 'Reshma#25BCE10240!Sec2026' },
           'rakhi.25bce10780': { name: 'RAKHI TYAGI', role: 'SUPER_ADMIN', surface: 'admin', pass: 'Rakhi#25BCE10780!Sec2026' },
         };
 
@@ -2934,27 +3446,46 @@
       },
       'shivam.25bce10736': {
         name: 'SHIVAM SINGH',
+        aadhaar: 'XXXXXXXX9012',
+        kccNo: 'KCC-MP-SEH-88210',
+        phone: '+91 98XXXXXX02',
         regNo: '25BCE10736',
-        location: 'Ichhawar Village, Sehore (MP)',
+        location: 'Village Khajuri, Block Sehore, District Sehore, Madhya Pradesh',
         farmCode: 'FARM-MP-SEH-0736',
-        area: '4.5 Hectares',
-        crops: 'Paddy & Cotton (धान एवं कपास)',
+        khasraNo: 'Plot 18B / Survey 101',
+        area: '2.5 Hectares',
+        crops: 'Kharif Soybean (JS 20-34 Variety)',
+        sowingDate: '20-June-2026',
+        harvestDate: '25-October-2026',
+        gisBoundary: 'Locked PostGIS Cadastral Polygon Geometry',
         policyNo: 'PMFBY-2026-MP-25BCE10736',
         healthScore: 58,
-        healthTag: 'Inundation & Waterlogging',
-        healthTag_hi: 'जलभराव एवं भारी नुकसान',
-        moisture: 89.5,
+        healthTag: 'Inundation & Fungal Rust Warning',
+        healthTag_hi: 'जलभराव एवं कवक गेरुआ चेतावनी',
+        moisture: 31.0,
+        nitrogen: '42 kg/ha (Deficient)',
+        phosphorus: '28 kg/ha (Optimum)',
+        potassium: '36 kg/ha (Good)',
+        soilPH: '6.8 (Neutral)',
+        weatherTempHumidity: '28°C / 84% RH',
+        imdRain: '142 mm heavy rainfall in 24h (Flood Trigger)',
+        riskForecast: 'High Humidity + High Rain → Fungal Rust Risk Warning',
+        preNdvi: 0.72,
+        postNdvi: 0.38,
+        deltaNdvi: -0.34,
+        pHashGate: 'PASSED (64-bit Unique Image)',
+        geofenceGate: 'PASSED (Inside Plot 18B)',
         claimStatus: 'Under Officer Review',
         claimStatus_hi: 'पटवारी/अधिकारी समीक्षाधीन',
         claimPayout: '₹1,12,500.00 Estimated',
         claimPayout_hi: '₹1,12,500.00 अनुमानित',
         coords: [23.0250, 76.8900],
-        advisoryTitle: '72h SOS Flood Mitigation',
-        advisoryTitle_hi: '72 घंटे जलभराव राहत कार्रवाई',
-        advisoryBody: 'Field inundated following 142mm heavy rain in Ichhawar. Joint Survey Officer assigned for physical assessment.',
-        advisoryBody_hi: 'इछावर में 142 मिमी भारी बारिश के बाद खेत में जलभराव हुआ है। भौतिक सर्वेक्षण हेतु अधिकारी नियुक्त किया गया है।',
-        greeting: '🌱 Hello Shivam Singh! Your 72h SOS claim (PMFBY-CLAIM-2026-MP-0736) for 4.5 Ha Paddy in Ichhawar is under review.',
-        greeting_hi: '🌱 नमस्ते शिवम सिंह! इछावर में 4.5 हेक्टेयर धान के लिए आपका 72 घंटे का SOS दावा (PMFBY-CLAIM-2026-MP-0736) समीक्षाधीन है।'
+        advisoryTitle: 'Fungal Rust Warning & Drainage Clearance',
+        advisoryTitle_hi: 'कवक गेरुआ चेतावनी एवं जल निकासी',
+        advisoryBody: '142mm heavy rain recorded in Khajuri Village. High humidity (84%) creates fungal rust risk. Apply 15 kg/acre Urea post-drainage as recommended for N deficit (42 kg/ha).',
+        advisoryBody_hi: 'खजूरी गांव में 142 मिमी भारी बारिश दर्ज की गई। 84% आर्द्रता से गेरुआ रोग का खतरा है। जल निकासी के बाद 15 किग्रा/एकड़ यूरिया का छिड़काव करें।',
+        greeting: '🌱 Hello Shivam Singh! Your Kharif Soybean parcel (2.5 Ha, Plot 18B / Survey 101) telemetry is active. 72h SOS Claim PMFBY-CLAIM-2026-MP-0736 is under review.',
+        greeting_hi: '🌱 नमस्ते शिवम सिंह! आपके खजूरी 2.5 हेक्टेयर सोयाबीन (प्लाट 18B) का 72h दाव समीक्षाधीन है।'
       },
       'atharv.25bce10596': {
         name: 'ATHARV BISHT',
@@ -3141,17 +3672,34 @@
           if (farmerMap) {
             farmerMap.setView(profile.coords, 15);
           }
-        } else if (currentUser.surface === 'officer' || currentUser.role === 'FIELD_OFFICER' || currentUser.role === 'INSURER') {
+        } else if (currentUser.surface === 'officer' || currentUser.role === 'FIELD_OFFICER') {
           const officerHead = document.getElementById('officer-header-sub');
           if (officerHead) {
-            const roleTitle = currentUser.role === 'INSURER' ? (isHi ? 'बीमा कंपनी अधिकारी' : 'PMFBY Insurer') : (isHi ? 'पटवारी / कृषि अधिकारी' : 'Field Officer / Patwari');
+            const roleTitle = isHi ? 'पटवारी / कृषि अधिकारी' : 'Field Officer / Patwari';
             officerHead.innerText = `Assigned Jurisdiction: Sehore District, MP • Active User: ${currentUser.name} (${roleTitle}) [Badge: ${currentUser.code}]`;
+          }
+        } else if (currentUser.surface === 'insurer' || currentUser.role === 'INSURER') {
+          const insurerHead = document.getElementById('insurer-header-sub');
+          if (insurerHead) {
+            const roleTitle = isHi ? 'बीमा कंपनी अधिकारी' : 'PMFBY Insurer';
+            insurerHead.innerText = `Assigned Jurisdiction: Sehore District, MP • Active User: ${currentUser.name} (${roleTitle}) [Badge: ${currentUser.code}]`;
           }
         } else if (currentUser.surface === 'admin' || currentUser.role === 'SUPER_ADMIN') {
           const adminHead = document.getElementById('admin-header-sub');
           if (adminHead) {
             adminHead.innerText = `National Agronomy Command Center • Logged in Nodal Admin: ${currentUser.name} (SUPER_ADMIN) [ID: ${currentUser.code}]`;
           }
+        }
+
+        // Update Nav text dynamically for Insurer
+        if (currentUser.surface === 'insurer' || currentUser.role === 'INSURER') {
+          document.getElementById('nav-dashboard').innerHTML = '<i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i><span>Insurer Dashboard</span>';
+          document.getElementById('nav-gallery').innerHTML = '<i data-lucide="image" class="w-3.5 h-3.5"></i><span>Evidence Gallery</span>';
+          document.getElementById('nav-about').innerHTML = '<i data-lucide="info" class="w-3.5 h-3.5"></i><span>Insurer Guidelines</span>';
+        } else {
+          document.getElementById('nav-dashboard').innerHTML = '<i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i><span>Dashboard ▾</span>';
+          document.getElementById('nav-gallery').innerHTML = '<i data-lucide="image" class="w-3.5 h-3.5"></i><span>Gallery</span>';
+          document.getElementById('nav-about').innerHTML = '<i data-lucide="info" class="w-3.5 h-3.5"></i><span>About Us & Guidelines</span>';
         }
 
         if (window.lucide) lucide.createIcons();
@@ -3452,6 +4000,155 @@
       document.getElementById('officer-damage-preview').style.backgroundImage = `linear-gradient(rgba(229,57,53,0.3), rgba(0,0,0,0.6)), url('${previewUrl}')`;
     }
 
+    const OFFICER_CLAIMS_DATA = {
+      'shivam.25bce10736': {
+        claimId: 'PMFBY-CLAIM-2026-MP-0736',
+        farmerName: 'Shivam Singh',
+        farmerId: '25BCE10736',
+        aadhaar: 'XXXXXXXX9012',
+        mobile: '+91 98XXXXXX02',
+        kcc: 'KCC-MP-SEH-88210',
+        address: 'Village Khajuri, Block Sehore, District Sehore, MP',
+        khasra: 'Plot 18B / Survey 101',
+        area: '2.5 Hectares',
+        crop: 'Kharif Soybean (JS 20-34 Variety)',
+        sownDates: 'Sown: 20-June-2026 | Est. Harvest: 25-October-2026',
+        cause: 'Inundation & Severe Lodging',
+        sanction: 'Est. Sanction: ₹1,12,500.00',
+        nitrogen: '42 kg/ha (Deficient)',
+        nitrogenRec: '* Rec: Apply 15 kg/acre Urea',
+        pk: 'P: 28 (Opt) | K: 36 (Good)',
+        phMoisture: 'pH: 6.8 | Moisture: 31% (Suff.)',
+        weatherTempRh: '28°C / 84% Relative Hum.',
+        weatherRain: '142 mm in 24h (Flood)',
+        weatherRisk: '⚠️ Risk: High Humidity + Rain → Fungal Rust Risk Warning',
+        satPre: '0.72 (Healthy)',
+        satPost: '0.38 (Severe Loss Drop)',
+        satDelta: '✓ ΔNDVI Anomaly: -0.34 (Validates Claim)',
+        geofence: '✓ PASSED (Plot 18B)',
+        phash: '✓ PASSED (Unique Image)',
+        maskTag: 'AI Segmented: 68.5% Loss',
+        baselineTag: 'Baseline: Jun 20, 2026 (Soybean)',
+        bgUrl: 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80'
+      },
+      'aryan.25bce10798': {
+        claimId: 'PMFBY-CLAIM-2026-MP-0741',
+        farmerName: 'Aryan Singh',
+        farmerId: '25BCE10798',
+        aadhaar: 'XXXXXXXX5432',
+        mobile: '+91 98XXXXXX01',
+        kcc: 'KCC-MP-SEH-44120',
+        address: 'Ashta Village, Sehore (MP)',
+        khasra: 'Plot 04A / Survey 88',
+        area: '3.2 Hectares',
+        crop: 'Kharif Soybean (JS 335 Variety)',
+        sownDates: 'Sown: 18-June-2026 | Est. Harvest: 20-October-2026',
+        cause: 'Pest Infestation & Yellowing',
+        sanction: 'Est. Sanction: ₹68,400.00',
+        nitrogen: '58 kg/ha (Optimum)',
+        nitrogenRec: '* Rec: Maintain current fertigation',
+        pk: 'P: 32 (Opt) | K: 40 (Opt)',
+        phMoisture: 'pH: 7.0 | Moisture: 52.4% (Optimal)',
+        weatherTempRh: '29°C / 78% Relative Hum.',
+        weatherRain: '65 mm in 24h (Moderate)',
+        weatherRisk: '⚠️ Risk: High Temp + RH → Yellow Mosaic Blight Warning',
+        satPre: '0.78 (Healthy)',
+        satPost: '0.52 (Moderate Drop)',
+        satDelta: '✓ ΔNDVI Anomaly: -0.26 (Pest Damage Confirmed)',
+        geofence: '✓ PASSED (Plot 04A)',
+        phash: '✓ PASSED (Unique Image)',
+        maskTag: 'AI Segmented: 42.1% Loss',
+        baselineTag: 'Baseline: Jun 18, 2026 (Soybean)',
+        bgUrl: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=600&q=80'
+      },
+      'atharv.25bce10596': {
+        claimId: 'PMFBY-CLAIM-2026-MP-0752',
+        farmerName: 'Atharv Bisht',
+        farmerId: '25BCE10596',
+        aadhaar: 'XXXXXXXX1190',
+        mobile: '+91 98XXXXXX03',
+        kcc: 'KCC-MP-SEH-19023',
+        address: 'Shyampur Village, Sehore (MP)',
+        khasra: 'Plot 12C / Survey 45',
+        area: '2.1 Hectares',
+        crop: 'Kharif Maize (Pioneer Hybrid)',
+        sownDates: 'Sown: 22-June-2026 | Est. Harvest: 28-October-2026',
+        cause: 'Flood & Root Zone Hypoxia',
+        sanction: 'Est. Sanction: ₹92,100.00',
+        nitrogen: '35 kg/ha (Deficient)',
+        nitrogenRec: '* Rec: Apply 12 kg/acre Urea post-drainage',
+        pk: 'P: 22 (Opt) | K: 30 (Good)',
+        phMoisture: 'pH: 6.5 | Moisture: 48.6% (High)',
+        weatherTempRh: '27°C / 86% Relative Hum.',
+        weatherRain: '110 mm in 24h (Heavy)',
+        weatherRisk: '⚠️ Risk: High Waterlogging → Stem Borer & Hypoxia',
+        satPre: '0.69 (Healthy)',
+        satPost: '0.41 (Severe Drop)',
+        satDelta: '✓ ΔNDVI Anomaly: -0.28 (Hypoxia Validated)',
+        geofence: '✓ PASSED (Plot 12C)',
+        phash: '✓ PASSED (Unique Image)',
+        maskTag: 'AI Segmented: 57.8% Loss',
+        baselineTag: 'Baseline: Jun 22, 2026 (Maize)',
+        bgUrl: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80'
+      }
+    };
+
+    function selectOfficerClaim(farmerKey) {
+      const data = OFFICER_CLAIMS_DATA[farmerKey];
+      if (!data) return;
+
+      // Update card highlighting
+      document.querySelectorAll('.officer-claim-card').forEach(card => {
+        card.classList.remove('border-brand-leaf', 'bg-emerald-50/60', 'shadow');
+        card.classList.add('border-gray-200', 'bg-white');
+      });
+      const activeCard = document.getElementById(`officer-card-${farmerKey}`);
+      if (activeCard) {
+        activeCard.classList.remove('border-gray-200', 'bg-white');
+        activeCard.classList.add('border-brand-leaf', 'bg-emerald-50/60', 'shadow');
+      }
+
+      // Update Dossier Title & Subtitle
+      document.getElementById('officer-dossier-claim-id').innerText = `Claim Assessment Dossier: ${data.claimId}`;
+      document.getElementById('officer-dossier-sub').innerText = `Farmer: ${data.farmerName.toUpperCase()} (${data.farmerId}) • ${data.cause}`;
+      document.getElementById('officer-sanction-badge').innerText = data.sanction;
+
+      // Section 1 & 2: Farmer & Land
+      document.getElementById('officer-farmer-name').innerText = `${data.farmerName} (ID: ${data.farmerId})`;
+      document.getElementById('officer-farmer-aadhaar-mobile').innerHTML = `<strong>Aadhaar:</strong> ${data.aadhaar} | <strong>Mobile:</strong> ${data.mobile}`;
+      document.getElementById('officer-farmer-kcc').innerText = data.kcc;
+      document.getElementById('officer-farmer-address').innerText = data.address;
+      document.getElementById('officer-land-khasra').innerText = data.khasra;
+      document.getElementById('officer-land-area').innerText = data.area;
+      document.getElementById('officer-land-crop').innerText = data.crop;
+      document.getElementById('officer-land-dates').innerHTML = `<strong>${data.sownDates.split(' | ')[0]}</strong> | <strong>${data.sownDates.split(' | ')[1]}</strong>`;
+
+      // Section 3: Soil Telemetry
+      document.getElementById('officer-telemetry-n').innerText = data.nitrogen;
+      document.getElementById('officer-telemetry-n-rec').innerText = data.nitrogenRec;
+      document.getElementById('officer-telemetry-pk').innerHTML = `<strong>P:</strong> ${data.pk.split(' | ')[0].replace('P: ','')} | <strong>K:</strong> ${data.pk.split(' | ')[1].replace('K: ','')}`;
+      document.getElementById('officer-telemetry-ph-m').innerHTML = `<strong>pH:</strong> ${data.phMoisture.split(' | ')[0].replace('pH: ','')} | <strong>Moisture:</strong> ${data.phMoisture.split(' | ')[1].replace('Moisture: ','')}`;
+
+      // Section 4: Weather & Microclimate
+      document.getElementById('officer-weather-temp-rh').innerText = data.weatherTempRh;
+      document.getElementById('officer-weather-rain').innerHTML = `<strong>IMD Rain:</strong> ${data.weatherRain}`;
+      document.getElementById('officer-weather-risk').innerText = data.weatherRisk;
+
+      // Section 5: Satellite NDVI
+      document.getElementById('officer-sat-pre').innerText = data.satPre;
+      document.getElementById('officer-sat-post').innerText = data.satPost;
+      document.getElementById('officer-sat-delta').innerText = data.satDelta;
+
+      // Section 6: Verification Gates
+      document.getElementById('officer-geofence-status').innerText = data.geofence;
+      document.getElementById('officer-phash-status').innerText = data.phash;
+
+      // Image & Mask Tags
+      document.getElementById('officer-mask-tag').innerText = data.maskTag;
+      document.getElementById('officer-baseline-tag').innerText = data.baselineTag;
+      document.getElementById('officer-damage-preview').style.backgroundImage = `linear-gradient(rgba(229,57,53,0.3), rgba(0,0,0,0.6)), url('${data.bgUrl}')`;
+    }
+
     function submitRealDamageReport() {
       const category = document.getElementById('damage-loss-category').value;
       const pct = document.getElementById('damage-loss-pct').value;
@@ -3463,6 +4160,27 @@
       alert(`✓ Calamity damage evidence submitted with PostGIS geofence & unique 64-bit pHash!\nDocket PMFBY-CLAIM-2026-MP-0001 is now under Officer Review.`);
       closeModal('modal-report-damage');
       switchView('officer');
+    }
+
+    function submitFarmRegistration() {
+      const khasra = document.getElementById('reg-farm-khasra').value.trim();
+      const area = document.getElementById('reg-farm-area').value.trim();
+      const crop = document.getElementById('reg-farm-crop').value.trim();
+
+      if (!khasra || !area || !crop) {
+        alert("Please fill in Khasra No, Cultivated Area, and Crop details.");
+        return;
+      }
+
+      alert(`✓ Land parcel (${khasra}, ${area} Ha ${crop}) successfully registered under PMFBY Cadastral PostGIS Registry!\nPolicy ID generated: PMFBY-2026-MP-PARCEL-${Math.floor(1000 + Math.random() * 9000)}`);
+      closeModal('modal-register-farm');
+
+      if (currentUser && (currentUser.surface === 'farmer' || currentUser.role === 'FARMER')) {
+        const fLoc = document.getElementById('farmer-loc');
+        if (fLoc) {
+          fLoc.innerText = `FARM-MP-SEH-${currentUser.code.slice(-4)} • ${area} Hectares • Khasra: ${khasra} • Policy: PMFBY-2026-MP-${currentUser.code}`;
+        }
+      }
     }
 
     async function askCropDoctor() {
@@ -3496,14 +4214,107 @@
 
     function officerAction(action) {
       if (action === 'APPROVED') {
-        document.getElementById('officer-claim-tag').innerText = "APPROVED (DBT SANCTIONED)";
-        document.getElementById('officer-claim-tag').className = "text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold";
-        alert("✓ Claim PMFBY-CLAIM-2026-MP-0001 APPROVED for ₹82,800.00!\nStatus changed to PROCESSED_FOR_DBT via PFMS portal.");
+        const tag = document.getElementById('officer-claim-tag');
+        if (tag) {
+          tag.innerText = "APPROVED (DBT SANCTIONED)";
+          tag.className = "text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold";
+        }
+        // Update Insurer Queue Status Pill
+        const pill = document.getElementById('status-pill-CLM-MP-0736');
+        if (pill) {
+          pill.innerText = "DBT DISBURSED (PFMS SUCCESS)";
+          pill.className = "bg-emerald-600 text-white px-2.5 py-0.5 rounded-full font-bold text-[10px] block text-center animate-pulse";
+        }
+        alert("✓ Claim APPROVED for Financial Settlement!\nStatus updated: Transferred to PFMS Aadhaar DBT Disbursement Portal.\nDirect payment receipt dispatched to Farmer's KCC account.");
       } else if (action === 'FIELD_VERIFICATION_REQUESTED') {
-        alert("✓ Field verification scheduled. Task assigned to local Joint Survey Committee.");
+        alert("✓ Secondary Joint Survey scheduled. Assigned to local District Field Committee.");
       } else {
         alert("✓ Claim disposition recorded.");
       }
+    }
+
+    function filterInsurerQueue() {
+      const state = document.getElementById('insurer-state-filter').value;
+      const district = document.getElementById('insurer-district-filter').value;
+      const status = document.getElementById('insurer-triage-filter').value;
+
+      const rows = document.querySelectorAll('#insurer-triage-body tr');
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const rowState = row.dataset.state;
+        const rowDistrict = row.dataset.district;
+        const rowPriority = row.dataset.priority;
+        const rowStatus = row.dataset.status;
+
+        const stateMatch = (state === 'all' || rowState === state);
+        const districtMatch = (district === 'all' || rowDistrict === district);
+        const statusMatch = (status === 'all' || rowPriority === status || rowStatus === status);
+
+        if (stateMatch && districtMatch && statusMatch) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      const countLabel = document.getElementById('insurer-queue-count');
+      if (countLabel) countLabel.innerText = `Showing ${visibleCount} Claims`;
+    }
+
+    function insurerExportClaims() {
+      alert("✓ PMFBY Insurer Settlement Register exported to CSV successfully.");
+    }
+
+    function showInsurerDossier(farmerKey) {
+      const data = OFFICER_CLAIMS_DATA[farmerKey];
+      if (!data) return;
+
+      // Header
+      document.getElementById('insurer-dossier-title').innerText = `${data.claimId} • ${data.farmerName.toUpperCase()} • ${data.cause}`;
+      document.getElementById('insurer-dossier-liability').innerText = data.sanction.replace('Est. Sanction: ', '');
+
+      // Farmer Credentials
+      document.getElementById('ins-farmer-name').innerText = `${data.farmerName} (ID: ${data.farmerId})`;
+      document.getElementById('ins-farmer-aadhaar-mobile').innerHTML = `<strong>Aadhaar:</strong> ${data.aadhaar} | <strong>Mobile:</strong> ${data.mobile}`;
+      document.getElementById('ins-farmer-kcc').innerText = data.kcc;
+      document.getElementById('ins-land-khasra').innerText = data.khasra;
+      document.getElementById('ins-land-area').innerText = data.area;
+      document.getElementById('ins-land-crop').innerText = data.crop;
+      document.getElementById('ins-farmer-address').innerText = data.address;
+
+      // Officer Approval Audit Trace
+      document.getElementById('ins-officer-name').innerText = "KRISHNA AGRAWAL";
+      document.getElementById('ins-officer-badge').innerText = "BADGE-25BCE10117";
+      document.getElementById('ins-officer-status-tag').innerText = "OFFICER SANCTIONED FOR PFMS DBT";
+      document.getElementById('ins-officer-time').innerText = "05 Sep 2026, 17:00 IST";
+
+      // Verification Matrix
+      document.getElementById('ins-telemetry-n').innerText = data.nitrogen;
+      document.getElementById('ins-weather-rain').innerText = data.weatherRain;
+      document.getElementById('ins-dossier-ndvi').innerText = data.satDelta.split(': ')[1] || data.satPost;
+      document.getElementById('ins-phash-status').innerText = data.phash;
+      document.getElementById('ins-dossier-ai-conf').innerText = data.conf;
+
+      // Image & Mask Label
+      document.getElementById('ins-dossier-mask-label').innerText = data.maskTag;
+      document.getElementById('ins-damage-preview').style.backgroundImage = `linear-gradient(rgba(229,57,53,0.25),rgba(0,0,0,0.55)), url('${data.bgUrl}')`;
+
+      document.getElementById('insurer-dossier-panel').classList.remove('hidden');
+      document.getElementById('insurer-dossier-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function closeInsurerDossier() {
+      document.getElementById('insurer-dossier-panel').classList.add('hidden');
+    }
+
+    function insurerAssignVisit() {
+      alert("✓ Secondary Joint Survey team assigned. Notification sent to District Agriculture Office.");
+    }
+
+    function insurerViewReports() {
+      alert("✓ Generating daily Risk & SLA Compliance Report...");
     }
 
     function initFarmerMap() {

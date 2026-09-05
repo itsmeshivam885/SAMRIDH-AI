@@ -21,10 +21,12 @@ backend_dir = Path(__file__).resolve().parent.parent.parent
 if str(backend_dir) not in sys.path:
     sys.path.insert(0, str(backend_dir))
 
+from datetime import datetime
 from sqlalchemy.orm import Session
 from app.core.database import engine, Base, SessionLocal
 from app.models.user import User, UserRole
 from app.models.farmer import Farmer
+from app.models.farm import Farm
 from app.models.officer import Officer
 from app.core.security import get_password_hash
 
@@ -101,14 +103,31 @@ def seed_database():
             db.flush()
 
             if udata["role"] == UserRole.FARMER:
+                village_name = "Khajuri" if udata["username"] == "shivam.25bce10736" else "Ashta"
                 farmer = Farmer(
                     user_id=user.id,
                     farmer_id_code=f"FARMER-{udata['registration_no']}",
                     state="Madhya Pradesh",
                     district="Sehore",
-                    village="Ashta",
+                    village=village_name,
                 )
                 db.add(farmer)
+                db.flush()
+
+                # Seed Farm Parcel
+                if udata["username"] == "shivam.25bce10736":
+                    farm = Farm(
+                        farmer_id=farmer.id,
+                        farm_code="FARM-MP-SEH-0736",
+                        khasra_number="Plot 18B / Survey 101",
+                        area_hectares=2.5,
+                        crop_type="Kharif Soybean (JS 20-34 Variety)",
+                        sowing_date=datetime(2026, 6, 20),
+                        center_latitude=23.0250,
+                        center_longitude=76.8900,
+                        status="ACTIVE",
+                    )
+                    db.add(farm)
             elif udata["role"] == UserRole.FIELD_OFFICER:
                 officer = Officer(
                     user_id=user.id,
