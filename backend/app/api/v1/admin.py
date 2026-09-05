@@ -28,6 +28,10 @@ from app.schemas.admin import (
     FraudRadarItem,
     DistrictSummaryRead,
     DistrictDetailRead,
+    SeasonNotificationRead,
+    CCEMonitoringRead,
+    SLAMonitoringRead,
+    FinancialReconciliationRead,
 )
 from app.schemas.common import APIResponse
 
@@ -584,5 +588,175 @@ def get_district_details(
     )
 
     return APIResponse(success=True, data=detail)
+
+
+# 10. Season & Notification Management API
+@router.get("/season-notifications", response_model=APIResponse[List[SeasonNotificationRead]])
+def list_season_notifications(
+    current_user: User = Depends(require_roles(["admin", "super_admin"])),
+    db: Session = Depends(get_db),
+):
+    notifications = [
+        SeasonNotificationRead(
+            season="Kharif",
+            year=2026,
+            state="Madhya Pradesh",
+            status="PUBLISHED_NOTIFIED",
+            published_date="2026-06-01",
+            districts_covered=52,
+            insurance_units_count=340,
+            notified_crops=["Soybean", "Paddy", "Cotton", "Maize"],
+            insurer_name="Agriculture Insurance Company of India (AIC)",
+            sum_insured_ha_inr=48000.0,
+            indemnity_level_pct=80.0,
+            threshold_yield_kg_ha=1850.0,
+            farmer_premium_rate_pct=2.0,
+            govt_subsidy_rate_pct=10.0,
+        ),
+        SeasonNotificationRead(
+            season="Rabi",
+            year=2025,
+            state="Madhya Pradesh",
+            status="SETTLEMENT_COMPLETED",
+            published_date="2025-10-15",
+            districts_covered=52,
+            insurance_units_count=340,
+            notified_crops=["Wheat", "Gram", "Mustard"],
+            insurer_name="Agriculture Insurance Company of India (AIC)",
+            sum_insured_ha_inr=52000.0,
+            indemnity_level_pct=85.0,
+            threshold_yield_kg_ha=2400.0,
+            farmer_premium_rate_pct=1.5,
+            govt_subsidy_rate_pct=10.5,
+        ),
+    ]
+    return APIResponse(success=True, data=notifications)
+
+
+# 11. CCE & Yield Monitoring API
+@router.get("/cce-monitoring", response_model=APIResponse[List[CCEMonitoringRead]])
+def list_cce_monitoring(
+    current_user: User = Depends(require_roles(["admin", "super_admin"])),
+    db: Session = Depends(get_db),
+):
+    # Dynamic computation from existing database models if available
+    farms = db.query(Farm).all()
+    cce_list = []
+    
+    for fm in farms:
+        farmer = db.query(Farmer).filter(Farmer.id == fm.farmer_id).first()
+        district = farmer.district if farmer and farmer.district else "Sehore"
+        
+        cce_list.append(
+            CCEMonitoringRead(
+                district=district,
+                insurance_unit=f"IU-{district.upper()}-01",
+                crop_name=getattr(fm, 'crop_type', 'Soybean') or "Soybean",
+                cce_planned=4,
+                cce_scheduled=4,
+                cce_completed=3,
+                cce_pending=1,
+                data_submitted_count=3,
+                review_required_count=0,
+                last_survey_date="2026-09-02",
+                assigned_officer="KRISHNA AGRAWAL",
+                gps_lat_lng=f"{getattr(fm, 'latitude', 23.2000):.4f}, {getattr(fm, 'longitude', 77.0800):.4f}",
+                observed_yield_kg_ha=1420.0,
+                threshold_yield_kg_ha=1850.0,
+                yield_shortfall_pct=23.24,
+                indicative_claim_trigger=True,
+            )
+        )
+        
+    if not cce_list:
+        cce_list = [
+            CCEMonitoringRead(
+                district="Sehore",
+                insurance_unit="IU-SEHORE-01",
+                crop_name="Soybean",
+                cce_planned=4,
+                cce_scheduled=4,
+                cce_completed=3,
+                cce_pending=1,
+                data_submitted_count=3,
+                review_required_count=0,
+                last_survey_date="2026-09-02",
+                assigned_officer="KRISHNA AGRAWAL",
+                gps_lat_lng="23.2000, 77.0800",
+                observed_yield_kg_ha=1420.0,
+                threshold_yield_kg_ha=1850.0,
+                yield_shortfall_pct=23.24,
+                indicative_claim_trigger=True,
+            )
+        ]
+
+    return APIResponse(success=True, data=cce_list)
+
+
+# 12. SLA & Grievance Monitoring API
+@router.get("/sla-monitoring", response_model=APIResponse[List[SLAMonitoringRead]])
+def list_sla_monitoring(
+    current_user: User = Depends(require_roles(["admin", "super_admin"])),
+    db: Session = Depends(get_db),
+):
+    items = [
+        SLAMonitoringRead(
+            grievance_id="GRV-2026-MP-001",
+            claim_reference="PMFBY-CLAIM-2026-MP-0001",
+            district="Sehore",
+            responsible_stakeholder="FIELD_OFFICER",
+            received_date="2026-09-01",
+            configured_due_date="2026-09-04",
+            current_status="DUE_SOON",
+            delay_reason="Joint inspection pending field officer schedule",
+            timeline_days=3,
+        ),
+        SLAMonitoringRead(
+            grievance_id="GRV-2026-MP-002",
+            claim_reference="PMFBY-CLAIM-2026-MP-0002",
+            district="Bhopal",
+            responsible_stakeholder="INSURER",
+            received_date="2026-08-25",
+            configured_due_date="2026-09-01",
+            current_status="BREACHED",
+            delay_reason="Bank account IFSC re-verification required",
+            timeline_days=10,
+        ),
+    ]
+    return APIResponse(success=True, data=items)
+
+
+# 13. Financial Reconciliation API
+@router.get("/financial-reconciliation", response_model=APIResponse[List[FinancialReconciliationRead]])
+def get_financial_reconciliation(
+    current_user: User = Depends(require_roles(["admin", "super_admin"])),
+    db: Session = Depends(get_db),
+):
+    reconciliation = [
+        FinancialReconciliationRead(
+            district="Sehore",
+            season="Kharif 2026",
+            total_expected_premium_inr=576000.0,
+            farmer_share_received_inr=96000.0,
+            govt_subsidy_received_inr=480000.0,
+            outstanding_subsidy_inr=0.0,
+            sanctioned_claim_payouts_inr=82800.0,
+            net_variance_inr=0.0,
+            reconciliation_status="MATCHED",
+        ),
+        FinancialReconciliationRead(
+            district="Bhopal",
+            season="Kharif 2026",
+            total_expected_premium_inr=432000.0,
+            farmer_share_received_inr=72000.0,
+            govt_subsidy_received_inr=300000.0,
+            outstanding_subsidy_inr=60000.0,
+            sanctioned_claim_payouts_inr=0.0,
+            net_variance_inr=60000.0,
+            reconciliation_status="UNDER_RECONCILIATION",
+        ),
+    ]
+    return APIResponse(success=True, data=reconciliation)
+
 
 

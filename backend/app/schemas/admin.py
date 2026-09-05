@@ -138,4 +138,65 @@ class DistrictDetailRead(BaseModel):
     claim_status_breakdown: Dict[str, int] = {}
 
 
+class SeasonNotificationRead(BaseModel):
+    season: str
+    year: int
+    state: str
+    status: str
+    published_date: Optional[str] = None
+    districts_covered: int
+    insurance_units_count: int
+    notified_crops: List[str]
+    insurer_name: str
+    sum_insured_ha_inr: float
+    indemnity_level_pct: float
+    threshold_yield_kg_ha: float
+    farmer_premium_rate_pct: float
+    govt_subsidy_rate_pct: float
+
+
+class CCEMonitoringRead(BaseModel):
+    district: str
+    insurance_unit: str
+    crop_name: str
+    cce_planned: int
+    cce_scheduled: int
+    cce_completed: int
+    cce_pending: int
+    data_submitted_count: int
+    review_required_count: int
+    last_survey_date: Optional[str] = None
+    assigned_officer: str
+    gps_lat_lng: str
+    observed_yield_kg_ha: float
+    threshold_yield_kg_ha: float
+    yield_shortfall_pct: float
+    indicative_claim_trigger: bool
+
+
+class SLAMonitoringRead(BaseModel):
+    grievance_id: str
+    claim_reference: str
+    district: str
+    responsible_stakeholder: str
+    received_date: str
+    configured_due_date: str
+    current_status: str  # OPEN, DUE_SOON, BREACHED, ESCALATED, RESOLVED
+    delay_reason: Optional[str] = None
+    timeline_days: int
+
+
+class FinancialReconciliationRead(BaseModel):
+    district: str
+    season: str
+    total_expected_premium_inr: float
+    farmer_share_received_inr: float
+    govt_subsidy_received_inr: float
+    outstanding_subsidy_inr: float
+    sanctioned_claim_payouts_inr: float
+    net_variance_inr: float
+    reconciliation_status: str  # MATCHED, PENDING, VARIANCE_DETECTED, UNDER_RECONCILIATION, RESOLVED
+
+
+
 

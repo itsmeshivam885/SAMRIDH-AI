@@ -131,3 +131,33 @@ def test_admin_district_intelligence():
     unknown_resp = client.get("/api/v1/admin/districts/NonExistentDistrict99", headers=headers)
     assert unknown_resp.status_code == 404
 
+
+def test_admin_eight_modules():
+    login_resp = client.post(
+        "/api/v1/auth/login",
+        json={"username": "rakhi.25bce10780", "password": "Rakhi#25BCE10780!Sec2026"}
+    )
+    token = login_resp.json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
+    # Module 3: Season & Notifications
+    season_resp = client.get("/api/v1/admin/season-notifications", headers=headers)
+    assert season_resp.status_code == 200
+    assert len(season_resp.json()["data"]) > 0
+
+    # Module 4: CCE & Yield Monitoring
+    cce_resp = client.get("/api/v1/admin/cce-monitoring", headers=headers)
+    assert cce_resp.status_code == 200
+    assert len(cce_resp.json()["data"]) > 0
+
+    # Module 7: SLA & Grievance Monitoring
+    sla_resp = client.get("/api/v1/admin/sla-monitoring", headers=headers)
+    assert sla_resp.status_code == 200
+    assert len(sla_resp.json()["data"]) > 0
+
+    # Module 8: Financial Reconciliation
+    fin_resp = client.get("/api/v1/admin/financial-reconciliation", headers=headers)
+    assert fin_resp.status_code == 200
+    assert len(fin_resp.json()["data"]) > 0
+
+
