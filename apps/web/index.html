@@ -2499,13 +2499,27 @@
     let selectedDamageFile = null;
     let cropDistChart, speedChart;
     
-    let API_BASE = localStorage.getItem('SAMRIDH_API_URL') || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? "http://127.0.0.1:8000/api/v1" : "https://samridh-ai-production.up.railway.app/api/v1");
-
     function setApiBaseUrl(url) {
       if (url) {
         localStorage.setItem('SAMRIDH_API_URL', url);
         API_BASE = url;
         alert(`✓ API Backend set to: ${url}`);
+      }
+    }
+
+    async function fetchWithTimeout(resource, options = {}, timeoutMs = 2500) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const response = await fetch(resource, {
+          ...options,
+          signal: controller.signal
+        });
+        clearTimeout(id);
+        return response;
+      } catch (error) {
+        clearTimeout(id);
+        throw error;
       }
     }
 
@@ -2571,12 +2585,12 @@
       let answer = "";
 
       try {
-        // Try calling backend crop-doctor / AI endpoint
-        const res = await fetch(`${API_BASE}/ai/crop-doctor`, {
+        // Try calling backend crop-doctor / AI endpoint with 2s timeout
+        const res = await fetchWithTimeout(`${API_BASE}/ai/crop-doctor`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ question: text, farm_id: 'farm_001', language: currentLanguage })
-        });
+        }, 2000);
         if (res.ok) {
           const json = await res.json();
           answer = currentLanguage === 'hi' ? (json.data.answer_hi || json.data.answer) : json.data.answer;
@@ -3097,48 +3111,46 @@
         return;
       }
 
+      let authenticated = false;
+
+      // ── Step 1: Try Railway Backend API (with 2-second timeout) ───────────────
       try {
-        const res = await fetch(`${API_BASE}/auth/login`, {
+        const res = await fetchWithTimeout(`${API_BASE}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password })
-        });
+        }, 2000);
 
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          const msg = (errData && (errData.detail || (errData.error && errData.error.message))) || "Invalid username or password";
-          showLoginError(typeof msg === 'string' ? msg : "Invalid username or password");
-          return;
+        if (res.ok) {
+          const data = await res.json();
+          const payload = data.data || data;
+          const token = payload.access_token;
+          const fullName = payload.full_name || username;
+          const role = payload.role || "FARMER";
+
+          if (token) localStorage.setItem('auth_token', token);
+          localStorage.setItem('user_role', role);
+
+          let surface = 'farmer';
+          if (role === 'FIELD_OFFICER' || role === 'INSURER') surface = 'officer';
+          else if (role === 'SUPER_ADMIN') surface = 'admin';
+
+          currentUser = {
+            name: fullName,
+            role: role,
+            code: username,
+            surface: surface
+          };
+          authenticated = true;
         }
-
-        const data = await res.json();
-        const payload = data.data || data;
-        const token = payload.access_token;
-        const fullName = payload.full_name || username;
-        const role = payload.role || "FARMER";
-
-        if (token) localStorage.setItem('auth_token', token);
-        localStorage.setItem('user_role', role);
-
-        let surface = 'farmer';
-        if (role === 'FIELD_OFFICER' || role === 'INSURER') surface = 'officer';
-        else if (role === 'SUPER_ADMIN') surface = 'admin';
-
-        currentUser = {
-          name: fullName,
-          role: role,
-          code: username,
-          surface: surface
-        };
-
-        updateSessionUI();
-        closeModal('modal-dept-login');
-        switchView(surface);
-
       } catch (err) {
-        // ── Check localStorage registered users first ─────────────────────────
+        console.warn("Backend API timeout or error, trying local authentication...", err);
+      }
+
+      // ── Step 2: Fallback to LocalStorage Registered Users ────────────────────
+      if (!authenticated) {
         const registeredUsers = JSON.parse(localStorage.getItem('samridh_registered_users') || '[]');
-        const lsUser = registeredUsers.find(u => u.username === username.toLowerCase() && u.password === password);
+        const lsUser = registeredUsers.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
         if (lsUser) {
           currentUser = {
             name: lsUser.fullName,
@@ -3148,13 +3160,12 @@
             state: lsUser.state,
             district: lsUser.district
           };
-          updateSessionUI();
-          closeModal('modal-dept-login');
-          switchView(lsUser.surface);
-          return;
+          authenticated = true;
         }
+      }
 
-        // ── High-speed local authentication fallback (hardcoded demo users) ────
+      // ── Step 3: Fallback to Default Demo System Users ─────────────────────────
+      if (!authenticated) {
         const demoMap = {
           'aryan.25bce10798': { name: 'ARYAN SINGH', role: 'FARMER', surface: 'farmer', pass: 'Aryan#25BCE10798!Sec2026' },
           'shivam.25bce10736': { name: 'SHIVAM SINGH', role: 'FARMER', surface: 'farmer', pass: 'Shivam#25BCE10736!Sec2026' },
@@ -3172,12 +3183,17 @@
             code: username,
             surface: matched.surface
           };
-          updateSessionUI();
-          closeModal('modal-dept-login');
-          switchView(matched.surface);
-        } else {
-          showLoginError("Invalid username or password");
+          authenticated = true;
         }
+      }
+
+      // ── Execute Login or Show Error ───────────────────────────────────────────
+      if (authenticated && currentUser) {
+        updateSessionUI();
+        closeModal('modal-dept-login');
+        switchView(currentUser.surface);
+      } else {
+        showLoginError("Invalid username or password");
       }
     }
 
@@ -4141,7 +4157,7 @@
       formData.append('image', file);
 
       try {
-        const response = await fetch(`${API_BASE}/ai/crop-scan`, { method: 'POST', body: formData });
+        const response = await fetchWithTimeout(`${API_BASE}/ai/crop-scan`, { method: 'POST', body: formData }, 2500);
         if (!response.ok) throw new Error("API call failed");
         const json = await response.json();
         renderCropScanResult(json.data, localThumbUrl);
