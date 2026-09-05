@@ -503,6 +503,9 @@ def list_district_summaries(
         rejected_claims = len([c for c in claims if c.status == "REJECTED"])
         high_risk_claims = len([c for c in claims if c.ai_fraud_risk == "HIGH"])
         
+        total_claimed = sum(c.estimated_payout_amount for c in claims)
+        total_sanctioned = sum(c.final_sanctioned_amount or 0.0 for c in claims)
+
         active_officers = db.query(Officer).filter(Officer.assigned_district.ilike(d_name)).count()
         disaster_events = db.query(DisasterEvent).filter(DisasterEvent.district.ilike(d_name)).count()
 
@@ -518,6 +521,8 @@ def list_district_summaries(
                 high_risk_claims=high_risk_claims,
                 active_officers=active_officers,
                 disaster_events=disaster_events,
+                total_claimed_amount=total_claimed,
+                total_sanctioned_amount=total_sanctioned,
             )
         )
 

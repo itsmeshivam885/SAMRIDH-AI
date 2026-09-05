@@ -3575,13 +3575,13 @@
         tbody.innerHTML = districts.map(d => `
           <tr class="hover:bg-emerald-50/40 transition-all">
             <td class="p-3 font-extrabold text-brand-forest">${d.district}</td>
-            <td class="p-3 text-center font-semibold">${d.farmers_count}</td>
-            <td class="p-3 text-center font-semibold">${d.farms_count}</td>
-            <td class="p-3 text-center font-semibold text-purple-700">${d.claims_count}</td>
+            <td class="p-3 text-center font-semibold">${d.total_farmers !== undefined ? d.total_farmers : (d.farmers_count || 0)}</td>
+            <td class="p-3 text-center font-semibold">${d.total_farms !== undefined ? d.total_farms : (d.farms_count || 0)}</td>
+            <td class="p-3 text-center font-semibold text-purple-700">${d.total_claims !== undefined ? d.total_claims : (d.claims_count || 0)}</td>
             <td class="p-3 text-right font-bold text-gray-800">₹${(d.total_claimed_amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
             <td class="p-3 text-right font-bold text-emerald-700">₹${(d.total_sanctioned_amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
-            <td class="p-3 text-center font-semibold text-amber-700">${d.officers_count}</td>
-            <td class="p-3 text-center font-semibold text-red-600">${d.disasters_count}</td>
+            <td class="p-3 text-center font-semibold text-amber-700">${d.active_officers !== undefined ? d.active_officers : (d.officers_count || 0)}</td>
+            <td class="p-3 text-center font-semibold text-red-600">${d.disaster_events !== undefined ? d.disaster_events : (d.disasters_count || 0)}</td>
             <td class="p-3 text-center">
               <button onclick="inspectDistrictDetail('${d.district}')" class="px-2.5 py-1 bg-brand-forest hover:bg-brand-leaf text-white font-bold rounded-lg text-[10px]">
                 Drill-Down
@@ -3634,12 +3634,12 @@
         const d = json.data;
 
         document.getElementById('district-detail-title').innerText = `District: ${d.district}`;
-        document.getElementById('dist-detail-farmers').innerText = d.farmers_count;
-        document.getElementById('dist-detail-farms').innerText = d.farms_count;
-        document.getElementById('dist-detail-claims').innerText = d.claims_count;
-        document.getElementById('dist-detail-officers').innerText = d.officers_count;
-        document.getElementById('dist-detail-claimed-amt').innerText = `₹${(d.total_claimed_amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}`;
-        document.getElementById('dist-detail-sanctioned-amt').innerText = `₹${(d.total_sanctioned_amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+        document.getElementById('dist-detail-farmers').innerText = d.total_farmers !== undefined ? d.total_farmers : (d.farmers_count || 0);
+        document.getElementById('dist-detail-farms').innerText = d.total_farms !== undefined ? d.total_farms : (d.farms_count || 0);
+        document.getElementById('dist-detail-claims').innerText = d.total_claims !== undefined ? d.total_claims : (d.claims_count || 0);
+        document.getElementById('dist-detail-officers').innerText = d.active_officers !== undefined ? d.active_officers : (d.officers_count || 0);
+        document.getElementById('dist-detail-claimed-amt').innerText = `₹${(d.total_est_loss_inr !== undefined ? d.total_est_loss_inr : (d.total_claimed_amount || 0)).toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+        document.getElementById('dist-detail-sanctioned-amt').innerText = `₹${(d.total_sanctioned_payout_inr !== undefined ? d.total_sanctioned_payout_inr : (d.total_sanctioned_amount || 0)).toLocaleString('en-IN', {minimumFractionDigits:2})}`;
 
         const statusContainer = document.getElementById('dist-detail-status-breakdown');
         const breakdown = d.claim_status_breakdown || {};

@@ -116,6 +116,8 @@ class DistrictSummaryRead(BaseModel):
     high_risk_claims: int
     active_officers: int
     disaster_events: int
+    total_claimed_amount: float = 0.0
+    total_sanctioned_amount: float = 0.0
 
 
 class DistrictDetailRead(BaseModel):
@@ -134,5 +136,6 @@ class DistrictDetailRead(BaseModel):
     disaster_events: int
     recent_audit_count: int
     claim_status_breakdown: Dict[str, int] = {}
+
 
 
