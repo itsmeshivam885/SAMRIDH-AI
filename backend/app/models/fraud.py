@@ -41,6 +41,10 @@ class FraudCheck(Base):
     fraud_risk_score = Column(Float, default=0.08)          # 0.0 (Clean) to 1.0 (Definite Fraud Flag)
     flag_reasons = Column(JSON, default=list)
     requires_manual_audit = Column(Boolean, default=False)
+    resolved_by_user_id = Column(String(36), nullable=True)
+    resolution_status = Column(String(50), default="UNRESOLVED") # UNRESOLVED, OVERRIDDEN_CLEARED, ESCALATED_FOR_SURVEY
+    resolution_notes = Column(Text, nullable=True)
+    resolved_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=get_utc_now)
 
     evidence = relationship("DamageEvidence", back_populates="fraud_check")
