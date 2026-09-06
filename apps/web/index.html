@@ -3739,7 +3739,9 @@
       const newUser = {
         id: docketNo,
         username: generatedUsername,
-        password: generatedPassword,
+        password: password, // Entered password by user
+        enteredPassword: password,
+        generatedPassword: generatedPassword,
         fullName: fullName,
         stakeholder: stakeholder,
         category: category,
@@ -3759,6 +3761,9 @@
       const existingUsers = JSON.parse(localStorage.getItem('samridh_registered_users') || '[]');
       existingUsers.push(newUser);
       localStorage.setItem('samridh_registered_users', JSON.stringify(existingUsers));
+
+      // Update Admin Registered Users Table immediately
+      loadAdminRegisteredUsers();
 
       // ── Try Railway backend (non-blocking) ────────────────────────────────────
       fetch(`${API_BASE}/auth/register`, {
@@ -3785,9 +3790,12 @@
         name: fullName,
         role: mappedRole,
         code: generatedUsername,
+        regCode: code,
         surface: mappedSurface,
         state: state,
-        district: district
+        district: district,
+        phone: phone,
+        email: email
       };
       updateSessionUI();
 
@@ -3796,8 +3804,8 @@
       document.getElementById('success-name').innerText = fullName;
       document.getElementById('success-stakeholder').innerText = `${stakeholder} (${category.split('(')[0].trim()})`;
       document.getElementById('success-role').innerText = `${designation || userCat} — ${userCat}`;
-      document.getElementById('success-username').innerText = generatedUsername;
-      document.getElementById('success-password').innerText = generatedPassword;
+      document.getElementById('success-username').innerText = `${generatedUsername} (or ID: ${code})`;
+      document.getElementById('success-password').innerText = password;
 
       closeModal('modal-register');
       openModal('modal-register-success');
@@ -3930,15 +3938,33 @@
       // ── Step 2: Fallback to LocalStorage Registered Users ────────────────────
       if (!authenticated) {
         const registeredUsers = JSON.parse(localStorage.getItem('samridh_registered_users') || '[]');
-        const lsUser = registeredUsers.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+        const inputLower = username.toLowerCase();
+        const lsUser = registeredUsers.find(u => {
+          const userMatches = (
+            (u.username && u.username.toLowerCase() === inputLower) ||
+            (u.regCode && u.regCode.toLowerCase() === inputLower) ||
+            (u.phone && u.phone === username) ||
+            (u.email && u.email.toLowerCase() === inputLower)
+          );
+          const passMatches = (
+            (u.password && u.password === password) ||
+            (u.enteredPassword && u.enteredPassword === password) ||
+            (u.generatedPassword && u.generatedPassword === password)
+          );
+          return userMatches && passMatches;
+        });
+
         if (lsUser) {
           currentUser = {
             name: lsUser.fullName,
             role: lsUser.role,
             code: lsUser.username,
+            regCode: lsUser.regCode || lsUser.username,
             surface: lsUser.surface,
             state: lsUser.state,
-            district: lsUser.district
+            district: lsUser.district,
+            phone: lsUser.phone,
+            email: lsUser.email
           };
           authenticated = true;
         }
@@ -4104,33 +4130,45 @@
         return FARMER_DATABASE[key];
       }
 
-      const cleanName = (name || 'FARMER').toUpperCase();
-      const cleanCode = code || `25BCE${Math.floor(10000 + Math.random() * 90000)}`;
-      const cleanLoc = `${district || 'Sehore'} District, ${state || 'Madhya Pradesh'}`;
+      // Lookup user in localStorage registered users
+      const lsUsers = JSON.parse(localStorage.getItem('samridh_registered_users') || '[]');
+      const registeredFarmer = lsUsers.find(u => 
+        (u.username && u.username.toLowerCase() === key) || 
+        (u.regCode && u.regCode.toLowerCase() === key) ||
+        (u.fullName && u.fullName.toUpperCase() === (name || '').toUpperCase())
+      );
+
+      const cleanName = registeredFarmer ? registeredFarmer.fullName.toUpperCase() : (name || 'FARMER').toUpperCase();
+      const cleanCode = registeredFarmer ? (registeredFarmer.regCode || registeredFarmer.username) : (code || `25BCE${Math.floor(10000 + Math.random() * 90000)}`);
+      const cleanState = registeredFarmer ? registeredFarmer.state : (state || 'Madhya Pradesh');
+      const cleanDistrict = registeredFarmer ? registeredFarmer.district : (district || 'Sehore');
+      const cleanLoc = `${cleanDistrict} District, ${cleanState}`;
+      const stateAbbr = (cleanState || 'MP').substring(0, 2).toUpperCase();
 
       const newProfile = {
         name: cleanName,
         regNo: cleanCode,
         location: cleanLoc,
-        farmCode: `FARM-${(state || 'MP').substring(0,2).toUpperCase()}-${cleanCode}`,
-        area: '2.8 Hectares',
-        crops: 'Soybean & Gram (सोयाबीन एवं चना)',
-        policyNo: `PMFBY-2026-${(state || 'MP').substring(0,2).toUpperCase()}-${cleanCode}`,
-        healthScore: 87,
+        farmCode: `FARM-${stateAbbr}-SEH-${cleanCode.slice(-4)}`,
+        khasraNo: `Plot ${(Math.floor(Math.random()*30)+1)}B / Survey ${Math.floor(Math.random()*150)+50}`,
+        area: '2.5 Hectares',
+        crops: 'Kharif Soybean & Wheat (सोयाबीन एवं गेहूं)',
+        policyNo: `PMFBY-2026-${stateAbbr}-${cleanCode}`,
+        healthScore: 89,
         healthTag: 'Healthy Verified Canopy',
         healthTag_hi: 'सत्यापित स्वस्थ फसल',
-        moisture: 52.0,
+        moisture: 52.4,
         claimStatus: 'No Active Claim',
         claimStatus_hi: 'कोई सक्रिय दावा नहीं',
-        claimPayout: '₹0.00 (Registered)',
-        claimPayout_hi: '₹0.00 (पंजीकृत)',
+        claimPayout: '₹0.00 (Optimal)',
+        claimPayout_hi: '₹0.00 (सामान्य)',
         coords: [23.0185, 76.8821],
-        advisoryTitle: 'New Registration Telemetry Active',
-        advisoryTitle_hi: 'नया पंजीकरण खेत निगरानी सक्रिय',
-        advisoryBody: 'Welcome to SAMRIDH-AI! PostGIS farm boundary established and Sentinel-2 satellite monitor online.',
-        advisoryBody_hi: 'समृद्धि AI में आपका स्वागत है! खेत की सीमा निर्धारित की गई है तथा उपग्रह निगरानी चालू है।',
-        greeting: `🌱 Hello ${cleanName}! Welcome to SAMRIDH-AI. Your farm profile is active. How can I assist you today?`,
-        greeting_hi: `🌱 नमस्ते ${cleanName}! समृद्धि AI में आपका स्वागत है। आपका खेत प्रोफ़ाइल सक्रिय है।`
+        advisoryTitle: `Live Sentinel-2 Telemetry Active for ${cleanName}`,
+        advisoryTitle_hi: `${cleanName} हेतु उपग्रह टेलीमेट्री सक्रिय`,
+        advisoryBody: `Welcome ${cleanName}! SoilNode IoT sensors and Sentinel-2 satellite canopy monitoring active for ${cleanLoc}. Field parameters are within optimal range.`,
+        advisoryBody_hi: `नमस्ते ${cleanName}! समृद्धि AI में स्वागत है। ${cleanLoc} के लिए उपग्रह निगरानी एवं मिट्टी सेंसर डेटा सामान्य स्थिति में हैं।`,
+        greeting: `🌱 Hello ${cleanName}! I am connected to your registered ${cleanLoc} farm telemetry (2.5 Ha Soybean & Wheat). Ask me about soil moisture, crop health, or PMFBY claims!`,
+        greeting_hi: `🌱 नमस्ते ${cleanName}! मैं आपके रजिस्टर्ड ${cleanLoc} खेत से जुड़ा हुआ हूँ। मुझसे फसल स्वास्थ्य, खाद या बीमे के बारे में पूछें!`
       };
 
       FARMER_DATABASE[key] = newProfile;
@@ -5174,7 +5212,7 @@
     }
 
     function switchView(viewName) {
-      const views = ['landing', 'dashboard', 'gallery', 'about', 'farmer', 'officer', 'admin'];
+      const views = ['landing', 'dashboard', 'gallery', 'about', 'farmer', 'officer', 'insurer', 'admin'];
       views.forEach(v => {
         const sec = document.getElementById(`view-${v}`);
         const btn = document.getElementById(`nav-${v}`);
@@ -5201,7 +5239,7 @@
       }
       if (viewName === 'dashboard') setTimeout(initDashboardCharts, 100);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
 
     function toggleLanguage() {
